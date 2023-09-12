@@ -1,0 +1,13 @@
+.ant-layout {
+  min-height: 100vh;
+}
+.ant-layout-header span.anticon-user {
+  width: 30px !important;
+  height: 30px !important;
+  /* margin: 10px !important; */
+}
+.ant-layout-header span.anticon-user svg {
+  width: 25px !important;
+  height: 25px !important;
+  margin: 7px !important;
+}

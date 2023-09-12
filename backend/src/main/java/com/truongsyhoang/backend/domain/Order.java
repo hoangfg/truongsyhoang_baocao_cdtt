@@ -1,6 +1,6 @@
 package com.truongsyhoang.backend.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,8 +22,8 @@ import lombok.Setter;
 @Table(name = "order")
 public class Order {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "user_id", nullable = false)
@@ -48,11 +48,11 @@ public class Order {
     @Column(name = "status", nullable = false)
     private Status status;
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     @Column(name = "created_by", nullable = false)
     private Long createdBy;
     @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+    private LocalDate updatedAt;
     @Column(name = "updated_by", nullable = false)
     private Long updatedBy;
 }

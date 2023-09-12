@@ -1,6 +1,6 @@
 package com.truongsyhoang.backend.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,9 +52,9 @@ public class Topic {
     @Column(name = "status", nullable = false, columnDefinition = "tinyint(3) unsigned default 2")
     private Status status;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    @Column(name = "created_at", nullable = false, length = 30)
+    private LocalDate createdAt;
 
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+    @Column(name = "updated_at", nullable = false, length = 30)
+    private LocalDate updatedAt;
 }

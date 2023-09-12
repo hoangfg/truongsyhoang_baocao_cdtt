@@ -1,6 +1,6 @@
 package com.truongsyhoang.backend.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,7 +46,7 @@ public class User {
     private String activedToken;
 
     @Column(name = "expires_at", nullable = true)
-    private LocalDateTime expiresAt;
+    private LocalDate expiresAt;
 
     @Column(name = "address", nullable = true)
     private String address;
@@ -70,9 +70,9 @@ public class User {
     private Status status;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+    private LocalDate updatedAt;
 
 }

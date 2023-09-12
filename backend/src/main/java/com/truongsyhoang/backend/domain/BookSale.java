@@ -1,6 +1,6 @@
 package com.truongsyhoang.backend.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +25,7 @@ public class BookSale {
     @Column(name = "price_sale", nullable = true)
     private double pricSale;
     @Column(name = "begin_sale", nullable = true)
-    private LocalDateTime beginSale;
+    private LocalDate beginSale;
     @Column(name = "end_sale", nullable = true)
-    private LocalDateTime endSale;
+    private LocalDate endSale;
 }
