@@ -1,13 +1,19 @@
 
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 
 import DashboardPage from './pages/DashboardPage';
-
+import { Provider } from "react-redux"
+import store from './redux/store';
 function App() {
   return (
-    <div className="App">
-      <DashboardPage/>
-    </div>
+    <Provider store={store} className="App">
+
+      <BrowserRouter>
+        <DashboardPage />
+      </BrowserRouter>
+
+    </Provider>
   );
 }
 

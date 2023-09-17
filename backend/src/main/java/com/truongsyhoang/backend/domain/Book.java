@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,10 +47,13 @@ public class Book {
 	private long authorId;
 	@Column(name = "language_id", nullable = false)
 	private long languageId;
-	@Column(name = "publisher_id", nullable = false)
-	private long publisherId;
-	@Column(name = "genre_id", nullable = false)
-	private Long genreId;
+	@OneToOne
+	@JoinColumn(name = "publisher_id")
+	private Publisher publisher;
+
+	@OneToOne
+	@JoinColumn(name = "genre_id")
+	private BookGenres bookGenres;
 	@Column(name = "status", nullable = false)
 	private Status status;
 	@Column(name = "created_at", nullable = false)

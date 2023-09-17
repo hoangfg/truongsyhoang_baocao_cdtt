@@ -2,6 +2,8 @@ package com.truongsyhoang.backend.domain;
 
 // import org.springframework.data.annotation.Id;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 import java.time.LocalDate;
 
@@ -30,8 +32,9 @@ public class Publisher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private long id;
-    @Column(name = "parent_id", nullable = false)
-    private long parentId;
+    // @OneToOne
+    // @JoinColumn(name = "publisher_id")
+    // private Publisher publisher;
     @Column(name = "name", nullable = false, length = 100)
     private String name;
     @Column(name = "slug", nullable = false, length = 100)
@@ -43,10 +46,9 @@ public class Publisher {
     private LocalDate createdAt;
     @Column(name = "created_by", nullable = false)
     private Long createdBy;
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = true)
     private LocalDate updatedAt;
-    @Column(name = "updated_by", nullable = false)
+    @Column(name = "updated_by", nullable = true)
     private Long updatedBy;
 
-    
 }

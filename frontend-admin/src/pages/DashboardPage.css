@@ -11,3 +11,39 @@
   height: 25px !important;
   margin: 7px !important;
 }
+
+.logo {
+  color: #fff !important;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.content-panel {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 10px;
+  height: 80vh;
+  overflow: hidden;
+  /* overflow-y: scroll; */
+}
+.content-header {
+  position: sticky;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+  border-bottom: 1px solid #e8e8e8;
+}
+.avatar-user_header {
+  position: absolute !important;
+  right: 25px !important;
+}
+.avatar-user_header span.user-img,
+.avatar-user_header span.user-name {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+}
+.avatar-user_header span.user-img {
+  margin-right: 5px;
+}

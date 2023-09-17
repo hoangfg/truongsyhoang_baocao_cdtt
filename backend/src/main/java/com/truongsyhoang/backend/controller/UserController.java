@@ -17,7 +17,7 @@ import com.truongsyhoang.backend.dto.UserDTO;
 import com.truongsyhoang.backend.service.UserService;
 
 @RestController
-@RequestMapping("/api/truongsyhoang/user")
+@RequestMapping("/api/user")
 public class UserController {
     @Autowired
     UserService userService;
