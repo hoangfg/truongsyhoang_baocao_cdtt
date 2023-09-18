@@ -16,4 +16,14 @@ public class CustomerResponseEntityExceptionHandler extends ResponseEntityExcept
         PublisherExceptionResponse exceptionResponse = new PublisherExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+    // @ExceptionHandler(FileNotFoundException.class)
+    // public final ResponseEntity<Object> handlerFileNotFoundException(FileNotFoundException ex, WebRequest request) {
+    //     ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage());
+    //     return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    // }
+    // @ExceptionHandler(FileStorageException.class)
+    // public final ResponseEntity<Object> handlerFileStorageException(FileStorageException ex, WebRequest request) {
+    //     ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage());
+    //     return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    // }
 }

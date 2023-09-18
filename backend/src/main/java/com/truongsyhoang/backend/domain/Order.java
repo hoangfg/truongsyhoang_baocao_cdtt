@@ -41,7 +41,7 @@ public class Order {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "code", nullable = false)
+    @Column(name = "code", nullable = true)
     private String code;
 
     @Enumerated

@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "user")
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,16 +61,13 @@ public class User {
     @Column(name = "image", nullable = true)
     private String image;
 
-    @Column(name = "roles", nullable = false, columnDefinition = "varchar(255) default '0'")
-    private String roles;
-
     @Column(name = "created_by", nullable = true)
     private Long createdBy;
 
     @Column(name = "updated_by", nullable = true)
     private Long updatedBy;
 
-    @Column(name = "status", nullable = false, columnDefinition = "tinyint(3) unsigned default 2")
+    @Column(name = "status", nullable = false, columnDefinition = "tinyint(3) unsigned default 1")
     private Status status;
 
     @Column(name = "created_at", nullable = false)

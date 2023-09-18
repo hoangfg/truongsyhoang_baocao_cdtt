@@ -5,13 +5,13 @@ import java.util.regex.Pattern;
 import java.text.Normalizer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.bind.BindResult;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,9 +46,7 @@ public class PublisherController {
         if (responseEntity != null) {
             return responseEntity;
         }
-        // if(true) {
-        // throw new PublisherException("Nhà xuất bản không hợp lệ");
-        // }
+
         Publisher entity = new Publisher();
         BeanUtils.copyProperties(dto, entity);
         String name = dto.getName();
@@ -80,7 +78,6 @@ public class PublisherController {
     @PatchMapping("/{id}/status")
     public ResponseEntity<?> changeStatus(@PathVariable("id") Long id, @RequestBody PublisherDTO dto) {
         try {
-           
 
             Publisher entity = publisherService.status(id, dto);
             return new ResponseEntity<>(entity, HttpStatus.OK);
