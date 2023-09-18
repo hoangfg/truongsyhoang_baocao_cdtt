@@ -8,7 +8,8 @@ import java.util.List;
 
 @Repository
 public interface AuthorReponsitory extends JpaRepository<Author, Long> {
-    List<Author> findByNameContainsIgnoreCase(String name);
 
-    List<Author> findByIdNotAndNameContainsIgnoreCase(Long id, String name);
+    // List<Author> findByIdNotAndNameContainsIgnoreCase(Long id, String name);
+
+    List<Author> findByNameContainsIgnoreCase(String name);
 }

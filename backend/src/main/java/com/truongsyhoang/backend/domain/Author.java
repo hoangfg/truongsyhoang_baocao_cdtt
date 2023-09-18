@@ -28,18 +28,20 @@ public class Author {
 	private long id;
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
-	@Column(name = "slug", nullable = false, length = 255)
+	@Column(name = "slug", length = 255)
 	private String slug;
+	@Column(name = "image", length = 127)
+	private String image;
 	@Enumerated
-	@Column(name = "status", nullable = false)
+	@Column(name = "status", nullable = true)
 	private Status status;
-	@Column(name = "created_at", nullable = false)
+	@Column(name = "created_at", nullable = true)
 	private LocalDate createdAt;
-	@Column(name = "created_by", nullable = false)
+	@Column(name = "created_by", nullable = true)
 	private Long createdBy;
-	@Column(name = "updated_at", nullable = false)
+	@Column(name = "updated_at", nullable = true)
 	private LocalDate updatedAt;
-	@Column(name = "updated_by", nullable = false)
+	@Column(name = "updated_by", nullable = true)
 	private Long updatedBy;
 
 }
