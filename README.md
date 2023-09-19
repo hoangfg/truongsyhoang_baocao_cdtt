@@ -7,9 +7,13 @@ Thông tin đề tại: Website bán sách
 Công nghệ: Java - spring boot(backend), ReactJs(frontend)
 
 ## Kế hoạch: 
+
+
 Tuần 1: Ngày bắt đầu ngày 05/09 kết thúc 12/09 (push) - Cài đặt spring boot, ReactJs và thiết kế database.
 
+
 Tuần 2: Ngày bắt đầu ngày 13/09 kết thúc 19/09 (push) - Thiết kế giao diện admin, Làm chức năng thêm, xóa, sửa của trang admin
+
 
 Tuần 3: Ngày bắt đầu ngày 20/09 kết thúc 26/09 (push) - đăng nhập admin.
 
