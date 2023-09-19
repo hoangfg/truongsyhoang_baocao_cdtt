@@ -46,6 +46,27 @@ public class AuthorService {
         return authorReponsitory.save(entity);
     }
 
+    public Author update(Long id, AuthorDTO dto) {
+        var found = authorReponsitory.findById(id);
+        if (found.isEmpty()) {
+            throw new AuthorException("Author name not found");
+        }
+        Author entity = new Author();
+        BeanUtils.copyProperties(dto, entity);
+        if (dto.getImageFile() != null) {
+            String fileName = fileStorageService.storeAuthorImageFile(dto.getImageFile());
+            entity.setImage(fileName);
+            dto.setImageFile(null);
+            String name = dto.getName();
+            String slug = generateSlug(name);
+            entity.setSlug(slug);
+
+            entity.setUpdatedAt(LocalDate.now());
+            entity.setUpdatedBy(1L);
+        }
+        return authorReponsitory.save(entity);
+    }
+
     public List<?> findAll() {
         return authorReponsitory.findAll();
     }
@@ -56,10 +77,15 @@ public class AuthorService {
 
     public Author findById(Long id) {
         Optional<Author> found = authorReponsitory.findById(id);
-        if(found.isEmpty()) {
-            throw new AuthorException("Author id: "+id+" does not esisted");
+        if (found.isEmpty()) {
+            throw new AuthorException("Author id: " + id + " does not esisted");
         }
         return found.get();
+    }
+
+    public void deleteById(Long id) {
+        Author existed = findById(id);
+        authorReponsitory.delete(existed);
     }
 
     public static String generateSlug(String name) {

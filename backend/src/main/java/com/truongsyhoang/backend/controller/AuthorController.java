@@ -19,8 +19,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +59,25 @@ public class AuthorController {
             return responseEntity;
         }
         Author entity = authorService.insert(dto);
+        dto.setId(entity.getId());
+        dto.setImage(entity.getImage());
+
+        return new ResponseEntity<>(entity, HttpStatus.CREATED);
+    }
+
+    @PatchMapping(value = "/{id}", consumes = { 
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            MediaType.MULTIPART_FORM_DATA_VALUE }, 
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> update(
+        @PathVariable Long id,
+            @Valid @ModelAttribute AuthorDTO dto, BindingResult result) {
+        ResponseEntity<?> responseEntity = mapValidationErrorService.mapValidationFields(result);
+        if (responseEntity != null) {
+            return responseEntity;
+        }
+        Author entity = authorService.update(id, dto);
         dto.setId(entity.getId());
         dto.setImage(entity.getImage());
 
@@ -117,4 +138,11 @@ public class AuthorController {
         return new ResponseEntity<>(entity, HttpStatus.OK);
 
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAuthor(@PathVariable long id) {
+        authorService.deleteById(id);
+        return new ResponseEntity<>("Author with id: " + id + " was deleted success", HttpStatus.OK);
+    }
+
 }
