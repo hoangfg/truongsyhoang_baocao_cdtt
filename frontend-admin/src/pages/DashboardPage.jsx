@@ -1,3 +1,4 @@
+import { MdOutlineEmojiPeople } from "react-icons/md"; 
 import "./DashboardPage.css";
 import React, { useEffect, useState } from "react";
 import {
@@ -85,8 +86,22 @@ function DashboardPage() {
             },
             {
               key: "3",
-              icon: <IoLanguageSharp />,
-              label: "Book language",
+              icon: <MdOutlineEmojiPeople />,
+              label: "Author",
+              children: [
+                {
+                  key: "31",
+                  icon: <BsListTask />,
+                  label: "List",
+                  onClick: () => navigate("/publishers"),
+                },
+                {
+                  key: "32",
+                  icon: <MdOutlineCreateNewFolder />,
+                  label: "Add",
+                  onClick: () => navigate("/publishers/add"),
+                },
+              ],
             },
           ]}
         />
@@ -136,8 +151,14 @@ function DashboardPage() {
             <Routes>
               <Route path="/" element={<Home />}></Route>
               <Route path="/publishers" element={<Index />}></Route>
-              <Route path="/publishers/add" element={<AddOrEdit key="a" />}></Route>
-              <Route path="/publishers/update/:id" element={<AddOrEdit key="u" />}></Route>
+              <Route
+                path="/publishers/add"
+                element={<AddOrEdit key="a" />}
+              ></Route>
+              <Route
+                path="/publishers/update/:id"
+                element={<AddOrEdit key="u" />}
+              ></Route>
             </Routes>
             <Outlet></Outlet>
           </div>

@@ -4,9 +4,15 @@ import java.net.http.HttpRequest;
 import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -79,4 +85,36 @@ public class AuthorController {
 
     }
 
+    @GetMapping
+    public ResponseEntity<?> getAuthors() {
+        var list = authorService.findAll();
+        var newList = list.stream().map(item -> {
+            AuthorDTO dto = new AuthorDTO();
+            BeanUtils.copyProperties(item, dto);
+            return dto;
+        }).collect(Collectors.toList());
+        return new ResponseEntity<>(newList, HttpStatus.OK);
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<?> getAuthors(
+            @PageableDefault(size = 5, sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
+        var list = authorService.findAll(pageable);
+        var newList = list.stream().map(item -> {
+            AuthorDTO dto = new AuthorDTO();
+            BeanUtils.copyProperties(item, dto);
+            return dto;
+        }).collect(Collectors.toList());
+        return new ResponseEntity<>(newList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAuthor(@PathVariable long id) {
+        var entity = authorService.findById(id);
+        AuthorDTO dto = new AuthorDTO();
+        BeanUtils.copyProperties(entity, dto);
+
+        return new ResponseEntity<>(entity, HttpStatus.OK);
+
+    }
 }

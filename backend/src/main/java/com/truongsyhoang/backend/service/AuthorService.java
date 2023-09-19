@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.truongsyhoang.backend.domain.Author;
@@ -44,6 +46,22 @@ public class AuthorService {
         return authorReponsitory.save(entity);
     }
 
+    public List<?> findAll() {
+        return authorReponsitory.findAll();
+    }
+
+    public Page<Author> findAll(Pageable pageable) {
+        return authorReponsitory.findAll(pageable);
+    }
+
+    public Author findById(Long id) {
+        Optional<Author> found = authorReponsitory.findById(id);
+        if(found.isEmpty()) {
+            throw new AuthorException("Author id: "+id+" does not esisted");
+        }
+        return found.get();
+    }
+
     public static String generateSlug(String name) {
         String normalized = Normalizer.normalize(name, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
@@ -51,4 +69,5 @@ public class AuthorService {
         slug = slug.replaceAll("\\s+", "-");
         return slug;
     }
+
 }

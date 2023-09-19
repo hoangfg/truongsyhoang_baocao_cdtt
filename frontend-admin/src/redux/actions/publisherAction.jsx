@@ -93,10 +93,10 @@ export const updatePublisher =
 export const statusPublisher = (id, publisher) => async (dispatch) => {
   const service = new publisherService();
   try {
-    dispatch({
-      type: COMMON_LOADING_SET,
-      payload: true,
-    });
+    // dispatch({
+    //   type: COMMON_LOADING_SET,
+    //   payload: true,
+    // });
 
     const response = await service.status(id, publisher);
 
@@ -123,12 +123,12 @@ export const statusPublisher = (id, publisher) => async (dispatch) => {
         ? error.response.data.message
         : error.message,
     });
+  } finally {
+    dispatch({
+      type: COMMON_LOADING_SET,
+      payload: false,
+    });
   }
-  dispatch({
-    type: COMMON_LOADING_SET,
-    payload: false,
-    
-  });
 };
 
 export const getPublishers = () => async (dispatch) => {
