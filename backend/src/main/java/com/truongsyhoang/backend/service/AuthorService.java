@@ -74,6 +74,9 @@ public class AuthorService {
     public Page<Author> findAll(Pageable pageable) {
         return authorReponsitory.findAll(pageable);
     }
+    public Page<Author> findByName(String name, Pageable pageable) {
+        return authorReponsitory.findByNameContainsIgnoreCase(name ,pageable);
+    }
 
     public Author findById(Long id) {
         Optional<Author> found = authorReponsitory.findById(id);
