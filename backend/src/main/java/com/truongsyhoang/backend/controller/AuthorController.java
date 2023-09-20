@@ -85,7 +85,7 @@ public class AuthorController {
         return new ResponseEntity<>(entity, HttpStatus.CREATED);
     }
 
-    @GetMapping("/logo/{fileName:.+}")
+    @GetMapping("/image/{fileName:.+}")
     public ResponseEntity<?> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = fileStorageService.loadAuthorFileAResource(fileName);
         String contentType = null;

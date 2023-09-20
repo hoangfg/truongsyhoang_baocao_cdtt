@@ -35,21 +35,21 @@ public class AuthorService {
             String fileName = fileStorageService.storeAuthorImageFile(dto.getImageFile());
             entity.setImage(fileName);
             dto.setImageFile(null);
-            String name = dto.getName();
-            String slug = generateSlug(name);
-            entity.setSlug(slug);
-            entity.setCreatedAt(LocalDate.now());
-            entity.setCreatedBy(1L);
-            entity.setUpdatedAt(LocalDate.now());
-            entity.setUpdatedBy(1L);
         }
+        String name = dto.getName();
+        String slug = generateSlug(name);
+        entity.setSlug(slug);
+        entity.setCreatedAt(LocalDate.now());
+        entity.setCreatedBy(1L);
+        entity.setUpdatedAt(LocalDate.now());
+        entity.setUpdatedBy(1L);
         return authorReponsitory.save(entity);
     }
 
     public Author update(Long id, AuthorDTO dto) {
         var found = authorReponsitory.findById(id);
         if (found.isEmpty()) {
-            throw new AuthorException("Author name not found");
+            throw new AuthorException("Author id not found");
         }
         Author entity = new Author();
         BeanUtils.copyProperties(dto, entity);
@@ -57,13 +57,13 @@ public class AuthorService {
             String fileName = fileStorageService.storeAuthorImageFile(dto.getImageFile());
             entity.setImage(fileName);
             dto.setImageFile(null);
-            String name = dto.getName();
-            String slug = generateSlug(name);
-            entity.setSlug(slug);
-
-            entity.setUpdatedAt(LocalDate.now());
-            entity.setUpdatedBy(1L);
         }
+        
+        String name = dto.getName();
+        String slug = generateSlug(name);
+        entity.setSlug(slug);
+        entity.setUpdatedAt(LocalDate.now());
+        entity.setUpdatedBy(1L);
         return authorReponsitory.save(entity);
     }
 

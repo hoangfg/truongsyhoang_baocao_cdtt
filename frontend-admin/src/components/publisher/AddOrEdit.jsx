@@ -90,7 +90,6 @@ class AddOrEdit extends Component {
     if (!id) {
       this.props.insertPublisher(values, navigate);
     } else if (this.state.shouldUpdate) {
-      
       this.props.updatePublisher(id, values, navigate);
     }
     console.log(values);
@@ -100,8 +99,8 @@ class AddOrEdit extends Component {
     const { isLoading } = this.props;
     const { publisher } = this.state;
     let title = "Thêm nhà xuất bản";
-    if(publisher.id) {
-      title="Sửa thông tin nhà xuất bản"
+    if (publisher.id) {
+      title = "Sửa thông tin nhà xuất bản";
     }
     return (
       <div>
@@ -123,14 +122,14 @@ class AddOrEdit extends Component {
           ref={this.formRef}
           disabled={isLoading}
         >
-          <Row>
+          <Row style={{ display: "flex", justifyContent: "space-around" }}>
             <Col md={12}>
               <Form.Item
                 label="ID"
                 name="id"
                 labelCol={{ span: 24 }}
                 initialValue={publisher.id}
-                hidden={ publisher.id ? false:true}
+                hidden={publisher.id ? false : true}
               >
                 <Input readOnly></Input>
               </Form.Item>
@@ -154,16 +153,44 @@ class AddOrEdit extends Component {
                 <Input></Input>
               </Form.Item>
               <Form.Item
-                label="Trạng thái"
-                name="status"
+                label="Email"
+                name="email"
+                initialValue={publisher.email}
                 labelCol={{ span: 24 }}
-                initialValue={publisher.status === "Visible" ? "0" : "1"}
+                // wrapperCol={{ span: 24 }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập email.",
+                  },
+                  {
+                    min: 2,
+                    message: "Email phải có ít nhất 2 ký tự.",
+                  },
+                ]}
               >
-                <Select>
-                  <Select.Option value="0">Hoạt động</Select.Option>
-                  <Select.Option value="1">Không hoạt động</Select.Option>
-                </Select>
+                <Input></Input>
               </Form.Item>
+              <Form.Item
+                label="Số điện thoại"
+                name="phone"
+                initialValue={publisher.phone}
+                labelCol={{ span: 24 }}
+                // wrapperCol={{ span: 24 }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập số điện thoại.",
+                  },
+                  {
+                    min: 2,
+                    message: "Số điện thoại phải có ít nhất 2 ký tự.",
+                  },
+                ]}
+              >
+                <Input></Input>
+              </Form.Item>
+
               <Divider></Divider>
 
               {!publisher.id && (
@@ -187,6 +214,38 @@ class AddOrEdit extends Component {
                   Cập nhật
                 </Button>
               )}
+            </Col>
+            <Col md={10}>
+              <Form.Item
+                label="Địa chỉ"
+                name="address"
+                initialValue={publisher.address}
+                labelCol={{ span: 24 }}
+                // wrapperCol={{ span: 24 }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập Địa chỉ.",
+                  },
+                  {
+                    min: 2,
+                    message: "Địa chỉ phải có ít nhất 2 ký tự.",
+                  },
+                ]}
+              >
+                <Input></Input>
+              </Form.Item>
+              <Form.Item
+                label="Trạng thái"
+                name="status"
+                labelCol={{ span: 24 }}
+                initialValue={publisher.status === "Visible" ? "0" : "1"}
+              >
+                <Select>
+                  <Select.Option value="0">Hoạt động</Select.Option>
+                  <Select.Option value="1">Không hoạt động</Select.Option>
+                </Select>
+              </Form.Item>
             </Col>
           </Row>
         </Form>
