@@ -1,4 +1,4 @@
-import { MdOutlineEmojiPeople } from "react-icons/md"; 
+import { MdOutlineEmojiPeople } from "react-icons/md";
 import "./DashboardPage.css";
 import React, { useEffect, useState } from "react";
 import {
@@ -20,6 +20,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { setError, setMessage } from "./../redux/actions/commonAction";
 import { commonReducer } from "./../redux/reducers/commonReducer";
+import ListAuthor from "../components/author/ListAuthor";
+import AuthorForm from "../components/author/AuthorForm";
 
 const { Header, Sider, Content } = Layout;
 
@@ -93,13 +95,13 @@ function DashboardPage() {
                   key: "31",
                   icon: <BsListTask />,
                   label: "List",
-                  onClick: () => navigate("/publishers"),
+                  onClick: () => navigate("/authors"),
                 },
                 {
                   key: "32",
                   icon: <MdOutlineCreateNewFolder />,
                   label: "Add",
-                  onClick: () => navigate("/publishers/add"),
+                  onClick: () => navigate("/author/add"),
                 },
               ],
             },
@@ -158,6 +160,15 @@ function DashboardPage() {
               <Route
                 path="/publishers/update/:id"
                 element={<AddOrEdit key="u" />}
+              ></Route>
+              <Route path="/authors" element={<ListAuthor />}></Route>
+              <Route
+                path="/author/add"
+                element={<AuthorForm key="a" />}
+              ></Route>
+              <Route
+                path="/author/update/:id"
+                element={<AuthorForm key="u" />}
               ></Route>
             </Routes>
             <Outlet></Outlet>

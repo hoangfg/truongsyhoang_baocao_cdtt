@@ -32,6 +32,9 @@ public class Author {
 	private String slug;
 	@Column(name = "image", length = 127)
 	private String image;
+	@Lob
+	@Column(name = "detail")
+	private String detail;
 	@Enumerated
 	@Column(name = "status", nullable = true)
 	private Status status;
