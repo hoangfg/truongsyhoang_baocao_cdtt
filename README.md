@@ -11,13 +11,9 @@ Công nghệ: Java - spring boot(backend), ReactJs(frontend)
 
 Tuần 1: Ngày bắt đầu ngày 05/09 kết thúc 12/09 (push) - Cài đặt spring boot, ReactJs và thiết kế database.
 
+Tuần 2+3: Ngày bắt đầu ngày 13/09 kết thúc 26/09 (push) - Thiết kế giao diện admin, Làm chức năng thêm, xóa, sửa của trang admin
 
-Tuần 2: Ngày bắt đầu ngày 13/09 kết thúc 19/09 (push) - Thiết kế giao diện admin, Làm chức năng thêm, xóa, sửa của trang admin
-
-
-Tuần 3: Ngày bắt đầu ngày 20/09 kết thúc 26/09 (push) - đăng nhập admin.
-
-Tuần 4:  Ngày bắt đầu ngày 27/09 kết thúc 03/10 (push) - Thiết kế giao diện trang người dùng
+Tuần 4:  Ngày bắt đầu ngày 27/09 kết thúc 03/10 (push) - đăng nhập admin, Thiết kế giao diện trang người dùng
 
 Tuần 5:  Ngày bắt đầu ngày 04/10 kết thúc 10/10 (push) - Hoàn thành trang chủ, trang sản phẩm, chi tiết sản phẩm.
 
