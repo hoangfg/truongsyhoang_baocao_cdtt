@@ -156,7 +156,7 @@ class AuthorForm extends Component {
                 label="Trạng thái"
                 name="status"
                 labelCol={{ span: 24 }}
-                initialValue={author.status === "Visible" ? "0" : "1"}
+                initialValue={author.status === "1" ? "0" : "1"}
               >
                 <Select>
                   <Select.Option value="0">Hoạt động</Select.Option>

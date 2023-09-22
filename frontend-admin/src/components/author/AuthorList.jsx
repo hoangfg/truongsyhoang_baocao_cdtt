@@ -5,9 +5,11 @@ import Column from "antd/es/table/Column";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Image } from "antd/lib";
+import authorService from "../../services/authorService";
 export default class AuthorList extends Component {
   render() {
-    const {dataSource, onEdit, onDeleteConfirm} = this.props
+    const { dataSource, onEdit, onDeleteConfirm } = this.props;
+    console.log(dataSource)
     return (
       <Table
         className="content-panel_table"
@@ -29,11 +31,14 @@ export default class AuthorList extends Component {
           dataIndex="image"
           width={100}
           align="center"
-          render={(_, record)=>(
+          render={(_, record) => (
             <Space>
-              <Image width="100%" src={record.image}></Image>
+              <Image
+                width="100%"
+                src={authorService.getPhotoUrl(record.image)}
+              ></Image>
             </Space>
-          ) }
+          )}
         ></Column>
         <Column title="Tên" key="name" dataIndex="name" align="center"></Column>
         <Column
@@ -45,7 +50,7 @@ export default class AuthorList extends Component {
           render={(text, record) => (
             <Space size="middle">
               <Switch
-                checked={record.status === "Visible"}
+                checked={record.status === 0}
                 onChange={() => this.handleStatusChange(record)}
                 // loading={isLoading}
               />

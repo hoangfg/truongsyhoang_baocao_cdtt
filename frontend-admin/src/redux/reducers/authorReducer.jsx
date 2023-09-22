@@ -1,4 +1,4 @@
-import { AUTHORS_SET, AUTHOR_DELETE, AUTHOR_SET } from "../actions/actionTypes";
+import { AUTHORS_SET, AUTHOR_APPEND, AUTHOR_DELETE, AUTHOR_SET } from "../actions/actionTypes";
 
 // rxreducer
 const initialState = {
@@ -12,6 +12,8 @@ const authorReducer = (state = initialState, { type, payload }) => {
       return { ...state, author: payload };
     case AUTHORS_SET:
       return { ...state, authors: payload };
+    case AUTHOR_APPEND:
+      return { ...state, authors: [payload, ...state.authors] };
     case AUTHOR_DELETE:
       return {
         ...state,

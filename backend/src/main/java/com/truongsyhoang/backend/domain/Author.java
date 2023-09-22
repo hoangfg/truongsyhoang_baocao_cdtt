@@ -35,9 +35,9 @@ public class Author {
 	@Lob
 	@Column(name = "detail")
 	private String detail;
-	@Enumerated
-	@Column(name = "status", nullable = true)
-	private Status status;
+	
+	@Column(name = "status",  columnDefinition = "int default 0")
+	private int status;
 	@Column(name = "created_at", nullable = true)
 	private LocalDate createdAt;
 	@Column(name = "created_by", nullable = true)

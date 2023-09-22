@@ -25,12 +25,15 @@ public class AuthorService {
     private FileStorageService fileStorageService;
 
     public Author insert(AuthorDTO dto) {
+        System.out.println("Detail: " + dto.getDetail());
+        System.out.println("Status: " + dto.getStatus());
         List<?> foundedList = authorReponsitory.findByNameContainsIgnoreCase(dto.getName());
         if (foundedList.size() > 0) {
             throw new AuthorException("Author name is existed");
         }
         Author entity = new Author();
         BeanUtils.copyProperties(dto, entity);
+        
         if (dto.getImageFile() != null) {
             String fileName = fileStorageService.storeAuthorImageFile(dto.getImageFile());
             entity.setImage(fileName);
@@ -53,12 +56,14 @@ public class AuthorService {
         }
         Author entity = new Author();
         BeanUtils.copyProperties(dto, entity);
+        System.out.println("detail: " + dto.getDetail());
+        System.out.println("status: " + dto.getStatus());
         if (dto.getImageFile() != null) {
             String fileName = fileStorageService.storeAuthorImageFile(dto.getImageFile());
             entity.setImage(fileName);
             dto.setImageFile(null);
         }
-        
+
         String name = dto.getName();
         String slug = generateSlug(name);
         entity.setSlug(slug);
@@ -74,8 +79,9 @@ public class AuthorService {
     public Page<Author> findAll(Pageable pageable) {
         return authorReponsitory.findAll(pageable);
     }
+
     public Page<Author> findByName(String name, Pageable pageable) {
-        return authorReponsitory.findByNameContainsIgnoreCase(name ,pageable);
+        return authorReponsitory.findByNameContainsIgnoreCase(name, pageable);
     }
 
     public Author findById(Long id) {

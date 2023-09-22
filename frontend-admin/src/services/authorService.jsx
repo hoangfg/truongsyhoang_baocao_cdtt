@@ -3,12 +3,18 @@ import { API_AUTHOR } from "./constant";
 
 export default class authorService {
   create = async (author) => {
-    console.log(author);
+    console.log("s", author.status);
+    console.log("d", author.detail);
     let formData = new FormData();
     formData.append("name", author.name);
+
     if (author.imageFile[0].originFileObj) {
       formData.append("imageFile", author.imageFile[0].originFileObj);
+       formData.append("detail", author.detail);
+       formData.append("status", author.status);
     }
+   
+
     return await axios.post(API_AUTHOR, formData);
   };
   getAuthors = async () => {
@@ -25,5 +31,8 @@ export default class authorService {
   };
   status = async (id, author) => {
     return await axios.patch(API_AUTHOR + "/" + id + "/status", author);
+  };
+  static getPhotoUrl = (filename) => {
+    return API_AUTHOR + "/image/" + filename;
   };
 }

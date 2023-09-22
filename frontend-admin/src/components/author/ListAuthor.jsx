@@ -5,8 +5,9 @@ import ContentHeader from "../common/ContentHeader";
 import AuthorList from "./AuthorList";
 import { Button, Col, Row } from "antd";
 import AuthorForm from "./AuthorForm";
-import { insertAuthor } from "./../../redux/actions/authorAction";
+import { insertAuthor, getAuthors } from "./../../redux/actions/authorAction";
 import { connect } from "react-redux";
+import authorReducer from "./../../redux/reducers/authorReducer";
 class ListAuthor extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +16,12 @@ class ListAuthor extends Component {
       open: false,
     };
   }
+  componentDidMount = () => {
+    this.props.getAuthors();
+  };
+  // componentWillUnmount = () => {
+  //   this.props.clearState();
+  // };
   onCreate = (values) => {
     console.log(values);
     this.props.insertAuthor(values);
@@ -23,6 +30,7 @@ class ListAuthor extends Component {
   render() {
     const { navigate } = this.props.router;
     const { open } = this.state;
+    const { authors, isLoading } = this.props;
     return (
       <>
         <ContentHeader
@@ -42,7 +50,7 @@ class ListAuthor extends Component {
             </Button>
           </Col>
         </Row>
-        <AuthorList />
+        <AuthorList dataSource={authors} />
 
         <AuthorForm
           open={open}
@@ -56,10 +64,14 @@ class ListAuthor extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  authors: state.authorReducer.authors,
+  isLoading: state.commonReducer.isLoading,
+});
 
 const mapDispatchToProps = {
   insertAuthor,
+  getAuthors,
 };
 
 export default connect(
