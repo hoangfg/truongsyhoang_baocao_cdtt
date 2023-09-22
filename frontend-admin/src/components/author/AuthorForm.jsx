@@ -1,24 +1,18 @@
 import { FcAddImage } from "react-icons/fc";
-import { BiImageAdd } from "react-icons/bi";
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component, createRef } from "react";
+
 import {
   Input,
   Modal,
-  Radio,
   Form,
   Select,
   Col,
   Divider,
-  Button,
   Row,
   Upload,
   Image,
-  uploadButton,
 } from "antd";
-import { createRef } from "react";
 import TextArea from "antd/es/input/TextArea";
-// import ImgCrop from "antd-img-crop";
 class AuthorForm extends Component {
   form = createRef();
   constructor(props) {
@@ -217,10 +211,10 @@ class AuthorForm extends Component {
   }
 }
 
-AuthorForm.propTypes = {
-  open: PropTypes.bool.isRequired,
-  onCreate: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-};
+// AuthorForm.propTypes = {
+//   open: PropTypes.bool.isRequired,
+//   onCreate: PropTypes.func.isRequired,
+//   onCancel: PropTypes.func.isRequired,
+// };
 
 export default AuthorForm;

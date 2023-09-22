@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import withRouter from "../../helpers/withRouter";
-import PropTypes from "prop-types";
+
 import ContentHeader from "../common/ContentHeader";
 import AuthorList from "./AuthorList";
 import { Button, Col, Row } from "antd";
 import AuthorForm from "./AuthorForm";
+import { insertAuthor } from "./../../redux/actions/authorAction";
+import { connect } from "react-redux";
 class ListAuthor extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,7 @@ class ListAuthor extends Component {
   }
   onCreate = (values) => {
     console.log(values);
+    this.props.insertAuthor(values);
   };
 
   render() {
@@ -52,4 +55,14 @@ class ListAuthor extends Component {
     );
   }
 }
-export default withRouter(ListAuthor);
+
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = {
+  insertAuthor,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(ListAuthor));

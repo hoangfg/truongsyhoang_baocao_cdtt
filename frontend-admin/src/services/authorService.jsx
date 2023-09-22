@@ -3,13 +3,13 @@ import { API_AUTHOR } from "./constant";
 
 export default class authorService {
   create = async (author) => {
-    let formData = new FormData()
-    formData.append("name", author.name)
-    if(author.fileImage[0].originFileObj) {
-        formData.append("imageFile", author.imageFile[0].originFileObj)
+    console.log(author);
+    let formData = new FormData();
+    formData.append("name", author.name);
+    if (author.imageFile[0].originFileObj) {
+      formData.append("imageFile", author.imageFile[0].originFileObj);
     }
-    return await axios.post(API_AUTHOR, formData) 
-
+    return await axios.post(API_AUTHOR, formData);
   };
   getAuthors = async () => {
     return await axios.get(API_AUTHOR);

@@ -11,6 +11,6 @@ import lombok.Setter;
 @Component
 @ConfigurationProperties(prefix = "file")
 public class FileStorageProperties {
-private String uploadAuthorImageDir;
-// private String uploadProductImageDir;
+    private String uploadAuthorImageDir;
+    // private String uploadProductImageDir;
 }

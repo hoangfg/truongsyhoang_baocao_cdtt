@@ -1,19 +1,22 @@
 import authorService from "../../services/authorService";
-import { AUTHOR_SET, COMMON_ERROR_SET, COMMON_LOADING_SET, COMMON_MESSAGE_SET } from "./actionTypes";
+import {
+  AUTHOR_SET,
+  COMMON_ERROR_SET,
+  COMMON_LOADING_SET,
+  COMMON_MESSAGE_SET,
+} from "./actionTypes";
 
-export const insertAuthor = (author, navigate) => async (dispatch) => {
+export const insertAuthor = (author) => async (dispatch) => {
   const service = new authorService();
   try {
-    dispatch({
-      type: COMMON_LOADING_SET,
-      payload: true,
-    });
-
+    console.log(service);
+    console.log(author);
     const response = await service.create(author);
 
     if (response.status === 201) {
+      console.log("yes");
       dispatch({
-        type:AUTHOR_SET,
+        type: AUTHOR_SET,
         payload: response.data,
       });
       dispatch({
@@ -21,12 +24,14 @@ export const insertAuthor = (author, navigate) => async (dispatch) => {
         payload: "Thêm thành công",
       });
     } else {
+      console.log("no1");
       dispatch({
         type: COMMON_ERROR_SET,
         payload: response.message,
       });
     }
   } catch (error) {
+    console.log("no", error);
     dispatch({
       type: COMMON_ERROR_SET,
       payload: error.response.data
@@ -39,5 +44,4 @@ export const insertAuthor = (author, navigate) => async (dispatch) => {
     type: COMMON_LOADING_SET,
     payload: false,
   });
-  navigate("/authors");
 };
