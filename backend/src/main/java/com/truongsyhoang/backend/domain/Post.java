@@ -46,8 +46,8 @@ public class Post {
     @Column(name = "updated_by")
     private Long updatedBy;
 
-    @Column(name = "status", nullable = false, columnDefinition = "tinyint(3) unsigned default 2")
-    private Status status;
+    @Column(name = "status", columnDefinition = "int default 0")
+    private int status;
 
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;

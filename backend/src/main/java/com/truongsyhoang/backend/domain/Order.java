@@ -44,9 +44,8 @@ public class Order {
     @Column(name = "code", nullable = true)
     private String code;
 
-    @Enumerated
-    @Column(name = "status", nullable = false)
-    private Status status;
+    @Column(name = "status", columnDefinition = "int default 0")
+    private int status;
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
     @Column(name = "created_by", nullable = false)

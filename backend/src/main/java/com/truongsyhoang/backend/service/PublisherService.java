@@ -40,7 +40,9 @@ public class PublisherService {
         try {
             Publisher existedPublisher = existed.get();
             existedPublisher.setName(entity.getName());
-            // existedPublisher.setSlug(entity.getSlug());
+            existedPublisher.setEmail(entity.getEmail());
+            existedPublisher.setAddress(entity.getAddress());
+            existedPublisher.setPhone(entity.getPhone());
             existedPublisher.setStatus(entity.getStatus());
             // existedPublisher.setUpdatedAt(entity.getUpdatedAt());
             // existedPublisher.setUpdatedBy(entity.getUpdatedBy());

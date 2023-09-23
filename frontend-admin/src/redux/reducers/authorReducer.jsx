@@ -1,4 +1,10 @@
-import { AUTHORS_SET, AUTHOR_APPEND, AUTHOR_DELETE, AUTHOR_SET } from "../actions/actionTypes";
+import {
+  AUTHORS_SET,
+  AUTHOR_APPEND,
+  AUTHOR_DELETE,
+  AUTHOR_SET,
+  AUTHOR_UPDATE,
+} from "../actions/actionTypes";
 
 // rxreducer
 const initialState = {
@@ -18,6 +24,12 @@ const authorReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         authors: state.authors.filter((item) => item.id !== payload),
+      };
+    case AUTHOR_UPDATE:
+      const newAuthor = state.authors.filter((item) => item.id !== payload.id)
+      return {
+        ...state,
+        authors: [payload, ...newAuthor]
       };
 
     default:

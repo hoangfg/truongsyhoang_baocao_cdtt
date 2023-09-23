@@ -30,8 +30,8 @@ public class BookLanguage {
 	private String name;
 	@Column(name = "slug", nullable = false, length = 100)
 	private String slug;
-	@Column(name = "status", nullable = false)
-	private Status status;
+	@Column(name = "status", columnDefinition = "int default 0")
+	private int status;
 	@Column(name = "created_at", nullable = false)
 	private LocalDate createdAt;
 	@Column(name = "created_by", nullable = false)

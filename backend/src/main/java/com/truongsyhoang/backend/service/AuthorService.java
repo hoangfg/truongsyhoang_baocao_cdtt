@@ -13,7 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.truongsyhoang.backend.domain.Author;
+import com.truongsyhoang.backend.domain.Publisher;
 import com.truongsyhoang.backend.dto.AuthorDTO;
+import com.truongsyhoang.backend.dto.PublisherDTO;
 import com.truongsyhoang.backend.exception.AuthorException;
 import com.truongsyhoang.backend.repository.AuthorReponsitory;
 
@@ -25,15 +27,14 @@ public class AuthorService {
     private FileStorageService fileStorageService;
 
     public Author insert(AuthorDTO dto) {
-        System.out.println("Detail: " + dto.getDetail());
-        System.out.println("Status: " + dto.getStatus());
+
         List<?> foundedList = authorReponsitory.findByNameContainsIgnoreCase(dto.getName());
         if (foundedList.size() > 0) {
             throw new AuthorException("Author name is existed");
         }
         Author entity = new Author();
         BeanUtils.copyProperties(dto, entity);
-        
+
         if (dto.getImageFile() != null) {
             String fileName = fileStorageService.storeAuthorImageFile(dto.getImageFile());
             entity.setImage(fileName);
@@ -44,31 +45,47 @@ public class AuthorService {
         entity.setSlug(slug);
         entity.setCreatedAt(LocalDate.now());
         entity.setCreatedBy(1L);
-        entity.setUpdatedAt(LocalDate.now());
-        entity.setUpdatedBy(1L);
+        // entity.setUpdatedAt(LocalDate.now());
+        // entity.setUpdatedBy(1L);
         return authorReponsitory.save(entity);
     }
 
     public Author update(Long id, AuthorDTO dto) {
+
         var found = authorReponsitory.findById(id);
         if (found.isEmpty()) {
             throw new AuthorException("Author id not found");
         }
-        Author entity = new Author();
-        BeanUtils.copyProperties(dto, entity);
-        System.out.println("detail: " + dto.getDetail());
-        System.out.println("status: " + dto.getStatus());
-        if (dto.getImageFile() != null) {
+
+        Author entity = found.get();
+
+        // Preserve original values
+        LocalDate originalCreatedAt = entity.getCreatedAt();
+        Long originalCreatedBy = entity.getCreatedBy();
+        String originalImage = entity.getImage();
+
+        // Copy properties from DTO, excluding createdAt, createdBy, and image
+        BeanUtils.copyProperties(dto, entity, "createdAt", "createdBy", "image");
+
+        if (dto.getImageFile() != null && dto.getImageFile().getSize() > 0) {
+            // Only update image if a new one is provided
             String fileName = fileStorageService.storeAuthorImageFile(dto.getImageFile());
             entity.setImage(fileName);
-            dto.setImageFile(null);
+        } else {
+            // Restore original image
+            entity.setImage(originalImage);
         }
+
+        // Restore original values
+        entity.setCreatedAt(originalCreatedAt);
+        entity.setCreatedBy(originalCreatedBy);
 
         String name = dto.getName();
         String slug = generateSlug(name);
         entity.setSlug(slug);
         entity.setUpdatedAt(LocalDate.now());
         entity.setUpdatedBy(1L);
+
         return authorReponsitory.save(entity);
     }
 
@@ -95,6 +112,14 @@ public class AuthorService {
     public void deleteById(Long id) {
         Author existed = findById(id);
         authorReponsitory.delete(existed);
+    }
+
+    public Author status(Long id, AuthorDTO dto) {
+        Author entity = findById(id);
+        entity.setStatus(dto.getStatus());
+        entity.setUpdatedAt(LocalDate.now());
+        entity.setUpdatedBy(1L);
+        return authorReponsitory.save(entity);
     }
 
     public static String generateSlug(String name) {

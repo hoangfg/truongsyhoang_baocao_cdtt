@@ -20,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "book_genres")
+@Table(name = "genres")
 public class BookGenres {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,22 +30,21 @@ public class BookGenres {
     private String name;
     @Column(name = "slug", nullable = false, length = 255)
     private String slug;
-    @Column(name = "parent_id", nullable = false)
-    private long parentId;
+    // @Column(name = "parent_id", nullable = false)
+    // private long parentId;
     @Lob
-    @Column(name = "description", nullable = true)
-    private String description;
+    @Column(name = "detail", nullable = true)
+    private String detail;
 
-    @Enumerated
-    @Column(name = "status", nullable = false)
-    private Status status;
+    @Column(name = "status", columnDefinition = "int default 0")
+    private int status;
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
     @Column(name = "created_by", nullable = false)
     private Long createdBy;
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = true)
     private LocalDate updatedAt;
-    @Column(name = "updated_by", nullable = false)
+    @Column(name = "updated_by", nullable = true)
     private Long updatedBy;
 
 }

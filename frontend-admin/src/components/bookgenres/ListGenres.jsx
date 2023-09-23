@@ -1,79 +1,79 @@
 import React, { Component } from "react";
 import withRouter from "../../helpers/withRouter";
-
 import ContentHeader from "../common/ContentHeader";
-import AuthorList from "./AuthorList";
 import { Button, Col, Modal, Row, Skeleton } from "antd";
-import AuthorForm from "./AuthorForm";
+
 import {
-  insertAuthor,
-  getAuthors,
+  insertGenres,
+  getGenres,
   deleteById,
-  updateAuthor,
-  statusAuthor,
-} from "./../../redux/actions/authorAction";
+  updateGenres,
+  statusGenres,
+} from "../../redux/actions/bookGenresAction";
 import { connect } from "react-redux";
-import authorReducer from "./../../redux/reducers/authorReducer";
+
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-class ListAuthor extends Component {
+import GenresList from "./GenresList";
+import GenresForm from "./GenresForm";
+
+import bookGenresReducer from "./../../redux/reducers/bookGenresReducer";
+class ListGenres extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       open: false,
-      author: {
+      genres: {
         id: "",
         name: "",
-        image: "",
         detail: "",
         status: 0,
       },
     };
   }
   componentDidMount = () => {
-    this.props.getAuthors();
+    this.props.getGenres();
   };
-  // componentWillUnmount = () => {
-  //   this.props.clearState();
-  // };
+  componentWillUnmount = () => {
+    // this.props.clearState();
+  };
   onCreate = (values) => {
-    // console.log(values);
+    console.log(values);
     if (values.id) {
-      this.props.updateAuthor(values);
+      this.props.updateGenres(values);
     } else {
-      this.props.insertAuthor(values);
+      this.props.insertGenres(values);
     }
-    this.setState({ ...this.state, author: {}, open: false });
+    this.setState({ ...this.state, genres: {}, open: false });
   };
   onEdit = (values) => {
-    this.setState({ ...this.state, author: values, open: true });
+    this.setState({ ...this.state, genres: values, open: true });
   };
 
-  onDeleteConfirm = (author) => {
-    this.setState({ ...this.state, author: author });
-
-    const message = "Bạn có muốn xóa tác giả: " + author.name + " không?";
+  onDeleteConfirm = (genres) => {
+    this.setState({ ...this.state, genres: genres });
+    const message = "Bạn có muốn xóa tác giả: " + genres.name + " không?";
     Modal.confirm({
       title: "Xóa bản ghi?",
       icon: <ExclamationCircleOutlined />,
       content: message,
-      onOk: this.deleteAuthor,
+      onOk: this.deleteGenres,
       okText: "Xóa",
       cancelText: "Thoát",
     });
   };
-  deleteAuthor = () => {
-    this.props.deleteById(this.state.author.id);
+  deleteGenres = () => {
+    this.props.deleteById(this.state.genres.id);
   };
   handleStatusChange = async (record) => {
-    this.props.statusAuthor(record.id, {
+    this.props.statusGenres(record.id, {
       status: record.status === 0 ? 1 : 0,
     });
   };
   render() {
     const { navigate } = this.props.router;
     const { open } = this.state;
-    const { authors, isLoading } = this.props;
+    const { isLoading, genres } = this.props;
     if (isLoading) {
       return (
         <>
@@ -109,16 +109,14 @@ class ListAuthor extends Component {
             </Col>
           </Row>
         </div>
-
-        <AuthorList
-          dataSource={authors}
+        <GenresList
+          dataSource={genres}
           onDeleteConfirm={this.onDeleteConfirm}
           onEdit={this.onEdit}
           handleStatusChange={this.handleStatusChange}
         />
-
-        <AuthorForm
-          author={this.state.author}
+        <GenresForm
+          genres={this.state.genres}
           open={open}
           onCreate={this.onCreate}
           onCancel={() => {
@@ -131,19 +129,19 @@ class ListAuthor extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  authors: state.authorReducer.authors,
+  genres: state.bookGenresReducer.genres,
   isLoading: state.commonReducer.isLoading,
 });
 
 const mapDispatchToProps = {
-  insertAuthor,
-  getAuthors,
+  getGenres,
+  insertGenres,
   deleteById,
-  updateAuthor,
-  statusAuthor,
+  updateGenres,
+  statusGenres,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(ListAuthor));
+)(withRouter(ListGenres));

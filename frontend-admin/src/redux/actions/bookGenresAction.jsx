@@ -1,26 +1,26 @@
-import authorService from "../../services/authorService";
+import bookGenresService from "../../services/bookGenresService";
 import {
-  AUTHORS_SET,
-  AUTHOR_APPEND,
-  AUTHOR_DELETE,
-  AUTHOR_SET,
-  AUTHOR_UPDATE,
   COMMON_ERROR_SET,
   COMMON_LOADING_SET,
   COMMON_MESSAGE_SET,
+  GENRES_SET,
+  GENRE_APPEND,
+  GENRE_DELETE,
+  GENRE_SET,
+  GENRE_UPDATE,
 } from "./actionTypes";
 
-export const insertAuthor = (author) => async (dispatch) => {
-  const service = new authorService();
+export const insertGenres = (genres) => async (dispatch) => {
+  const service = new bookGenresService();
 
   try {
-    const response = await service.create(author);
-    console.log(author);
+    const response = await service.create(genres);
+    console.log(genres);
     console.log(response.data);
     if (response.status === 201) {
       console.log("yes", response);
       dispatch({
-        type: AUTHOR_SET,
+        type: GENRE_SET,
         payload: response.data,
       });
       dispatch({
@@ -28,7 +28,7 @@ export const insertAuthor = (author) => async (dispatch) => {
         payload: "Thêm thành công",
       });
       dispatch({
-        type: AUTHOR_APPEND,
+        type: GENRE_APPEND,
         payload: response.data,
       });
     } else {
@@ -53,18 +53,18 @@ export const insertAuthor = (author) => async (dispatch) => {
     payload: false,
   });
 };
-export const getAuthors = () => async (dispatch) => {
-  const service = new authorService();
+export const getGenres = () => async (dispatch) => {
+  const service = new bookGenresService();
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
-    const response = await service.getAuthors();
+    const response = await service.getGenres();
 
     if (response.status === 200) {
       dispatch({
-        type: AUTHORS_SET,
+        type: GENRES_SET,
         payload: response.data,
       });
     } else {
@@ -88,7 +88,7 @@ export const getAuthors = () => async (dispatch) => {
   });
 };
 export const deleteById = (id) => async (dispatch) => {
-  const service = new authorService();
+  const service = new bookGenresService();
   try {
     dispatch({
       type: COMMON_LOADING_SET,
@@ -98,7 +98,7 @@ export const deleteById = (id) => async (dispatch) => {
     console.log(response);
     if (response.status === 200) {
       dispatch({
-        type: AUTHOR_DELETE,
+        type: GENRE_DELETE,
         payload: id,
       });
       dispatch({
@@ -126,7 +126,7 @@ export const deleteById = (id) => async (dispatch) => {
   });
 };
 export const getById = (id) => async (dispatch) => {
-  const service = new authorService();
+  const service = new bookGenresService();
   try {
     dispatch({
       type: COMMON_LOADING_SET,
@@ -136,7 +136,7 @@ export const getById = (id) => async (dispatch) => {
     console.log(response);
     if (response.status === 200) {
       dispatch({
-        type: AUTHOR_SET,
+        type: GENRE_SET,
         payload: response.data,
       });
       console.log(response);
@@ -160,26 +160,27 @@ export const getById = (id) => async (dispatch) => {
     payload: false,
   });
 };
-export const updateAuthor = (author) => async (dispatch) => {
-  const service = new authorService();
+export const updateGenres = (genres) => async (dispatch) => {
+  console.log(genres);
+  const service = new bookGenresService();
   try {
-    const { id } = author;
-    const response = await service.update(id, author);
+    const { id } = genres;
+    const response = await service.update(id, genres);
 
     if (response.status === 201) {
       dispatch({
-        type: AUTHOR_SET,
+        type: GENRE_SET,
         payload: response.data,
       });
       dispatch({
-        type: AUTHOR_UPDATE,
+        type: GENRE_UPDATE,
         payload: response.data,
       });
       dispatch({
         type: COMMON_MESSAGE_SET,
         payload: "Cập nhật thành công",
       });
-      dispatch(getAuthors);
+      dispatch(getGenres);
     } else {
       dispatch({
         type: COMMON_ERROR_SET,
@@ -201,27 +202,27 @@ export const updateAuthor = (author) => async (dispatch) => {
     payload: false,
   });
 };
-export const statusAuthor = (id, author) => async (dispatch) => {
-  const service = new authorService();
-  console.log(author);
+export const statusGenres = (id, genres) => async (dispatch) => {
+  const service = new bookGenresService();
+  console.log(genres);
   try {
     // dispatch({
     //   type: COMMON_LOADING_SET,
     //   payload: true,
     // });
 
-    const response = await service.status(id, author);
+    const response = await service.status(id, genres);
 
     if (response.status === 200) {
       dispatch({
-        type: AUTHOR_SET,
+        type: GENRE_SET,
         payload: response.data,
       });
       dispatch({
         type: COMMON_MESSAGE_SET,
         payload: "Cập nhật trang thái thành công",
       });
-      dispatch(getAuthors());
+      dispatch(getGenres());
     } else {
       dispatch({
         type: COMMON_ERROR_SET,

@@ -1,3 +1,4 @@
+import { GiRegeneration } from "react-icons/gi"; 
 import { MdOutlineEmojiPeople } from "react-icons/md";
 import "./DashboardPage.css";
 import React, { useEffect, useState } from "react";
@@ -22,6 +23,7 @@ import { setError, setMessage } from "./../redux/actions/commonAction";
 import { commonReducer } from "./../redux/reducers/commonReducer";
 import ListAuthor from "../components/author/ListAuthor";
 import AuthorForm from "../components/author/AuthorForm";
+import ListGenres from "../components/bookgenres/ListGenres";
 
 const { Header, Sider, Content } = Layout;
 
@@ -97,11 +99,18 @@ function DashboardPage() {
                   label: "List",
                   onClick: () => navigate("/authors"),
                 },
+              ],
+            },
+            {
+              key: "4",
+              icon: <GiRegeneration />,
+              label: "Genres",
+              children: [
                 {
-                  key: "32",
-                  icon: <MdOutlineCreateNewFolder />,
-                  label: "Add",
-                  onClick: () => navigate("/author/add"),
+                  key: "41",
+                  icon: <BsListTask />,
+                  label: "List",
+                  onClick: () => navigate("/genres"),
                 },
               ],
             },
@@ -162,14 +171,15 @@ function DashboardPage() {
                 element={<AddOrEdit key="u" />}
               ></Route>
               <Route path="/authors" element={<ListAuthor />}></Route>
-              <Route
+              {/* <Route
                 path="/author/add"
                 element={<AuthorForm key="a" />}
               ></Route>
               <Route
                 path="/author/update/:id"
                 element={<AuthorForm key="u" />}
-              ></Route>
+              ></Route> */}
+              <Route path="/genres" element={<ListGenres />}></Route>
             </Routes>
             <Outlet></Outlet>
           </div>

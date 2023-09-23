@@ -4,13 +4,11 @@ import { Button, Divider, Modal, Skeleton, Space, Switch, Table } from "antd";
 import Column from "antd/es/table/Column";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import { Image } from "antd/lib";
-import authorService from "../../services/authorService";
-export default class AuthorList extends Component {
+
+export default class GenresList extends Component {
   render() {
     const { dataSource, onEdit, onDeleteConfirm, handleStatusChange } =
       this.props;
-    console.log(dataSource);
     return (
       <Table
         className="content-panel_table"
@@ -26,21 +24,7 @@ export default class AuthorList extends Component {
           width={50}
           align="center"
         ></Column>
-        <Column
-          title="image"
-          key="image"
-          dataIndex="image"
-          width={100}
-          align="center"
-          render={(_, record) => (
-            <Space>
-              <Image
-                width="100%"
-                src={authorService.getPhotoUrl(record.image)}
-              ></Image>
-            </Space>
-          )}
-        ></Column>
+
         <Column title="Tên" key="name" dataIndex="name" align="center"></Column>
         <Column
           title="Trạng thái"

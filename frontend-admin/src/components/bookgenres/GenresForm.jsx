@@ -9,54 +9,24 @@ import {
   Col,
   Divider,
   Row,
-  Upload,
-  Image,
+ 
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import authorService from "./../../services/authorService";
-class AuthorForm extends Component {
+
+class GenresForm extends Component {
   form = createRef();
   constructor(props) {
     super(props);
 
     this.state = {
-      author: { id: "", name: "", detail: "", image: "" },
-      previewImage: "",
-      previewVisible: false,
+      genres: { id: "", name: "", detail: "", status: 0 },
     };
   }
-  //anfn
-  handlePreview = (file) => {
-    console.log(file);
-    if (file.thumbUrl) {
-      this.setState({
-        ...this.state,
-        previewImage: file.thumbUrl,
-        previewVisible: true,
-      });
-    }
-  };
-  handleRemove = (value) => {
-    console.log(value);
-  };
-  normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    if (e.fileList.length > 1) {
-      return [e.fileList[1]];
-    }
-    return e && e.fileList;
-  };
 
   render() {
     const { open, onCreate, onCancel } = this.props;
-    const { author } = this.props;
-    const imageURL = authorService.getPhotoUrl(author.image);
-    const initialImage = {
-      url: imageURL,
-      uid: author.image,
-    };
+    const { genres } = this.props;
+
     return (
       <Modal
         open={open}
@@ -82,7 +52,7 @@ class AuthorForm extends Component {
           layout="vertical"
           name="form_in_modal"
           initialValues={{ modifier: "public" }}
-          key={"f" + author.id + author.name + author.image}
+          key={"f" + genres.id + genres.name}
         >
           <Row style={{ display: "flex", justifyContent: "space-around" }}>
             <Col md={24}>
@@ -90,8 +60,8 @@ class AuthorForm extends Component {
                 label="ID"
                 name="id"
                 labelCol={{ span: 24 }}
-                initialValue={author.id}
-                hidden={author.id ? false : true}
+                initialValue={genres.id}
+                hidden={genres.id ? false : true}
               >
                 <Input readOnly></Input>
               </Form.Item>
@@ -101,15 +71,15 @@ class AuthorForm extends Component {
                 label="ID"
                 name="id"
                 labelCol={{ span: 24 }}
-                initialValue={author.id}
-                hidden={author.id ? false : true}
+                initialValue={genres.id}
+                hidden={genres.id ? false : true}
               >
                 <Input readOnly></Input>
               </Form.Item> */}
               <Form.Item
                 label="Tên"
                 name="name"
-                initialValue={author.name}
+                initialValue={genres.name}
                 labelCol={{ span: 24 }}
                 // wrapperCol={{ span: 24 }}
                 rules={[
@@ -128,7 +98,7 @@ class AuthorForm extends Component {
               <Form.Item
                 label="Thông tin"
                 name="detail"
-                initialValue={author.detail}
+                initialValue={genres.detail}
                 labelCol={{ span: 24 }}
                 // wrapperCol={{ span: 24 }}
                 rules={[
@@ -147,7 +117,7 @@ class AuthorForm extends Component {
 
               <Divider></Divider>
 
-              {/* {!author.id && (
+              {/* {!genres.id && (
                 <Button
                   htmlType="submit"
                   type="primary"
@@ -157,7 +127,7 @@ class AuthorForm extends Component {
                   Lưu
                 </Button>
               )}
-              {author.id && (
+              {genres.id && (
                 <Button
                   htmlType="button"
                   type="primary"
@@ -174,54 +144,15 @@ class AuthorForm extends Component {
                 label="Trạng thái"
                 name="status"
                 labelCol={{ span: 24 }}
-                initialValue={author.status === 0 ? "0" : "1"}
+                initialValue={genres.status === 0 ? "0" : "1"}
               >
                 <Select>
                   <Select.Option value="0">Hoạt động</Select.Option>
                   <Select.Option value="1">Không hoạt động</Select.Option>
                 </Select>
               </Form.Item>
-              <Form.Item
-                label="Hình ảnh"
-                name="imageFile"
-                initialValue={[initialImage]}
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng thêm 1 hình ảnh.",
-                  },
-                ]}
-                labelCol={{ span: 24 }}
-                valuePropName="fileList"
-                getValueFromEvent={this.normFile}
-                // initialValue={author.status === "Visible" ? "0" : "1"}
-              >
-                {/* <ImgCrop rotationSlider> */}
-                <Upload
-                  action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                  listType="picture-card"
-                  // onChange={onChange}
-                  onPreview={this.handlePreview}
-                  onRemove={this.handleRemove}
-                  accept=".jpg,.png,.gif"
-                  maxCount={1}
-                  beforeUpload={() => false}
-                >
-                  <uploadButton width="100px">
-                    <FcAddImage size style={{ width: "70%" }} />
-                  </uploadButton>
-                </Upload>
-                {/* </ImgCrop> */}
-              </Form.Item>
             </Col>
             <Divider></Divider>
-            {this.state.previewVisible && (
-              <Image
-                src={this.state.previewImage}
-                style={{ width: "300px" }}
-                preview={{ visible: false }}
-              ></Image>
-            )}
           </Row>
         </Form>
       </Modal>
@@ -235,4 +166,4 @@ class AuthorForm extends Component {
 //   onCancel: PropTypes.func.isRequired,
 // };
 
-export default AuthorForm;
+export default GenresForm;

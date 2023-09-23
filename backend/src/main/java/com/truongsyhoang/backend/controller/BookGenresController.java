@@ -31,14 +31,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.truongsyhoang.backend.domain.Author;
+import com.truongsyhoang.backend.domain.BookGenres;
 import com.truongsyhoang.backend.domain.Publisher;
-import com.truongsyhoang.backend.dto.AuthorDTO;
+import com.truongsyhoang.backend.dto.BookGenresDTO;
+import com.truongsyhoang.backend.dto.BookGenresDTO;
 import com.truongsyhoang.backend.dto.PublisherDTO;
 import com.truongsyhoang.backend.exception.FileNotFoundException;
 import com.truongsyhoang.backend.exception.FileStorageException;
 import com.truongsyhoang.backend.exception.PublisherException;
-import com.truongsyhoang.backend.service.AuthorService;
+
+import com.truongsyhoang.backend.service.BookGenresService;
 import com.truongsyhoang.backend.service.FileStorageService;
 import com.truongsyhoang.backend.service.MapValidationErrorService;
 
@@ -46,101 +48,73 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/authors")
+@RequestMapping("/api/genres")
 @CrossOrigin(origins = "http://localhost:3000")
-public class AuthorController {
+public class BookGenresController {
     @Autowired
-    private AuthorService authorService;
+    private BookGenresService bookGenresService;
     @Autowired
     private FileStorageService fileStorageService;
     @Autowired
     MapValidationErrorService mapValidationErrorService;
 
-    @PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE,
-            MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            MediaType.MULTIPART_FORM_DATA_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> create(@Valid @ModelAttribute AuthorDTO dto, BindingResult result) {
+    @PostMapping()
+    public ResponseEntity<?> create(@Valid @ModelAttribute BookGenresDTO dto, BindingResult result) {
         ResponseEntity<?> responseEntity = mapValidationErrorService.mapValidationFields(result);
         if (responseEntity != null) {
             return responseEntity;
         }
-        Author entity = authorService.insert(dto);
-        System.out.println(entity);
+        BookGenres entity = bookGenresService.insert(dto);
         dto.setId(entity.getId());
-        dto.setImage(entity.getImage());
-
         return new ResponseEntity<>(entity, HttpStatus.CREATED);
     }
 
-    @PatchMapping(value = "/{id}", consumes = {
-            MediaType.APPLICATION_JSON_VALUE,
-            MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            MediaType.MULTIPART_FORM_DATA_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable Long id,
-            @Valid @ModelAttribute AuthorDTO dto, BindingResult result) {
+            @Valid @ModelAttribute BookGenresDTO dto, BindingResult result) {
         ResponseEntity<?> responseEntity = mapValidationErrorService.mapValidationFields(result);
         if (responseEntity != null) {
             return responseEntity;
         }
-        Author entity = authorService.update(id, dto);
+        BookGenres entity = bookGenresService.update(id, dto);
         dto.setId(entity.getId());
 
         return new ResponseEntity<>(entity, HttpStatus.CREATED);
-    }
-
-    @GetMapping("/image/{fileName:.+}")
-    public ResponseEntity<?> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
-        Resource resource = fileStorageService.loadAuthorFileAResource(fileName);
-        String contentType = null;
-        try {
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (Exception e) {
-            throw new FileStorageException("could not delermine file type.");
-        }
-        if (contentType == null) {
-            contentType = "application/octer-stream";
-        }
-
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; fileName=\""
-                        + resource.getFilename() + "\"")
-                .body(resource);
-
     }
 
     @GetMapping
-    public ResponseEntity<?> getAuthors() {
-        var list = authorService.findAll();
+    public ResponseEntity<?> getGenres() {
+        var list = bookGenresService.findAll();
         var newList = list.stream().map(item -> {
-            AuthorDTO dto = new AuthorDTO();
+            BookGenresDTO dto = new BookGenresDTO();
             BeanUtils.copyProperties(item, dto);
             return dto;
         }).collect(Collectors.toList());
         return new ResponseEntity<>(newList, HttpStatus.OK);
     }
 
-    @GetMapping("/find")
-    public ResponseEntity<?> getAuthors(@RequestParam("query") String query,
-            @PageableDefault(size = 2, sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
-        var list = authorService.findByName(query, pageable);
-        var newList = list.getContent().stream().map(item -> {
-            AuthorDTO dto = new AuthorDTO();
-            BeanUtils.copyProperties(item, dto);
-            return dto;
-        }).collect(Collectors.toList());
-        var newPage = new PageImpl<>(newList, list.getPageable(), list.getTotalPages());
-        return new ResponseEntity<>(newPage, HttpStatus.OK);
-    }
+    // @GetMapping("/find")
+    // public ResponseEntity<?> getGenres(@RequestParam("query") String query,
+    // @PageableDefault(size = 2, sort = "name", direction = Sort.Direction.ASC)
+    // Pageable pageable) {
+    // var list = bookGenresService.findByName(query, pageable);
+    // var newList = list.getContent().stream().map(item -> {
+    // BookGenresDTO dto = new BookGenresDTO();
+    // BeanUtils.copyProperties(item, dto);
+    // return dto;
+    // }).collect(Collectors.toList());
+    // var newPage = new PageImpl<>(newList, list.getPageable(),
+    // list.getTotalPages());
+    // return new ResponseEntity<>(newPage, HttpStatus.OK);
+    // }
 
     @GetMapping("/page")
-    public ResponseEntity<?> getAuthors(
+    public ResponseEntity<?> getGenres(
             @PageableDefault(size = 5, sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
-        var list = authorService.findAll(pageable);
+        var list = bookGenresService.findAll(pageable);
         var newList = list.stream().map(item -> {
-            AuthorDTO dto = new AuthorDTO();
+            BookGenresDTO dto = new BookGenresDTO();
             BeanUtils.copyProperties(item, dto);
             return dto;
         }).collect(Collectors.toList());
@@ -148,9 +122,9 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getAuthor(@PathVariable long id) {
-        var entity = authorService.findById(id);
-        AuthorDTO dto = new AuthorDTO();
+    public ResponseEntity<?> getGenre(@PathVariable long id) {
+        var entity = bookGenresService.findById(id);
+        BookGenresDTO dto = new BookGenresDTO();
         BeanUtils.copyProperties(entity, dto);
 
         return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -158,16 +132,16 @@ public class AuthorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAuthor(@PathVariable long id) {
-        authorService.deleteById(id);
+    public ResponseEntity<?> deleteGenre(@PathVariable long id) {
+        bookGenresService.deleteById(id);
         return new ResponseEntity<>("Tác giá có id: " + id + " đã xóa thành công", HttpStatus.OK);
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<?> changeStatus(@PathVariable("id") Long id, @RequestBody AuthorDTO dto) {
+    public ResponseEntity<?> changeStatus(@PathVariable("id") Long id, @RequestBody BookGenresDTO dto) {
         try {
 
-            Author entity = authorService.status(id, dto);
+            BookGenres entity = bookGenresService.status(id, dto);
             return new ResponseEntity<>(entity, HttpStatus.OK);
         } catch (PublisherException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
