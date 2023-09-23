@@ -31,16 +31,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.truongsyhoang.backend.domain.BookGenres;
+import com.truongsyhoang.backend.domain.BookLanguage;
 import com.truongsyhoang.backend.domain.Publisher;
-import com.truongsyhoang.backend.dto.BookGenresDTO;
-import com.truongsyhoang.backend.dto.BookGenresDTO;
-import com.truongsyhoang.backend.dto.PublisherDTO;
+import com.truongsyhoang.backend.dto.BookLanguageDTO;
+
 import com.truongsyhoang.backend.exception.FileNotFoundException;
 import com.truongsyhoang.backend.exception.FileStorageException;
 import com.truongsyhoang.backend.exception.PublisherException;
 
-import com.truongsyhoang.backend.service.BookGenresService;
+import com.truongsyhoang.backend.service.BookLanguageService;
 import com.truongsyhoang.backend.service.FileStorageService;
 import com.truongsyhoang.backend.service.MapValidationErrorService;
 
@@ -48,22 +47,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/genres")
+@RequestMapping("/api/languages")
 @CrossOrigin(origins = "http://localhost:3000")
-public class BookGenresController {
+public class BookLanguageController {
     @Autowired
-    private BookGenresService bookGenresService;
+    private BookLanguageService bookLanguageService;
 
     @Autowired
     MapValidationErrorService mapValidationErrorService;
 
     @PostMapping()
-    public ResponseEntity<?> create(@Valid @ModelAttribute BookGenresDTO dto, BindingResult result) {
+    public ResponseEntity<?> create(@Valid @ModelAttribute BookLanguageDTO dto, BindingResult result) {
         ResponseEntity<?> responseEntity = mapValidationErrorService.mapValidationFields(result);
         if (responseEntity != null) {
             return responseEntity;
         }
-        BookGenres entity = bookGenresService.insert(dto);
+        BookLanguage entity = bookLanguageService.insert(dto);
         dto.setId(entity.getId());
         return new ResponseEntity<>(entity, HttpStatus.CREATED);
     }
@@ -71,22 +70,22 @@ public class BookGenresController {
     @PatchMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable Long id,
-            @Valid @ModelAttribute BookGenresDTO dto, BindingResult result) {
+            @Valid @ModelAttribute BookLanguageDTO dto, BindingResult result) {
         ResponseEntity<?> responseEntity = mapValidationErrorService.mapValidationFields(result);
         if (responseEntity != null) {
             return responseEntity;
         }
-        BookGenres entity = bookGenresService.update(id, dto);
+        BookLanguage entity = bookLanguageService.update(id, dto);
         dto.setId(entity.getId());
 
         return new ResponseEntity<>(entity, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<?> getGenres() {
-        var list = bookGenresService.findAll();
+    public ResponseEntity<?> getLanguage() {
+        var list = bookLanguageService.findAll();
         var newList = list.stream().map(item -> {
-            BookGenresDTO dto = new BookGenresDTO();
+            BookLanguageDTO dto = new BookLanguageDTO();
             BeanUtils.copyProperties(item, dto);
             return dto;
         }).collect(Collectors.toList());
@@ -94,12 +93,12 @@ public class BookGenresController {
     }
 
     // @GetMapping("/find")
-    // public ResponseEntity<?> getGenres(@RequestParam("query") String query,
+    // public ResponseEntity<?> getLanguage(@RequestParam("query") String query,
     // @PageableDefault(size = 2, sort = "name", direction = Sort.Direction.ASC)
     // Pageable pageable) {
-    // var list = bookGenresService.findByName(query, pageable);
+    // var list = bookLanguageService.findByName(query, pageable);
     // var newList = list.getContent().stream().map(item -> {
-    // BookGenresDTO dto = new BookGenresDTO();
+    // BookLanguageDTO dto = new BookLanguageDTO();
     // BeanUtils.copyProperties(item, dto);
     // return dto;
     // }).collect(Collectors.toList());
@@ -109,11 +108,11 @@ public class BookGenresController {
     // }
 
     @GetMapping("/page")
-    public ResponseEntity<?> getGenres(
+    public ResponseEntity<?> getLanguage(
             @PageableDefault(size = 5, sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
-        var list = bookGenresService.findAll(pageable);
+        var list = bookLanguageService.findAll(pageable);
         var newList = list.stream().map(item -> {
-            BookGenresDTO dto = new BookGenresDTO();
+            BookLanguageDTO dto = new BookLanguageDTO();
             BeanUtils.copyProperties(item, dto);
             return dto;
         }).collect(Collectors.toList());
@@ -122,8 +121,8 @@ public class BookGenresController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getGenre(@PathVariable long id) {
-        var entity = bookGenresService.findById(id);
-        BookGenresDTO dto = new BookGenresDTO();
+        var entity = bookLanguageService.findById(id);
+        BookLanguageDTO dto = new BookLanguageDTO();
         BeanUtils.copyProperties(entity, dto);
 
         return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -132,19 +131,20 @@ public class BookGenresController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteGenre(@PathVariable long id) {
-        bookGenresService.deleteById(id);
+        bookLanguageService.deleteById(id);
         return new ResponseEntity<>("Tác giá có id: " + id + " đã xóa thành công", HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<?> changeStatus(@PathVariable("id") Long id, @RequestBody BookGenresDTO dto) {
-        try {
+    // @PatchMapping("/{id}/status")
+    // public ResponseEntity<?> changeStatus(@PathVariable("id") Long id,
+    // @RequestBody BookLanguageDTO dto) {
+    // try {
 
-            BookGenres entity = bookGenresService.status(id, dto);
-            return new ResponseEntity<>(entity, HttpStatus.OK);
-        } catch (PublisherException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
+    // BookLanguage entity = bookLanguageService.status(id, dto);
+    // return new ResponseEntity<>(entity, HttpStatus.OK);
+    // } catch (PublisherException e) {
+    // return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    // }
+    // }
 
 }

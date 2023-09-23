@@ -1,4 +1,6 @@
-import { GiRegeneration } from "react-icons/gi"; 
+import { AiOutlineAlipay } from "react-icons/ai"; 
+import { IoLanguageOutline } from "react-icons/io";
+import { GiRegeneration } from "react-icons/gi";
 import { MdOutlineEmojiPeople } from "react-icons/md";
 import "./DashboardPage.css";
 import React, { useEffect, useState } from "react";
@@ -10,7 +12,7 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Row, Col, Avatar, message } from "antd";
 import { TbBrandAirtable } from "react-icons/tb";
-import { IoLanguageSharp } from "react-icons/io5";
+
 import { BsListTask } from "react-icons/bs";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
@@ -24,6 +26,7 @@ import { commonReducer } from "./../redux/reducers/commonReducer";
 import ListAuthor from "../components/author/ListAuthor";
 import AuthorForm from "../components/author/AuthorForm";
 import ListGenres from "../components/bookgenres/ListGenres";
+import ListLanguage from "../components/booklanguage/ListLanguage";
 
 const { Header, Sider, Content } = Layout;
 
@@ -114,6 +117,19 @@ function DashboardPage() {
                 },
               ],
             },
+            {
+              key: "5",
+              icon: <AiOutlineAlipay />,
+              label: "Language",
+              children: [
+                {
+                  key: "41",
+                  icon: <BsListTask />,
+                  label: "List",
+                  onClick: () => navigate("/language"),
+                },
+              ],
+            },
           ]}
         />
       </Sider>
@@ -180,6 +196,7 @@ function DashboardPage() {
                 element={<AuthorForm key="u" />}
               ></Route> */}
               <Route path="/genres" element={<ListGenres />}></Route>
+              <Route path="/language" element={<ListLanguage />}></Route>
             </Routes>
             <Outlet></Outlet>
           </div>
