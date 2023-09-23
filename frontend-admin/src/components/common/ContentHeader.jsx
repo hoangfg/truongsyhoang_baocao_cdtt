@@ -6,14 +6,13 @@ export default class ContentHeader extends Component {
   render() {
     const { navigate, title, className } = this.props;
     return (
-      <div className="content-header">
+      <>
         <PageHeader
           className={className}
           title={title}
           onBack={() => navigate(-1)}
         />
-       
-      </div>
+      </>
     );
   }
 }

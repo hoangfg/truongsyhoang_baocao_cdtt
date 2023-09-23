@@ -39,11 +39,11 @@ public class Publisher {
     private String name;
     @Column(name = "slug", nullable = false, length = 100)
     private String slug;
-    @Column(name="email", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
-    @Column(name="phone", nullable = false, length = 12)
+    @Column(name = "phone", nullable = false, length = 12)
     private String phone;
-    @Column(name="address", nullable=false)
+    @Column(name = "address", nullable = false)
     private String address;
     @Enumerated
     @Column(name = "status", nullable = false)

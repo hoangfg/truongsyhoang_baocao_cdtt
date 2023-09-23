@@ -98,9 +98,11 @@ class AddOrEdit extends Component {
     const { navigate } = this.props.router;
     const { isLoading } = this.props;
     const { publisher } = this.state;
-    let title = "Thêm nhà xuất bản";
+    let title = "";
     if (publisher.id) {
       title = "Sửa thông tin nhà xuất bản";
+    } else {
+      title = "Thêm nhà xuất bản";
     }
     return (
       <div>

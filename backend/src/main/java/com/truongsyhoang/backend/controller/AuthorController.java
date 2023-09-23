@@ -157,7 +157,7 @@ public class AuthorController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAuthor(@PathVariable long id) {
         authorService.deleteById(id);
-        return new ResponseEntity<>("Author with id: " + id + " was deleted success", HttpStatus.OK);
+        return new ResponseEntity<>("Tác giá có id: " + id + " đã xóa thành công", HttpStatus.OK);
     }
 
 }
