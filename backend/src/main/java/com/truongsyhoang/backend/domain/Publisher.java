@@ -27,11 +27,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "publisher")
-public class Publisher {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private long id;
+public class Publisher extends AbtractEntity {
+
     // @OneToOne
     // @JoinColumn(name = "publisher_id")
     // private Publisher publisher;
@@ -48,13 +45,6 @@ public class Publisher {
     @Enumerated
     @Column(name = "status", nullable = false)
     private Status status;
-    @Column(name = "created_at", nullable = false)
-    private LocalDate createdAt;
-    @Column(name = "created_by", nullable = false)
-    private Long createdBy;
-    @Column(name = "updated_at", nullable = true)
-    private LocalDate updatedAt;
-    @Column(name = "updated_by", nullable = true)
-    private Long updatedBy;
+
 
 }

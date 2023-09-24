@@ -59,20 +59,21 @@ public class AuthorService {
 
         Author entity = found.get();
 
-        // Preserve original values
         LocalDate originalCreatedAt = entity.getCreatedAt();
         Long originalCreatedBy = entity.getCreatedBy();
         String originalImage = entity.getImage();
 
-        // Copy properties from DTO, excluding createdAt, createdBy, and image
         BeanUtils.copyProperties(dto, entity, "createdAt", "createdBy", "image");
 
         if (dto.getImageFile() != null && dto.getImageFile().getSize() > 0) {
-            // Only update image if a new one is provided
+
             String fileName = fileStorageService.storeAuthorImageFile(dto.getImageFile());
             entity.setImage(fileName);
+            if (originalImage != null) {
+                fileStorageService.deleteImageFile(originalImage);
+            }
         } else {
-            // Restore original image
+
             entity.setImage(originalImage);
         }
 
@@ -111,6 +112,9 @@ public class AuthorService {
 
     public void deleteById(Long id) {
         Author existed = findById(id);
+        String fileName = existed.getImage();
+        fileStorageService.deleteImageFile(fileName);
+        
         authorReponsitory.delete(existed);
     }
 

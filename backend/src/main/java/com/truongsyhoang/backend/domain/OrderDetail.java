@@ -19,10 +19,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Table(name = "orderdetail")
-public class OrderDetail {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class OrderDetail extends AbtractEntity {
 
     @Column(name = "order_id", nullable = false)
     private long orderId;

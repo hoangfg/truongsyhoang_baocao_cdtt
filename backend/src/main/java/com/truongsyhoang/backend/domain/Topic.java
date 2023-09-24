@@ -19,11 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "topic")
-public class Topic {
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Topic extends AbtractEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -43,18 +39,10 @@ public class Topic {
     @Column(name = "metadesc", nullable = false)
     private String metadesc;
 
-    @Column(name = "created_by", nullable = false)
-    private Long createdBy;
 
-    @Column(name = "updated_by")
-    private Long updatedBy;
 
     @Column(name = "status", columnDefinition = "int default 0")
     private int status;
 
-    @Column(name = "created_at", nullable = false, length = 30)
-    private LocalDate createdAt;
 
-    @Column(name = "updated_at", nullable = false, length = 30)
-    private LocalDate updatedAt;
 }

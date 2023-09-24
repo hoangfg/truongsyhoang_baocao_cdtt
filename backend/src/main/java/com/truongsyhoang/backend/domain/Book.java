@@ -1,6 +1,8 @@
 package com.truongsyhoang.backend.domain;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,9 +11,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,11 +30,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "book")
-public class Book {
-	@Id
-	@Column(name = "id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+public class Book extends AbtractEntity {
+
 	@Column(name = "name", nullable = false)
 	private String name;
 	@Column(name = "slug", nullable = false, length = 255)
@@ -43,26 +46,51 @@ public class Book {
 	private String detail;
 	@Column(name = "price", nullable = false)
 	private double price;
-	@Column(name = "author_id", nullable = false)
-	private long authorId;
-	@Column(name = "language_id", nullable = false)
-	private long languageId;
-	@OneToOne
+	@ManyToOne
+	@JoinColumn(name = "author_id")
+	private Author authorId;
+	@ManyToOne
+	@JoinColumn(name = "language_id")
+	private BookLanguage languageId;
+	@ManyToOne
 	@JoinColumn(name = "publisher_id")
 	private Publisher publisher;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "genre_id")
 	private BookGenres bookGenres;
-	
+
+	@ManyToMany
+	@JoinTable(name = "book_book_images", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "book_images_id"))
+	private Set<BookImages> images = new LinkedHashSet<>();
+
+	@OneToOne(orphanRemoval = true)
+	@JoinColumn(name = "book_image_id")
+	private BookImages image;
+
 	@Column(name = "status", columnDefinition = "int default 0")
 	private int status;
-	@Column(name = "created_at", nullable = false)
-	private LocalDate createdAt;
-	@Column(name = "created_by", nullable = false)
-	private Long createdBy;
-	@Column(name = "updated_at", nullable = false)
-	private LocalDate updatedAt;
-	@Column(name = "updated_by", nullable = false)
-	private Long updatedBy;
+
+	@PrePersist
+	@Override
+	public void prePersist() {
+		super.prePersist();
+		if (description == null)
+			description = "Thông tin sản phẩm";
+		if (detail == null)
+			detail = "Chi tiết sản phẩm";
+		price = 0L;
+
+	}
+
+	@PreUpdate
+	@Override
+	public void preUpdate() {
+		super.preUpdate();
+		if (description == null)
+			description = "Thông tin sản phẩm";
+		if (detail == null)
+			detail = "Chi tiết sản phẩm";
+	}
+
 }

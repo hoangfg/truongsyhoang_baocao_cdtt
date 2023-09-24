@@ -20,6 +20,7 @@ import com.truongsyhoang.backend.exception.FileNotFoundException;
 @Service
 public class FileStorageService {
     private final Path fileAuthorImageStorageLocation;
+
     public FileStorageService(FileStorageProperties fileStorageProperties) {
         this.fileAuthorImageStorageLocation = Paths.get(fileStorageProperties
                 .getUploadAuthorImageDir())
@@ -31,9 +32,11 @@ public class FileStorageService {
             throw new FileStorageException("Counld not create the directory where the upload files will be stored", ex);
         }
     }
+
     public String storeAuthorImageFile(MultipartFile file) {
         return storeFile(fileAuthorImageStorageLocation, file);
     }
+
     private String storeFile(Path location, MultipartFile file) {
         UUID uuid = UUID.randomUUID();
         String ext = StringUtils.getFilenameExtension(file.getOriginalFilename());
@@ -50,12 +53,15 @@ public class FileStorageService {
             throw new FileStorageException("Could not store file" + filename + " .Please try again!", e);
         }
     }
+
     public Resource loadAuthorFileAResource(String fileName) {
         return loadFileAsResourse(fileAuthorImageStorageLocation, fileName);
     }
+
     public void deleteImageFile(String fileName) {
         deleteFile(fileAuthorImageStorageLocation, fileName);
     }
+
     private Resource loadFileAsResourse(Path location, String fileName) {
         try {
             Path filePath = location.resolve(fileName).normalize();
@@ -72,14 +78,19 @@ public class FileStorageService {
         }
 
     }
+
     private void deleteFile(Path location, String fileName) {
         try {
             Path filePath = location.resolve(fileName);
-            if(!Files.exists(filePath)) {
-                throw new FileNotFoundException("File not found " + fileName);
-            } 
-            Files.delete(filePath);
-        }catch (Exception e) {
+            // if(!Files.exists(filePath)) {
+            // throw new FileNotFoundException("File not found " + fileName);
+            // }
+            // Files.delete(filePath);
+
+            if (Files.exists(filePath)) {
+                Files.delete(filePath);
+            }
+        } catch (Exception e) {
 
             throw new FileNotFoundException("File not found " + fileName, e);
         }

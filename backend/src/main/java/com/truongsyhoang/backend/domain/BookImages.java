@@ -1,5 +1,9 @@
 package com.truongsyhoang.backend.domain;
 
+import java.util.Objects;
+
+import org.hibernate.Hibernate;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,17 +14,38 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@Entity
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "images")
-public class BookImages {
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+@Entity
+@Getter
+@Setter
+@Table(name = "book_images")
+public class BookImages extends AbtractEntity {
+
     @Column(name = "product_id", nullable = false)
     private int productId;
-    @Column(name = "image", nullable = false)
-    private String image;
+    @Column(name = "file_name", nullable = false)
+    private String fileName;
+    @Column(name = "url", nullable = false)
+    private String url;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o))
+            return false;
+        BookImages that = (BookImages) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

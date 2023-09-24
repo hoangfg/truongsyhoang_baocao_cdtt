@@ -21,11 +21,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "author")
-public class Author {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false)
-	private long id;
+public class Author extends AbtractEntity{
+	
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
 	@Column(name = "slug", length = 255)
@@ -38,13 +35,6 @@ public class Author {
 	
 	@Column(name = "status",  columnDefinition = "int default 0")
 	private int status;
-	@Column(name = "created_at", nullable = true)
-	private LocalDate createdAt;
-	@Column(name = "created_by", nullable = true)
-	private Long createdBy;
-	@Column(name = "updated_at", nullable = true)
-	private LocalDate updatedAt;
-	@Column(name = "updated_by", nullable = true)
-	private Long updatedBy;
+	
 
 }

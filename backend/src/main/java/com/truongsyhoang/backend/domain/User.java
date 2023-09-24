@@ -23,10 +23,7 @@ import lombok.Setter;
         @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")
 })
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends AbtractEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -61,19 +58,7 @@ public class User {
     @Column(name = "image", nullable = true)
     private String image;
 
-    @Column(name = "created_by", nullable = true)
-    private Long createdBy;
-
-    @Column(name = "updated_by", nullable = true)
-    private Long updatedBy;
-
     @Column(name = "status", columnDefinition = "int default 0")
     private int status;
-
-    @Column(name = "created_at", nullable = false)
-    private LocalDate createdAt;
-
-    @Column(name = "updated_at", nullable = false)
-    private LocalDate updatedAt;
 
 }

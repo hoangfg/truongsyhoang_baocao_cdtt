@@ -20,11 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "order")
-public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class Order extends AbtractEntity {
 
     @Column(name = "user_id", nullable = false)
     private long userId;
@@ -46,12 +42,4 @@ public class Order {
 
     @Column(name = "status", columnDefinition = "int default 0")
     private int status;
-    @Column(name = "created_at", nullable = false)
-    private LocalDate createdAt;
-    @Column(name = "created_by", nullable = false)
-    private Long createdBy;
-    @Column(name = "updated_at", nullable = false)
-    private LocalDate updatedAt;
-    @Column(name = "updated_by", nullable = false)
-    private Long updatedBy;
 }

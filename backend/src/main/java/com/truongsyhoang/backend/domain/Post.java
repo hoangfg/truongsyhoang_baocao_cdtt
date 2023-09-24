@@ -11,10 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "post")
-public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Post extends AbtractEntity {
 
     @Column(name = "topic_id")
     private Long topicId;
@@ -40,18 +37,11 @@ public class Post {
     @Column(name = "metadesc", nullable = false)
     private String metadesc;
 
-    @Column(name = "created_by", nullable = false, columnDefinition = "int(10) unsigned default 1")
-    private Long createdBy;
 
-    @Column(name = "updated_by")
-    private Long updatedBy;
 
     @Column(name = "status", columnDefinition = "int default 0")
     private int status;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDate createdAt;
-    @Column(name = "updated_at", nullable = false)
-    private LocalDate updatedAt;
+
 
 }

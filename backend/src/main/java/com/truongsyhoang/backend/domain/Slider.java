@@ -19,10 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "slider")
-public class Slider {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Slider extends AbtractEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -42,18 +39,10 @@ public class Slider {
     @Column(name = "position", nullable = false)
     private String position;
 
-    @Column(name = "created_by", nullable = false)
-    private Long createdBy;
 
-    @Column(name = "updated_by")
-    private Long updatedBy;
 
     @Column(name = "status", columnDefinition = "int default 0")
     private int status;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDate createdAt;
 
-    @Column(name = "updated_at", nullable = false)
-    private LocalDate updatedAt;
 }

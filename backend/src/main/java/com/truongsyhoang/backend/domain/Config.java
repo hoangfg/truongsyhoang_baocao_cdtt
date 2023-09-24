@@ -19,10 +19,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "config")
-public class Config {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Config extends AbtractEntity {
 
     @Column(name = "site_name", nullable = false)
     private String siteName;
@@ -54,11 +51,5 @@ public class Config {
     @Column(name = "googleplus")
     private String googleplus;
 
-    private LocalDate createdAt;
-    @Column(name = "created_by", nullable = false)
-    private Long createdBy;
-    @Column(name = "updated_at", nullable = false)
-    private LocalDate updatedAt;
-    @Column(name = "updated_by", nullable = false)
-    private Long updatedBy;
+
 }

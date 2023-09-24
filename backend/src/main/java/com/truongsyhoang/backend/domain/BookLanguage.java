@@ -19,23 +19,13 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "book_language")
-public class BookLanguage {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false)
-	private long id;
+public class BookLanguage extends AbtractEntity {
+
 	@Column(name = "code", nullable = false, length = 10)
 	private String code;
 	@Column(name = "name", nullable = false, length = 255)
 	private String name;
 	@Column(name = "slug", nullable = false, length = 100)
 	private String slug;
-	@Column(name = "created_at", nullable = false)
-	private LocalDate createdAt;
-	@Column(name = "created_by", nullable = false)
-	private Long createdBy;
-	@Column(name = "updated_at", nullable = false)
-	private LocalDate updatedAt;
-	@Column(name = "updated_by", nullable = false)
-	private Long updatedBy;
+
 }
