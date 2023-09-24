@@ -22,7 +22,7 @@ public class BookSale extends AbtractEntity {
     @JoinColumn(name = "book_id", nullable = false)
     private Book bookId;
     @Column(name = "price_sale", nullable = true)
-    private double pricSale;
+    private double priceSale;
     @Column(name = "begin_sale", nullable = true)
     private LocalDate beginSale;
     @Column(name = "end_sale", nullable = true)

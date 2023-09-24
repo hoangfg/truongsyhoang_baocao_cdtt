@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @Data
 public class PublisherDTO implements Serializable {
-	private long id;
+	private Long id;
 	// private long parentId;
 	@NotBlank(message = "Tên không được để trống")
 	@Size(max = 255, message = "Tên không được vượt quá 255 ký tự")

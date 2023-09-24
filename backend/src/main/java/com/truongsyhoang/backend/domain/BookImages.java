@@ -27,12 +27,12 @@ import lombok.Setter;
 @Table(name = "book_images")
 public class BookImages extends AbtractEntity {
 
-    @Column(name = "product_id", nullable = false)
-    private int productId;
+    @Column(name = "name", nullable = false)
+    private String name;
     @Column(name = "file_name", nullable = false)
     private String fileName;
-    @Column(name = "url", nullable = false)
-    private String url;
+    @Column(name = "uri", nullable = false)
+    private String uri;
 
     @Override
     public boolean equals(Object o) {

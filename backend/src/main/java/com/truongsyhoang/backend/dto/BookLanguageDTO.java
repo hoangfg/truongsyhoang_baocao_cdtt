@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Data
 public class BookLanguageDTO implements Serializable {
-    private long id;
+    private Long id;
     private String code;
     private String name;
     private String slug;

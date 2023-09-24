@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @Data
 public class AuthorDTO implements Serializable {
-    private long id;
+    private Long id;
 
     private String name;
 
