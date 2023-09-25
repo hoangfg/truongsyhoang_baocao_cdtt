@@ -118,7 +118,7 @@ public class BookService {
             BookBriefDTO dto = new BookBriefDTO();
             BeanUtils.copyProperties(item, dto);
             dto.setAuthorName(item.getAuthor().getName());
-            dto.setBookGenresName(item.getBookGenres().getName());
+            dto.setBookGenresName(item.getGenres().getName());
             dto.setLanguageName(item.getLanguage().getName());
             dto.setPublisherName(item.getPublisher().getName());
             dto.setImageFileName(item.getImage().getFileName());
@@ -137,9 +137,10 @@ public class BookService {
         BeanUtils.copyProperties(found, dto);
 
         dto.setAuthorId(found.getAuthor().getId());
-        dto.setBookGenresId(found.getBookGenres().getId());
+
         dto.setLanguageId(found.getLanguage().getId());
         dto.setPublisherId(found.getPublisher().getId());
+        dto.setGenresId(found.getGenres().getId());
         var images = found.getImages().stream().map(item -> {
             BookImagesDTO imgDto = new BookImagesDTO();
             BeanUtils.copyProperties(item, imgDto);

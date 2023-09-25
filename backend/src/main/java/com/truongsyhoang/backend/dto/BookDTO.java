@@ -33,7 +33,7 @@ public class BookDTO implements Serializable {
     private Long authorId;
     private Long languageId;
     private Long publisherId;
-    private Long bookGenresId;
+    private Long genresId;
     private List<BookImagesDTO> images;
     private BookImagesDTO image;
 

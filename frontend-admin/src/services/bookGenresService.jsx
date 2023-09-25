@@ -7,7 +7,6 @@ export default class bookGenresService {
     formData.append("name", bookGenres.name);
     formData.append("detail", bookGenres.detail);
     formData.append("status", bookGenres.status);
-    
 
     return await axios.post(API_GENRES, formData);
   };
@@ -31,5 +30,4 @@ export default class bookGenresService {
   status = async (id, bookGenres) => {
     return await axios.patch(API_GENRES + "/" + id + "/status", bookGenres);
   };
- 
 }

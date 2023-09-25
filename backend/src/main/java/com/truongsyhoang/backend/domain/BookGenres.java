@@ -20,21 +20,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "genres")
+@Table(name = "book_genres")
 public class BookGenres extends AbtractEntity {
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
     @Column(name = "slug", nullable = false, length = 255)
     private String slug;
-    // @Column(name = "parent_id", nullable = false)
-    // private long parentId;
+
     @Lob
     @Column(name = "detail", nullable = true)
     private String detail;
 
     @Column(name = "status", columnDefinition = "int default 0")
     private int status;
-
 
 }
