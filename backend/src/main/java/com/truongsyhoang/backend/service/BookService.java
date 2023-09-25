@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -24,6 +25,8 @@ import com.truongsyhoang.backend.domain.BookLanguage;
 import com.truongsyhoang.backend.domain.Publisher;
 import com.truongsyhoang.backend.dto.BookBriefDTO;
 import com.truongsyhoang.backend.dto.BookDTO;
+import com.truongsyhoang.backend.dto.BookImagesDTO;
+import com.truongsyhoang.backend.exception.AuthorException;
 import com.truongsyhoang.backend.repository.BookImagesReponsitory;
 import com.truongsyhoang.backend.repository.BookReponsitory;
 
@@ -42,7 +45,12 @@ public class BookService {
     public BookDTO insert(BookDTO dto) {
         Book entity = new Book();
         BeanUtils.copyProperties(dto, entity);
-
+        String name = dto.getName();
+        String slug = generateSlug(name);
+        entity.setSlug(slug);
+        String generatedISBN = generateUniqueISBN();
+        entity.setIsbn(generatedISBN);
+        entity.setCreatedBy(1L);
         var author = new Author();
         author.setId(dto.getAuthorId());
         entity.setAuthor(author);
@@ -69,14 +77,9 @@ public class BookService {
             var entityList = saveBookEntity(dto);
             entity.setImages(entityList);
         }
-        String name = dto.getName();
-        String slug = generateSlug(name);
-        entity.setSlug(slug);
-        String generatedISBN = generateUniqueISBN();
-        entity.setIsbn(generatedISBN);
+
         var saveBook = bookReponsitory.save(entity);
-        entity.setCreatedAt(LocalDate.now());
-        entity.setCreatedBy(1L);
+
         dto.setId(saveBook.getId());
         return dto;
     }
@@ -127,4 +130,27 @@ public class BookService {
 
     }
 
+    public BookDTO getBookById(Long id) {
+        var found = bookReponsitory.findById(id)
+                .orElseThrow(() -> new AuthorException("Book Id Khồn tồn tại"));
+        BookDTO dto = new BookDTO();
+        BeanUtils.copyProperties(found, dto);
+
+        dto.setAuthorId(found.getAuthor().getId());
+        dto.setBookGenresId(found.getBookGenres().getId());
+        dto.setLanguageId(found.getLanguage().getId());
+        dto.setPublisherId(found.getPublisher().getId());
+        var images = found.getImages().stream().map(item -> {
+            BookImagesDTO imgDto = new BookImagesDTO();
+            BeanUtils.copyProperties(item, imgDto);
+            return imgDto;
+        }).collect(Collectors.toList());
+        dto.setImages(images);
+
+        BookImagesDTO imageDTO = new BookImagesDTO();
+        BeanUtils.copyProperties(found.getImage(), imageDTO);
+        dto.setImage(imageDTO);
+
+        return dto;
+    }
 }

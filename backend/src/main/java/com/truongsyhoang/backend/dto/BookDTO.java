@@ -1,6 +1,7 @@
 package com.truongsyhoang.backend.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.truongsyhoang.backend.domain.Author;
@@ -18,11 +19,17 @@ import lombok.Setter;
 public class BookDTO implements Serializable {
     private Long id;
     private String name;
-    
+
     private String description;
     private String detail;
     private double price;
+    private LocalDate createdAt;
 
+    private Long createdBy;
+
+    private LocalDate updatedAt;
+
+    private Long updatedBy;
     private Long authorId;
     private Long languageId;
     private Long publisherId;
@@ -34,6 +41,5 @@ public class BookDTO implements Serializable {
     private BookLanguage language;
     private Publisher publisher;
     private BookGenres genres;
-    
 
 }

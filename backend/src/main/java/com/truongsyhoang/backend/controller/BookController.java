@@ -97,11 +97,13 @@ public class BookController {
 
     @GetMapping("/find")
     public ResponseEntity<?> getBooks(@RequestParam("query") String query,
-            @PageableDefault(size = 2, sort = "name", 
-            direction = Sort.Direction.ASC) Pageable pageable) {
-        
-       
+            @PageableDefault(size = 2, sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
+
         return new ResponseEntity<>(bookService.getBookBriefsByName(query, pageable), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        return new ResponseEntity<>(bookService.getBookById(id), HttpStatus.OK);
+    }
 }
