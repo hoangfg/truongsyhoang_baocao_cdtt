@@ -48,17 +48,17 @@ public class Book extends AbtractEntity {
 	private double price;
 	@ManyToOne
 	@JoinColumn(name = "author_id")
-	private Author authorId;
+	private Author author;
 	@ManyToOne
 	@JoinColumn(name = "language_id")
-	private BookLanguage languageId;
+	private BookLanguage language;
 	@ManyToOne
 	@JoinColumn(name = "publisher_id")
-	private Publisher publisherId;
+	private Publisher publisher;
 
 	@ManyToOne
 	@JoinColumn(name = "genre_id")
-	private BookGenres bookGenresId;
+	private BookGenres bookGenres;
 
 	@ManyToMany
 	@JoinTable(name = "book_book_images", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "book_images_id"))

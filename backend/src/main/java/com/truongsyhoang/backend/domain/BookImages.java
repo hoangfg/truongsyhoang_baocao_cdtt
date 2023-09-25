@@ -29,7 +29,7 @@ public class BookImages extends AbtractEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "file_name", nullable = false)
+    @Column(name = "filename", nullable = false)
     private String fileName;
     @Column(name = "uri", nullable = false)
     private String uri;

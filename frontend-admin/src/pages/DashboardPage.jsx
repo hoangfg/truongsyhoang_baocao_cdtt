@@ -1,4 +1,4 @@
-import { AiOutlineAlipay } from "react-icons/ai"; 
+import { AiOutlineAlipay } from "react-icons/ai";
 import { IoLanguageOutline } from "react-icons/io";
 import { GiRegeneration } from "react-icons/gi";
 import { MdOutlineEmojiPeople } from "react-icons/md";
@@ -123,7 +123,7 @@ function DashboardPage() {
               label: "Language",
               children: [
                 {
-                  key: "41",
+                  key: "51",
                   icon: <BsListTask />,
                   label: "List",
                   onClick: () => navigate("/language"),
