@@ -15,25 +15,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-public class BookDTO implements Serializable {
+public class BookBriefDTO implements Serializable {
     private Long id;
     private String name;
-    
-    private String description;
-    private String detail;
+    private String slug;
+    private String isbn;
     private double price;
-
-    private Long authorId;
-    private Long languageId;
-    private Long publisherId;
-    private Long bookGenresId;
-    private List<BookImagesDTO> images;
-    private BookImagesDTO image;
-
-    private Author author;
-    private BookLanguage language;
-    private Publisher publisher;
-    private BookGenres genres;
-    
-
+    private String authorName;
+    private String languageName;
+    private String publisherName;
+    private String bookGenresName;
+    private String imageFileName;
 }

@@ -1,8 +1,14 @@
 package com.truongsyhoang.backend.controller;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
@@ -20,14 +26,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.truongsyhoang.backend.dto.BookDTO;
 import com.truongsyhoang.backend.dto.BookDTO;
 import com.truongsyhoang.backend.dto.BookImagesDTO;
 import com.truongsyhoang.backend.exception.FileStorageException;
 import com.truongsyhoang.backend.service.BookService;
 import com.truongsyhoang.backend.service.FileStorageService;
 import com.truongsyhoang.backend.service.MapValidationErrorService;
-
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -89,4 +94,14 @@ public class BookController {
         var saveDto = bookService.insert(dto);
         return new ResponseEntity<>(saveDto, HttpStatus.CREATED);
     }
+
+    @GetMapping("/find")
+    public ResponseEntity<?> getBooks(@RequestParam("query") String query,
+            @PageableDefault(size = 2, sort = "name", 
+            direction = Sort.Direction.ASC) Pageable pageable) {
+        
+       
+        return new ResponseEntity<>(bookService.getBookBriefsByName(query, pageable), HttpStatus.OK);
+    }
+
 }
