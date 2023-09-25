@@ -64,8 +64,8 @@ public class BookService {
         entity.setLanguage(language);
 
         var genres = new BookGenres();
-        genres.setId(dto.getBookGenresId());
-        entity.setBookGenres(genres);
+        genres.setId(dto.getGenresId());
+        entity.setGenres(genres);
 
         if (dto.getImage() != null) {
             BookImages img = new BookImages();
