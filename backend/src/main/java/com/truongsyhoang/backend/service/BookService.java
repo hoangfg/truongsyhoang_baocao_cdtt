@@ -4,6 +4,7 @@ import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -122,19 +125,19 @@ public class BookService {
         found.setUpdatedBy(1L);
         if (dto.getImages().size() > 0) {
             var toDeleteFile = new ArrayList<BookImages>();
-            found.getImages().stream().forEach(item->{
-                var existed = dto.getImages().stream().anyMatch(img->img.getId()==item.getId());
-                if(!existed) {
+            found.getImages().stream().forEach(item -> {
+                var existed = dto.getImages().stream().anyMatch(img -> img.getId() == item.getId());
+                if (!existed) {
                     toDeleteFile.add(item);
                 }
             });
-            if(toDeleteFile.size()>0) {
-                toDeleteFile.stream().forEach(item->{
+            if (toDeleteFile.size() > 0) {
+                toDeleteFile.stream().forEach(item -> {
                     fileStorageService.deleteBookImageFile(item.getFileName());
                     bookImagesReponsitory.delete(item);
                 });
             }
-            var imgList = dto.getImages().stream().map(item-> {
+            var imgList = dto.getImages().stream().map(item -> {
                 BookImages img = new BookImages();
                 BeanUtils.copyProperties(item, img);
                 return img;
@@ -215,5 +218,48 @@ public class BookService {
         dto.setImage(imageDTO);
 
         return dto;
+    }
+
+    public ResponseEntity<?> findAll() {
+        var list = bookReponsitory.findAll();
+        var newList = list.stream().map(item -> {
+            BookBriefDTO dto = new BookBriefDTO();
+            BeanUtils.copyProperties(item, dto);
+            if (item.getAuthor() != null) {
+                dto.setAuthorName(item.getAuthor().getName());
+            }
+            if (item.getGenres() != null) {
+                dto.setBookGenresName(item.getGenres().getName());
+            }
+            if (item.getLanguage() != null) {
+                dto.setLanguageName(item.getLanguage().getName());
+            }
+            if (item.getPublisher() != null) {
+                dto.setPublisherName(item.getPublisher().getName());
+            }
+            if (item.getImage() != null) {
+                dto.setImageFileName(item.getImage().getFileName());
+            }
+
+            return dto;
+        }).collect(Collectors.toList());
+        return new ResponseEntity<>(newList, HttpStatus.OK);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteById(Long id) {
+        var found = bookReponsitory.findById(id).orElseThrow(() -> new AuthorException("Book not found"));
+        if (found.getImage() != null) {
+            fileStorageService.deleteBookImageFile(found.getImage().getFileName());
+            bookImagesReponsitory.delete(found.getImage());
+        }
+        if (found.getImages().size() > 0) {
+            found.getImages().stream().forEach(item -> {
+                fileStorageService.deleteBookImageFile(item.getFileName());
+                bookImagesReponsitory.delete(item);
+            });
+        }
+        bookReponsitory.delete(found);
+
     }
 }
