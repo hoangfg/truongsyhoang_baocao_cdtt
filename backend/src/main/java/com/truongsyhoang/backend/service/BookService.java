@@ -2,6 +2,7 @@ package com.truongsyhoang.backend.service;
 
 import java.text.Normalizer;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -51,6 +52,7 @@ public class BookService {
         String generatedISBN = generateUniqueISBN();
         entity.setIsbn(generatedISBN);
         entity.setCreatedBy(1L);
+
         var author = new Author();
         author.setId(dto.getAuthorId());
         entity.setAuthor(author);
@@ -81,6 +83,66 @@ public class BookService {
         var saveBook = bookReponsitory.save(entity);
 
         dto.setId(saveBook.getId());
+        return dto;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public BookDTO update(Long id, BookDTO dto) {
+        var found = bookReponsitory.findById(id).orElseThrow(() -> new AuthorException("Book id không tồn tại"));
+        String ignoreFields[] = new String[] { "createdBy", "images", "updatedBy" };
+        BeanUtils.copyProperties(dto, found, ignoreFields);
+
+        if (dto.getImage().getId() != null && found.getImage().getId() != dto.getImage().getId()) {
+            fileStorageService.deleteBookImageFile(found.getImage().getFileName());
+            BookImages img = new BookImages();
+            BeanUtils.copyProperties(dto.getImage(), img);
+            bookImagesReponsitory.save(img);
+            found.setImage(img);
+        }
+        var author = new Author();
+        author.setId(dto.getAuthorId());
+        found.setAuthor(author);
+
+        var publisher = new Publisher();
+        publisher.setId(dto.getPublisherId());
+        found.setPublisher(publisher);
+
+        var language = new BookLanguage();
+        language.setId(dto.getLanguageId());
+        found.setLanguage(language);
+
+        var genres = new BookGenres();
+        genres.setId(dto.getGenresId());
+        found.setGenres(genres);
+
+        String name = dto.getName();
+        String slug = generateSlug(name);
+        found.setSlug(slug);
+
+        found.setUpdatedBy(1L);
+        if (dto.getImages().size() > 0) {
+            var toDeleteFile = new ArrayList<BookImages>();
+            found.getImages().stream().forEach(item->{
+                var existed = dto.getImages().stream().anyMatch(img->img.getId()==item.getId());
+                if(!existed) {
+                    toDeleteFile.add(item);
+                }
+            });
+            if(toDeleteFile.size()>0) {
+                toDeleteFile.stream().forEach(item->{
+                    fileStorageService.deleteBookImageFile(item.getFileName());
+                    bookImagesReponsitory.delete(item);
+                });
+            }
+            var imgList = dto.getImages().stream().map(item-> {
+                BookImages img = new BookImages();
+                BeanUtils.copyProperties(item, img);
+                return img;
+            }).collect(Collectors.toSet());
+            found.setImages(imgList);
+        }
+        var saveEntity = bookReponsitory.save(found);
+        dto.setId(saveEntity.getId());
         return dto;
     }
 

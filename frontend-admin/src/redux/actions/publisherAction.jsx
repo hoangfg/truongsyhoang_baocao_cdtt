@@ -11,6 +11,7 @@ import {
 
 export const insertPublisher = (publisher, navigate) => async (dispatch) => {
   const service = new publisherService();
+  console.log("object", service);
   try {
     dispatch({
       type: COMMON_LOADING_SET,

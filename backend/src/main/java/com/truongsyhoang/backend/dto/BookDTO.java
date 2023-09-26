@@ -23,11 +23,8 @@ public class BookDTO implements Serializable {
     private String description;
     private String detail;
     private double price;
-    private LocalDate createdAt;
 
     private Long createdBy;
-
-    private LocalDate updatedAt;
 
     private Long updatedBy;
     private Long authorId;

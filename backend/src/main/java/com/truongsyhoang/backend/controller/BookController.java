@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.truongsyhoang.backend.dto.BookDTO;
 import com.truongsyhoang.backend.dto.BookDTO;
 import com.truongsyhoang.backend.dto.BookImagesDTO;
 import com.truongsyhoang.backend.exception.FileStorageException;
@@ -93,6 +92,16 @@ public class BookController {
         }
         var saveDto = bookService.insert(dto);
         return new ResponseEntity<>(saveDto, HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody BookDTO dto, BindingResult result) {
+        ResponseEntity<?> responseEntity = mapValidationErrorService.mapValidationFields(result);
+        if (responseEntity != null) {
+            return responseEntity;
+        }
+        var updateDto = bookService.update(id, dto);
+        return new ResponseEntity<>(updateDto, HttpStatus.OK);
     }
 
     @GetMapping("/find")
