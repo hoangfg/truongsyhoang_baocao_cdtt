@@ -63,6 +63,12 @@ public class BookController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @DeleteMapping("/images/{fileName:.+}")
+    public ResponseEntity<?> deleteImage(@PathVariable String fileName) {
+        fileStorageService.deleteBookImageFile(fileName);
+        return new ResponseEntity<>("Book image was delete", HttpStatus.OK);
+    }
+
     @GetMapping("/images/{fileName:.+}")
     public ResponseEntity<?> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = fileStorageService.loadBookFileAResource(fileName);

@@ -65,7 +65,7 @@ public class AuthorController {
             return responseEntity;
         }
         Author entity = authorService.insert(dto);
-       
+
         dto.setId(entity.getId());
         dto.setImage(entity.getImage());
 
