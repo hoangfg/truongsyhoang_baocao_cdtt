@@ -52,7 +52,7 @@ class ListGenres extends Component {
 
   onDeleteConfirm = (genres) => {
     this.setState({ ...this.state, genres: genres });
-    const message = "Bạn có muốn xóa tác giả: " + genres.name + " không?";
+    const message = "Bạn có muốn xóa thể loại: " + genres.name + " không?";
     Modal.confirm({
       title: "Xóa bản ghi?",
       icon: <ExclamationCircleOutlined />,
@@ -79,7 +79,7 @@ class ListGenres extends Component {
         <>
           <ContentHeader
             navigate={navigate}
-            title="Danh sách nhà xuất bản"
+            title="Danh sách thể loại"
             className="site-page_header"
           />
           <Skeleton />
@@ -93,7 +93,7 @@ class ListGenres extends Component {
             <Col span={12}>
               <ContentHeader
                 navigate={navigate}
-                title="Danh sách tác giả"
+                title="Danh sách thể loại"
                 className="site-page_header"
               />
             </Col>

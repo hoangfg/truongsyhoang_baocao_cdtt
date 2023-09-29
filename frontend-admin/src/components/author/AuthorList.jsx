@@ -17,7 +17,8 @@ export default class AuthorList extends Component {
         dataSource={dataSource}
         size="small"
         rowKey="id"
-        pagination={{ pageSize: 8 }}
+        pagination={{ pageSize: 6 }}
+        scroll={{ y: 396 }}
       >
         <Column
           title="ID"
@@ -35,7 +36,7 @@ export default class AuthorList extends Component {
           render={(_, record) => (
             <Space>
               <Image
-                width="100%"
+                height="50px"
                 src={authorService.getPhotoUrl(record.image)}
               ></Image>
             </Space>

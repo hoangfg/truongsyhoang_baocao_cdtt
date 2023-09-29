@@ -70,6 +70,11 @@ public class Book extends AbtractEntity {
 
 	@Column(name = "status", columnDefinition = "int default 0")
 	private int status;
+	@OneToOne(mappedBy = "bookId", orphanRemoval = true)
+	private BookSale sale;
+
+	@OneToOne(mappedBy = "bookId", orphanRemoval = true)
+	private BookStore store;
 
 	@PrePersist
 	@Override

@@ -1,6 +1,7 @@
 package com.truongsyhoang.backend.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.truongsyhoang.backend.domain.Author;
@@ -26,4 +27,10 @@ public class BookBriefDTO implements Serializable {
     private String publisherName;
     private String bookGenresName;
     private String imageFileName;
+    private int quanlity;
+    private double entryPrice;
+
+    private double priceSale;
+    private LocalDate beginSale;
+    private LocalDate endSale;
 }

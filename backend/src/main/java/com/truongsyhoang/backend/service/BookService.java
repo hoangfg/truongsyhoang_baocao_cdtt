@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -26,6 +27,8 @@ import com.truongsyhoang.backend.domain.Book;
 import com.truongsyhoang.backend.domain.BookGenres;
 import com.truongsyhoang.backend.domain.BookImages;
 import com.truongsyhoang.backend.domain.BookLanguage;
+import com.truongsyhoang.backend.domain.BookSale;
+import com.truongsyhoang.backend.domain.BookStore;
 import com.truongsyhoang.backend.domain.Publisher;
 import com.truongsyhoang.backend.dto.BookBriefDTO;
 import com.truongsyhoang.backend.dto.BookDTO;
@@ -33,6 +36,8 @@ import com.truongsyhoang.backend.dto.BookImagesDTO;
 import com.truongsyhoang.backend.exception.AuthorException;
 import com.truongsyhoang.backend.repository.BookImagesReponsitory;
 import com.truongsyhoang.backend.repository.BookReponsitory;
+import com.truongsyhoang.backend.repository.BookSaleReponsitory;
+import com.truongsyhoang.backend.repository.BookStoreReponsitory;
 
 @Service
 public class BookService {
@@ -41,6 +46,11 @@ public class BookService {
 
     @Autowired
     private BookImagesReponsitory bookImagesReponsitory;
+
+    @Autowired
+    private BookStoreReponsitory bookStoreReponsitory;
+    @Autowired
+    private BookSaleReponsitory bookSaleReponsitory;
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -86,6 +96,24 @@ public class BookService {
         var saveBook = bookReponsitory.save(entity);
 
         dto.setId(saveBook.getId());
+
+        BookStore bookStore = new BookStore();
+
+        bookStore.setBookId(saveBook);
+        bookStore.setEntryPrice(dto.getEntryPrice());
+        bookStore.setQuanlity(dto.getQuanlity());
+
+        bookStoreReponsitory.save(bookStore);
+
+        if (dto.getBeginSale() != null && dto.getEndSale() != null && dto.getPriceSale() != 0) {
+            BookSale bookSale = new BookSale();
+
+            bookSale.setBeginSale(dto.getBeginSale()); // Set LocalDate directly
+            bookSale.setEndSale(dto.getEndSale()); // Set LocalDate directly
+            bookSale.setPriceSale(dto.getPriceSale());
+            bookSale.setBookId(saveBook);
+            bookSaleReponsitory.save(bookSale);
+        }
         return dto;
     }
 
@@ -95,13 +123,14 @@ public class BookService {
         String ignoreFields[] = new String[] { "createdBy", "images", "updatedBy" };
         BeanUtils.copyProperties(dto, found, ignoreFields);
 
-        if (dto.getImage().getId() != null && found.getImage().getId() != dto.getImage().getId()) {
+        if (dto.getImage().getId() != null && !dto.getImage().getId().equals(found.getImage().getId())) {
             fileStorageService.deleteBookImageFile(found.getImage().getFileName());
             BookImages img = new BookImages();
             BeanUtils.copyProperties(dto.getImage(), img);
-            bookImagesReponsitory.save(img);
+            img = bookImagesReponsitory.save(img);
             found.setImage(img);
         }
+
         var author = new Author();
         author.setId(dto.getAuthorId());
         found.setAuthor(author);
@@ -123,30 +152,60 @@ public class BookService {
         found.setSlug(slug);
 
         found.setUpdatedBy(1L);
-        if (dto.getImages().size() > 0) {
+
+        if (dto.getImages() != null && !dto.getImages().isEmpty()) {
             var toDeleteFile = new ArrayList<BookImages>();
-            found.getImages().stream().forEach(item -> {
-                var existed = dto.getImages().stream().anyMatch(img -> img.getId() == item.getId());
+            found.getImages().forEach(item -> {
+                var existed = dto.getImages().stream().anyMatch(img -> img.getId().equals(item.getId()));
                 if (!existed) {
                     toDeleteFile.add(item);
                 }
             });
-            if (toDeleteFile.size() > 0) {
-                toDeleteFile.stream().forEach(item -> {
+
+            if (!toDeleteFile.isEmpty()) {
+                toDeleteFile.forEach(item -> {
                     fileStorageService.deleteBookImageFile(item.getFileName());
                     bookImagesReponsitory.delete(item);
                 });
             }
+
             var imgList = dto.getImages().stream().map(item -> {
                 BookImages img = new BookImages();
                 BeanUtils.copyProperties(item, img);
                 return img;
             }).collect(Collectors.toSet());
+
             found.setImages(imgList);
         }
-        var saveEntity = bookReponsitory.save(found);
-        dto.setId(saveEntity.getId());
+
+        Optional<BookStore> optionalBookStore = bookStoreReponsitory.findByBookId_Id(id);
+        if (optionalBookStore.isPresent()) {
+            BookStore bookStore = optionalBookStore.get();
+            bookStore.setEntryPrice(dto.getEntryPrice());
+            bookStore.setQuanlity(dto.getQuanlity());
+            bookStoreReponsitory.save(bookStore);
+        }
+
+        // Cập nhật thông tin BookSale
+        Optional<BookSale> optionalBookSale = bookSaleReponsitory.findByBookId_Id(id);
+        if (dto.getBeginSale() != null && dto.getEndSale() != null && dto.getPriceSale() != 0) {
+            if (optionalBookSale.isPresent()) {
+                BookSale bookSale = optionalBookSale.get();
+                bookSale.setBeginSale(dto.getBeginSale());
+                bookSale.setEndSale(dto.getEndSale());
+                bookSale.setPriceSale(dto.getPriceSale());
+            } else {
+                BookSale bookSale = new BookSale();
+                bookSale.setBeginSale(dto.getBeginSale());
+                bookSale.setEndSale(dto.getEndSale());
+                bookSale.setPriceSale(dto.getPriceSale());
+                bookSale.setBookId(found);
+                bookSaleReponsitory.save(bookSale);
+            }
+        }
+
         return dto;
+
     }
 
     private Set<BookImages> saveBookEntity(BookDTO dto) {
@@ -217,6 +276,24 @@ public class BookService {
         BeanUtils.copyProperties(found.getImage(), imageDTO);
         dto.setImage(imageDTO);
 
+        // Lấy thông tin store
+        Optional<BookStore> optionalBookStore = bookStoreReponsitory.findByBookId_Id(id);
+        if (optionalBookStore.isPresent()) {
+            BookStore bookStore = optionalBookStore.get();
+            dto.setEntryPrice(bookStore.getEntryPrice());
+            dto.setQuanlity(bookStore.getQuanlity());
+        }
+        Optional<BookSale> optionalBookSale = bookSaleReponsitory.findByBookId_Id(id);
+        if (optionalBookSale.isPresent()) {
+            BookSale bookSale = optionalBookSale.get();
+            dto.setBeginSale(bookSale.getBeginSale());
+            dto.setEndSale(bookSale.getEndSale());
+            dto.setPriceSale(bookSale.getPriceSale());
+        } else {
+            dto.setBeginSale(null);
+            dto.setEndSale(null);
+            dto.setPriceSale(0); // Hoặc giá trị mặc định khác tùy theo trường hợp
+        }
         return dto;
     }
 
@@ -240,7 +317,19 @@ public class BookService {
             if (item.getImage() != null) {
                 dto.setImageFileName(item.getImage().getFileName());
             }
+            Optional<BookStore> optionalBookStore = bookStoreReponsitory.findByBookId_Id(item.getId());
+            optionalBookStore.ifPresent(bookStore -> {
+                dto.setEntryPrice(bookStore.getEntryPrice());
+                dto.setQuanlity(bookStore.getQuanlity());
+            });
 
+            // Retrieve BookSale information
+            Optional<BookSale> optionalBookSale = bookSaleReponsitory.findByBookId_Id(item.getId());
+            optionalBookSale.ifPresent(bookSale -> {
+                dto.setBeginSale(bookSale.getBeginSale());
+                dto.setEndSale(bookSale.getEndSale());
+                dto.setPriceSale(bookSale.getPriceSale());
+            });
             return dto;
         }).collect(Collectors.toList());
         return new ResponseEntity<>(newList, HttpStatus.OK);

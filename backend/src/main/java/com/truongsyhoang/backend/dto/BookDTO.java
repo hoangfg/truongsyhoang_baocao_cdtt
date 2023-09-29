@@ -39,4 +39,10 @@ public class BookDTO implements Serializable {
     private Publisher publisher;
     private BookGenres genres;
 
+    private int quanlity;
+    private double entryPrice;
+
+    private double priceSale;
+    private LocalDate beginSale;
+    private LocalDate endSale;
 }

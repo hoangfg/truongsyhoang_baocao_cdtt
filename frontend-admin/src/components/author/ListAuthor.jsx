@@ -93,7 +93,7 @@ class ListAuthor extends Component {
             <Col span={12}>
               <ContentHeader
                 navigate={navigate}
-                title="Danh sách tác giả"
+                title="Danh sách nhà xuất bản"
                 className="site-page_header"
               />
             </Col>

@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -19,9 +20,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "book_store")
-public class BookStore extends AbtractEntity {
+public class BookStore {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
     @OneToOne
-    @JoinColumn(name = "book_id", nullable = false)
+    @JoinColumn(name = "book_id", referencedColumnName = "id", unique = true, nullable = false)
     private Book bookId;
     @Column(name = "quanlity", nullable = false, columnDefinition = "int default 0")
     private int quanlity;

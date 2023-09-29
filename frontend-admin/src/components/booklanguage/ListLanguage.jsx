@@ -50,7 +50,7 @@ class ListLanguage extends Component {
 
   onDeleteConfirm = (languages) => {
     this.setState({ ...this.state, languages: languages });
-    const message = "Bạn có muốn xóa tác giả: " + languages.name + " không?";
+    const message = "Bạn có muốn xóa ngôn ngữ: " + languages.name + " không?";
     Modal.confirm({
       title: "Xóa bản ghi?",
       icon: <ExclamationCircleOutlined />,
@@ -77,7 +77,7 @@ class ListLanguage extends Component {
         <>
           <ContentHeader
             navigate={navigate}
-            title="Danh sách nhà xuất bản"
+            title="Danh sách ngôn ngữ"
             className="site-page_header"
           />
           <Skeleton />
@@ -91,7 +91,7 @@ class ListLanguage extends Component {
             <Col span={12}>
               <ContentHeader
                 navigate={navigate}
-                title="Danh sách tác giả"
+                title="Danh sách ngôn ngữ"
                 className="site-page_header"
               />
             </Col>
