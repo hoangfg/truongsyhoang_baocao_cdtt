@@ -1,3 +1,6 @@
+import { GiBookshelf } from "react-icons/gi"; 
+import { AiOutlineCloudUpload } from "react-icons/ai"; 
+import { MdOutlineProductionQuantityLimits } from "react-icons/md"; 
 import { AiOutlineAlipay } from "react-icons/ai";
 import { IoLanguageOutline } from "react-icons/io";
 import { GiRegeneration } from "react-icons/gi";
@@ -27,6 +30,7 @@ import ListAuthor from "../components/author/ListAuthor";
 import AuthorForm from "../components/author/AuthorForm";
 import ListGenres from "../components/bookgenres/ListGenres";
 import ListLanguage from "../components/booklanguage/ListLanguage";
+import UploadImage from "../components/products/UploadImage";
 
 const { Header, Sider, Content } = Layout;
 
@@ -130,6 +134,25 @@ function DashboardPage() {
                 },
               ],
             },
+            {
+              key: "6",
+              icon:<GiBookshelf />,
+              label: "Product",
+              children: [
+                {
+                  key: "61",
+                  icon: <AiOutlineCloudUpload />,
+                  label: "Upload Images",
+                  onClick: () => navigate("/product/upload"),
+                },
+                {
+                  key: "62",
+                  icon: <BsListTask />,
+                  label: "List",
+                  onClick: () => navigate("/product"),
+                },
+              ],
+            },
           ]}
         />
       </Sider>
@@ -197,6 +220,7 @@ function DashboardPage() {
               ></Route> */}
               <Route path="/genres" element={<ListGenres />}></Route>
               <Route path="/language" element={<ListLanguage />}></Route>
+              <Route path="/product/upload" element={<UploadImage />}></Route>
             </Routes>
             <Outlet></Outlet>
           </div>
