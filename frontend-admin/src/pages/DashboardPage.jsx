@@ -1,6 +1,6 @@
-import { GiBookshelf } from "react-icons/gi"; 
-import { AiOutlineCloudUpload } from "react-icons/ai"; 
-import { MdOutlineProductionQuantityLimits } from "react-icons/md"; 
+import { GiBookshelf } from "react-icons/gi";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { AiOutlineAlipay } from "react-icons/ai";
 import { IoLanguageOutline } from "react-icons/io";
 import { GiRegeneration } from "react-icons/gi";
@@ -31,6 +31,7 @@ import AuthorForm from "../components/author/AuthorForm";
 import ListGenres from "../components/bookgenres/ListGenres";
 import ListLanguage from "../components/booklanguage/ListLanguage";
 import UploadImage from "../components/products/UploadImage";
+import AddOrEditBook from "../components/products/AddOrEditBook";
 
 const { Header, Sider, Content } = Layout;
 
@@ -55,7 +56,7 @@ function DashboardPage() {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
-    <Layout style={{ height: "100vh", overflow: "hidden" }}>
+    <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
       <Sider
         trigger={null}
         collapsible
@@ -136,7 +137,7 @@ function DashboardPage() {
             },
             {
               key: "6",
-              icon:<GiBookshelf />,
+              icon: <GiBookshelf />,
               label: "Product",
               children: [
                 {
@@ -147,6 +148,12 @@ function DashboardPage() {
                 },
                 {
                   key: "62",
+                  icon: <BsListTask />,
+                  label: "Add Book",
+                  onClick: () => navigate("/product/add"),
+                },
+                {
+                  key: "63",
                   icon: <BsListTask />,
                   label: "List",
                   onClick: () => navigate("/product"),
@@ -221,6 +228,7 @@ function DashboardPage() {
               <Route path="/genres" element={<ListGenres />}></Route>
               <Route path="/language" element={<ListLanguage />}></Route>
               <Route path="/product/upload" element={<UploadImage />}></Route>
+              <Route path="/product/add" element={<AddOrEditBook />}></Route>
             </Routes>
             <Outlet></Outlet>
           </div>
