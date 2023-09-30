@@ -11,6 +11,7 @@ import {
   Upload,
 } from "antd";
 import React, { Component } from "react";
+import CustomForm from "./CustomForm";
 
 class SaleForm extends Component {
   form = React.createRef();
@@ -18,7 +19,7 @@ class SaleForm extends Component {
     const { book } = this.props;
 
     return (
-      <Form layout="vertical" className="form" size="middle" ref={this.form}>
+      // <CustomForm>
         <Row>
           <Col md={12}>
             <Form.Item
@@ -53,7 +54,7 @@ class SaleForm extends Component {
             </Form.Item>
           </Col>
         </Row>
-      </Form>
+      // </CustomForm>
     );
   }
 }
