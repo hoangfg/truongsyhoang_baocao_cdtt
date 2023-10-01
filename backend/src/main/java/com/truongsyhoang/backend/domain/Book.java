@@ -46,6 +46,7 @@ public class Book extends AbtractEntity {
 	private String detail;
 	@Column(name = "price", nullable = false)
 	private double price;
+	
 	@ManyToOne
 	@JoinColumn(name = "author_id")
 	private Author author;
@@ -84,7 +85,6 @@ public class Book extends AbtractEntity {
 			description = "Thông tin sản phẩm";
 		if (detail == null)
 			detail = "Chi tiết sản phẩm";
-		price = 0L;
 
 	}
 

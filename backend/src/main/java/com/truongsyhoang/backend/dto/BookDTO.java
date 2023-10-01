@@ -38,7 +38,7 @@ public class BookDTO implements Serializable {
     private BookLanguage language;
     private Publisher publisher;
     private BookGenres genres;
-
+    private int status;
     private int quanlity;
     private double entryPrice;
 

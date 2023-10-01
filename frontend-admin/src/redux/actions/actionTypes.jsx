@@ -26,6 +26,9 @@ export const LANGUAGES_STATE_CLEAR = "LANGUAGES_STATE_CLEAR";
 
 export const BOOK_SET = "BOOK_SET";
 export const BOOKS_SET = "BOOKS_SET";
+export const BOOK_DELETE = "BOOK_DELETE";
+export const BOOK_UPDATE = "BOOK_UPDATE";
+export const BOOKS_STATE_CLEAR = "BOOKS_STATE_CLEAR";
 
 export const COMMON_ERROR_SET = "COMMON_ERROR_SET";
 export const COMMON_MESSAGE_SET = "COMMON_MESSAGE_SET";

@@ -20,6 +20,7 @@ class SelectForm extends Component {
     const { book, publisherList, authorList, genresList, languageList } =
       this.props;
     console.log("1", publisherList);
+    console.log("book trong SelectForm:", book);
     return (
       // <CustomForm>
 

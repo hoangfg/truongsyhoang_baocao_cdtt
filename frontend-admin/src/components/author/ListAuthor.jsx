@@ -74,6 +74,7 @@ class ListAuthor extends Component {
     const { navigate } = this.props.router;
     const { open } = this.state;
     const { authors, isLoading } = this.props;
+
     if (isLoading) {
       return (
         <>

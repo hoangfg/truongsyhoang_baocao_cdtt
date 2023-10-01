@@ -30,6 +30,7 @@ import com.truongsyhoang.backend.domain.BookLanguage;
 import com.truongsyhoang.backend.domain.BookSale;
 import com.truongsyhoang.backend.domain.BookStore;
 import com.truongsyhoang.backend.domain.Publisher;
+import com.truongsyhoang.backend.dto.AuthorDTO;
 import com.truongsyhoang.backend.dto.BookBriefDTO;
 import com.truongsyhoang.backend.dto.BookDTO;
 import com.truongsyhoang.backend.dto.BookImagesDTO;
@@ -351,4 +352,12 @@ public class BookService {
         bookReponsitory.delete(found);
 
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void changeStatus(Long id, Integer status) {
+        var found = bookReponsitory.findById(id).orElseThrow(() -> new AuthorException("Book id không tồn tại"));
+        found.setStatus(status);
+        bookReponsitory.save(found);
+    }
+
 }

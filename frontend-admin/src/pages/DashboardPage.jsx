@@ -32,6 +32,7 @@ import ListGenres from "../components/bookgenres/ListGenres";
 import ListLanguage from "../components/booklanguage/ListLanguage";
 import UploadImage from "../components/products/UploadImage";
 import AddOrEditBook from "../components/products/AddOrEditBook";
+import ListBook from "../components/products/ListBook";
 
 const { Header, Sider, Content } = Layout;
 
@@ -140,12 +141,12 @@ function DashboardPage() {
               icon: <GiBookshelf />,
               label: "Product",
               children: [
-                {
-                  key: "61",
-                  icon: <AiOutlineCloudUpload />,
-                  label: "Upload Images",
-                  onClick: () => navigate("/product/upload"),
-                },
+                // {
+                //   key: "61",
+                //   icon: <AiOutlineCloudUpload />,
+                //   label: "Upload Images",
+                //   onClick: () => navigate("/product/upload"),
+                // },
                 {
                   key: "62",
                   icon: <BsListTask />,
@@ -227,8 +228,16 @@ function DashboardPage() {
               ></Route> */}
               <Route path="/genres" element={<ListGenres />}></Route>
               <Route path="/language" element={<ListLanguage />}></Route>
-              <Route path="/product/upload" element={<UploadImage />}></Route>
-              <Route path="/product/add" element={<AddOrEditBook />}></Route>
+              {/* <Route path="/product/upload" element={<UploadImage />}></Route> */}
+              <Route
+                path="/product/add"
+                element={<AddOrEditBook key="a" />}
+              ></Route>
+              <Route path="/product" element={<ListBook />}></Route>
+              <Route
+                path="/product/update/:id"
+                element={<AddOrEditBook key="u" />}
+              />
             </Routes>
             <Outlet></Outlet>
           </div>

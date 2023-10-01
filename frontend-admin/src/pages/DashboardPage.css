@@ -48,3 +48,6 @@
 .avatar-user_header span.user-img {
   margin-right: 5px;
 }
+.ant-table-body {
+  max-height: 420px !important;
+}

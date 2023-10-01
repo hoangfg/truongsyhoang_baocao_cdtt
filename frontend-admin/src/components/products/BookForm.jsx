@@ -39,6 +39,7 @@ class BookForm extends Component {
   };
   render() {
     const { book } = this.props;
+    console.log("123", book);
     const handlePriceChange = (value) => {
       const price = parseFloat(value);
 
@@ -97,7 +98,7 @@ class BookForm extends Component {
             ]}
             hasFeedback
           >
-            <InputNumber style={{ width: "100%" }} onBlur={handlePriceChange} />
+            <InputNumber style={{ width: "100%" }} />
           </Form.Item>
         </Col>
         <Col md={1}>
@@ -108,7 +109,7 @@ class BookForm extends Component {
             label="Trạng thái"
             name="status"
             labelCol={{ span: 24 }}
-            initialValue={book.status === 0 ? "1" : "0"}
+            initialValue={book.status === 0 ? "0" : "1"}
             rules={[
               {
                 required: true,

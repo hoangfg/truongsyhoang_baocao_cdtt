@@ -1,5 +1,6 @@
 package com.truongsyhoang.backend.controller;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -27,9 +28,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.truongsyhoang.backend.domain.Author;
+import com.truongsyhoang.backend.dto.AuthorDTO;
 import com.truongsyhoang.backend.dto.BookDTO;
 import com.truongsyhoang.backend.dto.BookImagesDTO;
 import com.truongsyhoang.backend.exception.FileStorageException;
+import com.truongsyhoang.backend.exception.PublisherException;
 import com.truongsyhoang.backend.service.BookService;
 import com.truongsyhoang.backend.service.FileStorageService;
 import com.truongsyhoang.backend.service.MapValidationErrorService;
@@ -133,5 +137,11 @@ public class BookController {
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         bookService.deleteById(id);
         return new ResponseEntity<>("Book id was delete", HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}/status")
+    public void changeStatus(@PathVariable Long id, @RequestBody Map<String, Integer> statusData) {
+        Integer status = statusData.get("status");
+        bookService.changeStatus(id, status);
     }
 }

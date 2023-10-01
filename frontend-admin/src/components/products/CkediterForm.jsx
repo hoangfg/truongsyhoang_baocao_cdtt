@@ -22,8 +22,8 @@ class CkediterForm extends Component {
   // };
 
   render() {
-    const { descriptionCkData, detailCkData } = this.state;
     const { book } = this.props;
+    console.log("book trong SelectForm:", book);
     console.log(book);
     return (
       <Row>
@@ -41,28 +41,11 @@ class CkediterForm extends Component {
             ]}
             hasFeedback
           >
-            {/* <CKEditor
-              editor={ClassicEditor}
-              data={descriptionCkData}
-              onReady={(editor) => {
-                editor.editing.view.change((writer) => {
-                  writer.setStyle(
-                    "height",
-                    "200px",
-                    editor.editing.view.document.getRoot()
-                  );
-                });
-              }}
-              onChange={(event, editor) => {
-                const data = editor.getData();
-                this.setState({ ...this.state, descriptionCkData: data });
-              }}
-            /> */}
             <SunEditor
               setOptions={{
-                height: 300,
+                height: 500,
                 buttonList: [
-                  ["undo", "redo", "font", "fontSize", "formatBlock"],
+                  
                   [
                     "bold",
                     "underline",
@@ -73,13 +56,11 @@ class CkediterForm extends Component {
                   ],
                   ["fontColor", "hiliteColor", "textStyle", "removeFormat"],
                   ["outdent", "indent"],
-                  ["align", "horizontalRule", "list", "lineHeight"],
-                  ["table", "link", "image", "video"],
-                  ["fullScreen", "showBlocks", "codeView"],
-                 
-                  ["save", "template"],
+                  ["align", "horizontalRule", "lineHeight"],
+                  ["table", "link", "image"],
                 ],
               }}
+              setContents={book.description}
             />
           </Form.Item>
         </Col>
@@ -102,7 +83,7 @@ class CkediterForm extends Component {
           >
             <SunEditor
               setOptions={{
-                height: 300,
+                height: 500,
                 buttonList: [
                   ["undo", "redo", "font", "fontSize", "formatBlock"],
                   [
@@ -115,14 +96,12 @@ class CkediterForm extends Component {
                   ],
                   ["fontColor", "hiliteColor", "textStyle", "removeFormat"],
                   ["outdent", "indent"],
-                  ["align", "horizontalRule", "list", "lineHeight"],
-                  ["table", "link", "image", "video"],
-                  ["fullScreen", "showBlocks", "codeView"],
-                  ["preview", "print"],
-                  ["save", "template"],
+                  ["align", "horizontalRule", "lineHeight"],
+                  ["table", "link", "image"],
                 ],
               }}
               onChange={this.handleDetailChange}
+              setContents={book.detail}
             />
           </Form.Item>
         </Col>

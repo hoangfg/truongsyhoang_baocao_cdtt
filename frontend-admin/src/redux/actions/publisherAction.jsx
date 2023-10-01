@@ -91,6 +91,40 @@ export const updatePublisher =
     });
     navigate("/publishers");
   };
+  export const getPublishers = () => async (dispatch) => {
+    const service = new publisherService();
+    try {
+      dispatch({
+        type: COMMON_LOADING_SET,
+        payload: true,
+      });
+      const response = await service.getPublishes();
+
+      if (response.status === 200) {
+        dispatch({
+          type: PUBLISHERS_SET,
+          payload: response.data,
+        });
+      } else {
+        dispatch({
+          type: COMMON_ERROR_SET,
+          payload: response.message,
+        });
+      }
+    } catch (error) {
+      // console.log("error:" + error);
+      dispatch({
+        type: COMMON_ERROR_SET,
+        payload: error.response.data
+          ? error.response.data.message
+          : error.message,
+      });
+    }
+    dispatch({
+      type: COMMON_LOADING_SET,
+      payload: false,
+    });
+  };
 export const statusPublisher = (id, publisher) => async (dispatch) => {
   const service = new publisherService();
   try {
@@ -132,40 +166,7 @@ export const statusPublisher = (id, publisher) => async (dispatch) => {
   }
 };
 
-export const getPublishers = () => async (dispatch) => {
-  const service = new publisherService();
-  try {
-    dispatch({
-      type: COMMON_LOADING_SET,
-      payload: true,
-    });
-    const response = await service.getPublishes();
 
-    if (response.status === 200) {
-      dispatch({
-        type: PUBLISHERS_SET,
-        payload: response.data,
-      });
-    } else {
-      dispatch({
-        type: COMMON_ERROR_SET,
-        payload: response.message,
-      });
-    }
-  } catch (error) {
-    // console.log("error:" + error);
-    dispatch({
-      type: COMMON_ERROR_SET,
-      payload: error.response.data
-        ? error.response.data.message
-        : error.message,
-    });
-  }
-  dispatch({
-    type: COMMON_LOADING_SET,
-    payload: false,
-  });
-};
 export const deleteById = (id) => async (dispatch) => {
   const service = new publisherService();
   try {

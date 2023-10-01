@@ -29,7 +29,7 @@ public class BookBriefDTO implements Serializable {
     private String imageFileName;
     private int quanlity;
     private double entryPrice;
-
+    private int status;
     private double priceSale;
     private LocalDate beginSale;
     private LocalDate endSale;
