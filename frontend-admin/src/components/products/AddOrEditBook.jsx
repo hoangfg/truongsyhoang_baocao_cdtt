@@ -13,6 +13,7 @@ import {
   Steps,
   Tabs,
   message,
+  notification,
 } from "antd";
 import BookForm from "./BookForm";
 import UploadImage from "./UploadImage";
@@ -25,6 +26,10 @@ import publisherService from "./../../services/publisherService";
 import authorService from "./../../services/authorService";
 import bookGenresService from "./../../services/bookGenresService";
 import bookLanguageService from "./../../services/bookLanguageService";
+import bookService from "../../services/bookService";
+import { connect } from "react-redux";
+import bookReducer from "./../../redux/reducers/bookReducer";
+import { insertBook } from "./../../redux/actions/bookAction";
 const { Step } = Steps;
 
 class AddOrEditBook extends Component {
@@ -34,29 +39,70 @@ class AddOrEditBook extends Component {
     this.state = {
       step: 0,
       book: {
-        id: "",
-        name: "",
-        price: 0,
-        image: "",
-        status: 0,
-        detail: "",
-        description: "",
-        publisherId: "",
-        authorId: "",
-        genresId: "",
-        languageId: "",
+        // id: "",
+        // name: "",
+        // price: 0,
+        // image: "",
+        // status: 0,
+        // detail: "",
+        // description: "",
+        // publisherId: "",
+        // authorId: "",
+        // genresId: "",
+        // languageId: "",
       },
 
       publisherList: [], // Thêm mảng publisherList vào state
       authorList: [], // Thêm mảng authorList vào state
       genresList: [], // Thêm mảng genresList vào state
       languageList: [],
+      bookImages: [],
+      updateBookImages: [],
     };
     this.form = React.createRef();
   }
   componentDidMount = () => {
+    const { book } = this.props;
+    if (book) {
+      this.setState({
+        ...this.state,
+        // description: book.description,
+        // detail: book.detail,
+      });
+    }
     this.loadData();
   };
+
+  onUpdateFileList = (fileList) => {
+    this.setState({
+      ...this.state,
+      updateBookImages: fileList,
+      bookImages: fileList,
+    });
+  };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      nextProps.book &&
+      nextProps.book.images &&
+      nextProps.book.images.length > 0
+    ) {
+      let bookImages = [];
+      if (nextProps.book.images) {
+        bookImages = nextProps.book.images.map((item) => ({
+          ...item,
+          uid: item.id,
+          url: bookService.getPhotoUrl(item.fileName),
+          status: "done",
+        }));
+      }
+      return {
+        ...prevState,
+        bookImages: bookImages,
+      };
+    }
+  }
+
   loadData = async () => {
     try {
       const PublisherService = new publisherService();
@@ -85,19 +131,52 @@ class AddOrEditBook extends Component {
   };
 
   saveBook = () => {
-    console.log(this.form);
+    const { bookImages, updateBookImages } = this.state;
+
     if (this.form.current) {
-      // Kiểm tra xem this.form.current có tồn tại không trước khi gọi validateFields
       this.form.current
         .validateFields()
         .then((values) => {
-          console.log(values);
           const newValues = {
             ...values,
-            description: this.state.descriptionCkData,
-            detail: this.state.detailCkData,
+            // description: this.state.book.descriptionCkData,
+            // detail: this.state.detailCkData,
+            image:
+              values.image[0] && values.image[0].fileName
+                ? values.image[0]
+                : values.image[0].response,
+            images:
+              updateBookImages && updateBookImages.length > 0
+                ? updateBookImages.map((item) =>
+                    item.id ? { ...item } : item.response
+                  )
+                : bookImages.map((item) =>
+                    item.id ? { ...item } : item.response
+                  ),
           };
           console.log("Saving book:", newValues);
+          console.log("values", values);
+
+          if (newValues.images && newValues.images.length > 0) {
+            const uploading = newValues.images.filter(
+              (item) => item.status != "done"
+            );
+            if (uploading && uploading.length > 0) {
+              notification.error({
+                message: "Đã có file chờ upload",
+                description: "Vui lòng đợi tới khi hoàn thành",
+                duration: 10,
+              });
+              return;
+            }
+          } 
+          const { navigate } = this.props.router;
+          this.setState({
+            ...this.state,
+            book: {},
+            bookImages: [],
+          });
+          this.props.insertBook(newValues, navigate);
         })
         .catch((info) => {
           console.log(info);
@@ -115,9 +194,29 @@ class AddOrEditBook extends Component {
       },
     }));
   };
+
+  handleRemoveImage = (params) => {
+    console.log("remove");
+    if (params.fileName) {
+      bookService.deleteBookImage(params.fileName);
+    } else if (params.response && params.response.fileName) {
+      bookService.deleteBookImage(params.response.fileName);
+    }
+  };
+  normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    if (e.fileList.length > 1) {
+      return [e.fileList[1]];
+    }
+    return e && e.fileList;
+  };
+
   render() {
     const { navigate } = this.props.router;
-    const { publisherList, authorList, genresList, languageList } = this.state;
+    const { publisherList, authorList, genresList, languageList, bookImages } =
+      this.state;
     const { book } = this.props;
     const title = "Book";
     const items = [
@@ -127,7 +226,11 @@ class AddOrEditBook extends Component {
         children: (
           <>
             <Divider />
-            <BookForm book={{}} />
+            <BookForm
+              book={{}}
+              handleRemoveImage={this.handleRemoveImage}
+              fileList={this.state.bookImages}
+            />
           </>
         ),
       },
@@ -137,7 +240,11 @@ class AddOrEditBook extends Component {
         children: (
           <>
             <Divider />
-            <CkediterForm book={{}} />
+            <CkediterForm
+              book={{}}
+              descriptionCkData={this.state.descriptionCkData}
+              detailCkData={this.state.detailCkData}
+            />
           </>
         ),
       },
@@ -163,7 +270,11 @@ class AddOrEditBook extends Component {
         children: (
           <>
             <Divider />
-            <UploadImage />
+            <UploadImage
+              book={{}}
+              fileList={this.state.bookImages}
+              onUpdateFileList={this.onUpdateFileList}
+            />
           </>
         ),
       },
@@ -260,4 +371,15 @@ class AddOrEditBook extends Component {
   }
 }
 
-export default withRouter(AddOrEditBook);
+const mapStateToProps = (state) => ({
+  book: state.bookReducer.book,
+});
+
+const mapDispatchToProps = {
+  insertBook,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(AddOrEditBook));

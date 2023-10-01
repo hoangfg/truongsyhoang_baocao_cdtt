@@ -6,27 +6,20 @@ const UploadImage = (props) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
+
   const handleCancel = () => {
     setPreviewOpen(false);
   };
+
   const getBase64 = (file) => {
-    new Promise((resovle, reject) => {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resovle(reader.result);
+      reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
   };
-  // const handlePreview = async (file) => {
-  //   if (!file.url && !file.preview) {
-  //     file.preview = await getBase64(file.originFileObj);
-  //   }
-  //   setPreviewImage(file.url || file.preview);
-  //   setPreviewOpen(true);
-  //   setPreviewTitle(
-  //     file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
-  //   );
-  // };
+
   const handlePreview = async (file) => {
     file.preview ??= await getBase64(file.originFileObj);
     setPreviewImage(file.url || file.preview);
@@ -39,22 +32,36 @@ const UploadImage = (props) => {
   const handleChange = (info) => {
     const { fileList } = info;
     const status = info.file.status;
+
     if (status !== "uploading") {
       console.log(info.file);
     }
+
     if (status === "done") {
       message.success(`${info.file.name} file uploaded success`);
-    } else {
+    } else if (status !== "loading") {
       message.error(`${info.file.name} file upload failed`);
+    } else if (status === "remove") {
+      message.success(`${info.file.name} file remove success`);
     }
-    // props.onUploadFileList(fileList.slice());
+
+    props.onUpdateFileList(fileList.slice());
   };
+
   const handleRemove = (info) => {
     if (info.fileName) {
       console.log("delete " + info.fileName);
     } else if (info.response && info.response.fileName) {
       console.log("delete " + info.response.fileName);
     }
+
+    const { fileList } = props;
+    const updatedFileList = fileList.filter((file) => file.uid !== info.uid);
+    props.onUpdateFileList(updatedFileList);
+  };
+  const onUpdateFileList = (fileList) => {
+    console.log("update file list: ", fileList);
+    props.onUpdateFileList(fileList);
   };
 
   const uploadButton = (
@@ -63,7 +70,9 @@ const UploadImage = (props) => {
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
+
   const { fileList } = props;
+
   return (
     <>
       <Upload
@@ -76,7 +85,7 @@ const UploadImage = (props) => {
         onChange={handleChange}
         onRemove={handleRemove}
       >
-        {FileList.length >= 8 ? null : uploadButton}
+        {fileList.length >= 8 ? null : uploadButton}
       </Upload>
       <Modal
         open={previewOpen}

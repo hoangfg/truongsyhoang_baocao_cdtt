@@ -12,9 +12,31 @@ import {
 } from "antd";
 import React, { Component } from "react";
 import CustomForm from "./CustomForm";
+import bookService from "../../services/bookService";
 
 class BookForm extends Component {
   form = React.createRef();
+  handleRemoveImage = (params) => {
+    console.log("remove");
+    if (params.fileName) {
+      this.props.handleRemoveImage(params);
+    } else if (params.response && params.response.fileName) {
+      this.props.handleRemoveImage(params.response.fileName);
+    }
+  };
+  updateBookImages = (fileList) => {
+    this.setState({ bookImages: fileList });
+  };
+
+  normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    if (e.fileList.length > 1) {
+      return [e.fileList[1]];
+    }
+    return e && e.fileList;
+  };
   render() {
     const { book } = this.props;
     const handlePriceChange = (value) => {
@@ -23,6 +45,7 @@ class BookForm extends Component {
       if (!isNaN(price) && price > 0) {
       }
     };
+
     return (
       // <CustomForm>
       <Row>
@@ -104,7 +127,16 @@ class BookForm extends Component {
             label="Main Image"
             name="image"
             labelCol={{ span: 24 }}
-            initialValue={book.image ? [{ ...book.image }] : []}
+            initialValue={
+              book.image
+                ? [
+                    {
+                      ...book.image,
+                      url: bookService.getPhotoUrl(book.image.fileName),
+                    },
+                  ]
+                : []
+            }
             rules={[
               {
                 required: true,
@@ -112,13 +144,18 @@ class BookForm extends Component {
               },
             ]}
             hasFeedback
+            valuePropName="fileList"
+            getValueFromEvent={this.normFile}
           >
             <Upload
               listType="picture-card"
               accept=".jpg, .png, .gif, .webp"
               maxCount={1}
+              onRemove={this.handleRemoveImage}
+              action={bookService.getImageUploadURL()}
+              onChange={this.props.updateBookImages}
             >
-              <AiOutlineCloudUpload size="middle" />
+              <AiOutlineCloudUpload />
             </Upload>
           </Form.Item>
         </Col>

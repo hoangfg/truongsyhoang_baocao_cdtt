@@ -1,50 +1,47 @@
-import { AiOutlineCloudUpload } from "react-icons/ai";
-import { Button, Col, Divider, Form, Input, Row, Select, Upload } from "antd";
-import React, { Component } from "react";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import CustomForm from "./CustomForm";
-
+import React, { Component } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import SunEditor from "suneditor-react";
+import "suneditor/dist/css/suneditor.min.css";
 class CkediterForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      descriptionCkData: "",
-      detailCkData: "",
+      // descriptionCkData: this.props.descriptionCkData || "",
+      // detailCkData: this.props.detailCkData || "",
     };
   }
 
-  handleDescriptionChange = (event, editor) => {
-    const data = editor.getData();
-    this.setState({ descriptionCkData: data });
-  };
-
-  handleDetailChange = (event, editor) => {
-    const data = editor.getData();
-    this.setState({ detailCkData: data });
-  };
+  // handleDescriptionChange = (event, editor) => {
+  //   const data = editor.getData();
+  //   this.setState({ descriptionCkData: data });
+  // };
 
   render() {
     const { descriptionCkData, detailCkData } = this.state;
-
+    const { book } = this.props;
+    console.log(book);
     return (
       <Row>
-        <Col md={12}>
+        <Col md={11}>
           <Form.Item
             label="Description"
             name="description"
-            initialValue={descriptionCkData}
+            initialValue={book.description}
             labelCol={{ span: 24 }}
             rules={[
               {
                 required: true,
-                message: "Vui lòng nhập.",
+                message: "Please enter a description.",
               },
             ]}
             hasFeedback
           >
-            <CKEditor
+            {/* <CKEditor
               editor={ClassicEditor}
               data={descriptionCkData}
               onReady={(editor) => {
@@ -56,38 +53,74 @@ class CkediterForm extends Component {
                   );
                 });
               }}
-              onChange={this.handleDescriptionChange}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                this.setState({ ...this.state, descriptionCkData: data });
+              }}
+            /> */}
+            <SunEditor
+              setOptions={{
+                height: 300,
+                buttonList: [
+                  ["undo", "redo", "font", "fontSize", "formatBlock"],
+                  [
+                    "bold",
+                    "underline",
+                    "italic",
+                    "strike",
+                    "subscript",
+                    "superscript",
+                  ],
+                  ["fontColor", "hiliteColor", "textStyle", "removeFormat"],
+                  ["outdent", "indent"],
+                  ["align", "horizontalRule", "list", "lineHeight"],
+                  ["table", "link", "image", "video"],
+                  ["fullScreen", "showBlocks", "codeView"],
+                 
+                  ["save", "template"],
+                ],
+              }}
             />
           </Form.Item>
         </Col>
         <Col md={1}>
           <Divider type="vertical" style={{ height: "100%" }}></Divider>
         </Col>
-        <Col md={11}>
+        <Col md={12}>
           <Form.Item
             label="Detail"
             name="detail"
-            initialValue={detailCkData}
+            initialValue={book.detail}
             labelCol={{ span: 24 }}
             rules={[
               {
                 required: true,
-                message: "Vui lòng nhập.",
+                message: "Please enter a detail.",
               },
             ]}
             hasFeedback
           >
-            <CKEditor
-              editor={ClassicEditor}
-              data={detailCkData}
-              onReady={(editor) => {
-                editor.editing.view.change((writer) => {
-                  writer.setStyle(
-                    "height",
-                    "200px",
-                    editor.editing.view.document.getRoot()
-                  );
-                });
+            <SunEditor
+              setOptions={{
+                height: 300,
+                buttonList: [
+                  ["undo", "redo", "font", "fontSize", "formatBlock"],
+                  [
+                    "bold",
+                    "underline",
+                    "italic",
+                    "strike",
+                    "subscript",
+                    "superscript",
+                  ],
+                  ["fontColor", "hiliteColor", "textStyle", "removeFormat"],
+                  ["outdent", "indent"],
+                  ["align", "horizontalRule", "list", "lineHeight"],
+                  ["table", "link", "image", "video"],
+                  ["fullScreen", "showBlocks", "codeView"],
+                  ["preview", "print"],
+                  ["save", "template"],
+                ],
               }}
               onChange={this.handleDetailChange}
             />

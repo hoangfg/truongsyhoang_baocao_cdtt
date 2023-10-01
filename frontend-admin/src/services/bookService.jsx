@@ -3,16 +3,8 @@ import { API_BOOK } from "./constant";
 
 export default class bookService {
   create = async (book) => {
-    let formData = new FormData();
-    formData.append("name", book.name);
-
-    if (book.imageFile[0].originFileObj) {
-      formData.append("imageFile", book.imageFile[0].originFileObj);
-      formData.append("detail", book.detail);
-      formData.append("status", book.status);
-    }
-
-    return await axios.post(API_BOOK, formData);
+    console.log(": ", book);
+    return await axios.post(API_BOOK, book);
   };
   getBooks = async () => {
     return await axios.get(API_BOOK);
@@ -39,6 +31,12 @@ export default class bookService {
     return await axios.patch(API_BOOK + "/" + id + "/status", book);
   };
   static getPhotoUrl = (filename) => {
-    return API_BOOK + "/image/" + filename;
+    return API_BOOK + "/images/" + filename;
+  };
+  static getImageUploadURL = (filename) => {
+    return API_BOOK + "/images/one";
+  };
+  static deleteImage = async (fileName) => {
+    await axios.delete(API_BOOK + "/images/" + fileName);
   };
 }
