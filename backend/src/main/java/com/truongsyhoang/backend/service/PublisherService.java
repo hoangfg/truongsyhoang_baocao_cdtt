@@ -4,14 +4,16 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.truongsyhoang.backend.domain.Publisher;
-
+import com.truongsyhoang.backend.dto.BookDTO;
 import com.truongsyhoang.backend.dto.PublisherDTO;
+import com.truongsyhoang.backend.exception.AuthorException;
 import com.truongsyhoang.backend.exception.PublisherException;
 import com.truongsyhoang.backend.repository.PublisherRepository;
 
@@ -26,9 +28,11 @@ public class PublisherService {
             throw new PublisherException("Publisher id: " + id + " không tồn tại");
         }
         return found.get();
+
     }
 
     public Publisher save(Publisher entity) {
+
         return publisherRepository.save(entity);
     }
 
@@ -44,6 +48,9 @@ public class PublisherService {
             existedPublisher.setAddress(entity.getAddress());
             existedPublisher.setPhone(entity.getPhone());
             existedPublisher.setStatus(entity.getStatus());
+            if (entity.getParentId() != null) {
+                existedPublisher.setParentId(entity.getParentId());
+            }
             // existedPublisher.setUpdatedAt(entity.getUpdatedAt());
             // existedPublisher.setUpdatedBy(entity.getUpdatedBy());
             return publisherRepository.save(existedPublisher);

@@ -1,16 +1,7 @@
 import { FcAddImage } from "react-icons/fc";
 import React, { Component, createRef } from "react";
 
-import {
-  Input,
-  Modal,
-  Form,
-  Select,
-  Col,
-  Divider,
-  Row,
- 
-} from "antd";
+import { Input, Modal, Form, Select, Col, Divider, Row } from "antd";
 import TextArea from "antd/es/input/TextArea";
 
 class GenresForm extends Component {
@@ -24,9 +15,15 @@ class GenresForm extends Component {
   }
 
   render() {
-    const { open, onCreate, onCancel } = this.props;
+    const { open, onCreate, onCancel, dataSource } = this.props;
     const { genres } = this.props;
-
+    // console.log(dataSource);
+    let filteredData = dataSource.filter((item) => item.status === 0 );
+    if (genres.id !== "") {
+      filteredData = filteredData.filter(
+        (item) => item.id !== genres.id && item.parentId !== genres.id
+      );
+    }
     return (
       <Modal
         open={open}
@@ -140,6 +137,22 @@ class GenresForm extends Component {
               {/* )} */}
             </Col>
             <Col xs={24} md={12}>
+              <Form.Item
+                label="Mã cấp cha"
+                name="parentId"
+                labelCol={{ span: 24 }}
+                // initialValue={select}
+                hasFeedback
+              >
+                <Select placeholder="Chọn mã cấp cha">
+                  {filteredData &&
+                    filteredData.map((item) => (
+                      <Select.Option value={item.id} key={"pub" + item.id}>
+                        {item.name}
+                      </Select.Option>
+                    ))}
+                </Select>
+              </Form.Item>
               <Form.Item
                 label="Trạng thái"
                 name="status"

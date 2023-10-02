@@ -3,6 +3,7 @@ package com.truongsyhoang.backend.domain;
 // import org.springframework.data.annotation.Id;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 import java.time.LocalDate;
@@ -29,9 +30,10 @@ import lombok.Setter;
 @Table(name = "publisher")
 public class Publisher extends AbtractEntity {
 
-    // @OneToOne
-    // @JoinColumn(name = "publisher_id")
-    // private Publisher publisher;
+    @ManyToOne
+    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    private Publisher parentId;
+    
     @Column(name = "name", nullable = false, length = 100)
     private String name;
     @Column(name = "slug", nullable = false, length = 100)
@@ -45,6 +47,5 @@ public class Publisher extends AbtractEntity {
     @Enumerated
     @Column(name = "status", nullable = false)
     private Status status;
-
 
 }

@@ -5,7 +5,17 @@ import withRouter from "./../../helpers/withRouter";
 import { PageHeader } from "@ant-design/pro-layout";
 import { Divider } from "antd/lib";
 
-import { Row, Button, Col, Form, Input, Select, Modal, Popconfirm } from "antd";
+import {
+  Row,
+  Button,
+  Col,
+  Form,
+  Input,
+  Select,
+  Modal,
+  Popconfirm,
+  message,
+} from "antd";
 
 import ContentHeader from "../common/ContentHeader";
 import {
@@ -18,6 +28,7 @@ import { connect } from "react-redux";
 import publisherReducer from "./../../redux/reducers/publisherReducer";
 import commonReducer from "./../../redux/reducers/commonReducer";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import publisherService from "../../services/publisherService";
 
 class AddOrEdit extends Component {
   formRef = React.createRef();
@@ -29,17 +40,59 @@ class AddOrEdit extends Component {
         id: "",
         name: "",
         status: "Visible",
+        parentId: "",
       },
+      publisherList: [],
       shouldUpdate: false,
     };
   }
+  handleChangeParentId = (value) => {
+    this.setState({
+      publisher: {
+        ...this.state.publisher,
+        parentId: value,
+      },
+    });
+  };
+  loadData = async (id) => {
+    // console.log("id1", id);
+    let parent = parseInt(id);
+    try {
+      const PublisherService = new publisherService();
+      const publisherListResponse = await PublisherService.getPublishes();
+
+      const filteredPublisherList = publisherListResponse.data.filter(
+        (publisher) =>
+          parent !== publisher.id &&
+          publisher.status === "Visible" &&
+          publisher.parentId !== parent
+        // {
+        //   if (id === publisher.parentId) {
+        //     console.log("44", publisher);
+        //   }
+        // }
+      );
+
+      console.log("1", filteredPublisherList);
+      this.setState({
+        ...this.state,
+        publisherList: filteredPublisherList,
+      });
+    } catch (error) {
+      // console.log(error);
+      message.error("Error: " + error);
+    }
+  };
 
   componentDidMount = () => {
     const { id } = this.props.router.params;
     if (id) {
       this.props.getById(id);
+
+      this.loadData(id);
     } else {
       this.props.clearPublisher();
+      this.loadData();
     }
   };
 
@@ -59,11 +112,34 @@ class AddOrEdit extends Component {
           id: "",
           name: "",
           status: "visible",
+          parentId: "",
         },
       };
     }
     return null;
   }
+
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (
+  //     nextProps.publisher &&
+  //     prevState.publisher.id !== nextProps.publisher.id
+  //   ) {
+  //     return {
+  //       ...prevState,
+  //       publisher: nextProps.publisher,
+  //     };
+  //   } else if (!nextProps.publisher) {
+  //     return {
+  //       ...prevState,
+  //       publisher: {
+  //         id: "",
+  //         name: "",
+  //         status: "visible",
+  //       },
+  //     };
+  //   }
+  //   return null;
+  // }
   openUpdateConfirmModal = () => {
     const message = "Bạn có nuốn Cập nhật nhà xuất bản không?";
     Modal.confirm({
@@ -86,24 +162,35 @@ class AddOrEdit extends Component {
   onSubmitForm = (values) => {
     const { navigate } = this.props.router;
     const { id } = this.state.publisher;
-    console.log("id:", id);
+
     if (!id) {
       this.props.insertPublisher(values, navigate);
     } else if (this.state.shouldUpdate) {
+      console.log(values);
       this.props.updatePublisher(id, values, navigate);
     }
-    console.log(values);
   };
+
   render() {
     const { navigate } = this.props.router;
     const { isLoading } = this.props;
+    const { publisherList } = this.state;
+    // console.log(publisherList);
     const { publisher } = this.state;
+    // console.log("2", publisher.parentId.id);
     let title = "";
     if (publisher.id) {
       title = "Sửa thông tin nhà xuất bản";
     } else {
       title = "Thêm nhà xuất bản";
     }
+    let select = publisher.parentId;
+   
+    if (select !== null && select !== undefined) {
+      select = publisher.parentId.id;
+     
+    }
+
     return (
       <div>
         {/* <PageHeader
@@ -236,6 +323,26 @@ class AddOrEdit extends Component {
                 ]}
               >
                 <Input></Input>
+              </Form.Item>
+              <Form.Item
+                label="Mã cấp cha"
+                name="parentId"
+                labelCol={{ span: 24 }}
+                initialValue={select}
+                hasFeedback
+              >
+                <Select
+                  placeholder="Chọn mã cấp cha"
+                  // value={publisher.parentId}
+                >
+                  {/* {console.log("", publisher.parentId)} */}
+                  {publisherList &&
+                    publisherList.map((item) => (
+                      <Select.Option value={item.id} key={"pub" + item.id}>
+                        {item.name}
+                      </Select.Option>
+                    ))}
+                </Select>
               </Form.Item>
               <Form.Item
                 label="Trạng thái"

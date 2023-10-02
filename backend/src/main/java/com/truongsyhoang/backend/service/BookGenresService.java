@@ -13,9 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.truongsyhoang.backend.domain.BookGenres;
-import com.truongsyhoang.backend.domain.Publisher;
+
 import com.truongsyhoang.backend.dto.BookGenresDTO;
-import com.truongsyhoang.backend.dto.PublisherDTO;
+
 import com.truongsyhoang.backend.exception.AuthorException;
 
 import com.truongsyhoang.backend.repository.BookGenresReponsitory;
@@ -33,14 +33,20 @@ public class BookGenresService {
         }
         BookGenres entity = new BookGenres();
         BeanUtils.copyProperties(dto, entity);
+        System.out.println(dto.getParentId());
 
+        if (dto.getParentId() != 0L && dto.getParentId() != null) {
+
+            entity.setParentId(dto.getParentId());
+        }
+
+        System.out.println(entity.getParentId());
         String name = dto.getName();
         String slug = generateSlug(name);
         entity.setSlug(slug);
         entity.setCreatedAt(LocalDate.now());
         entity.setCreatedBy(1L);
-        entity.setUpdatedAt(LocalDate.now());
-        entity.setUpdatedBy(1L);
+
         return bookGenresReponsitory.save(entity);
     }
 
@@ -59,7 +65,10 @@ public class BookGenresService {
 
         // Copy properties from DTO, excluding createdAt, createdBy, and image
         BeanUtils.copyProperties(dto, entity, "createdAt", "createdBy");
+        if (dto.getParentId() != 0L && dto.getParentId() != null) {
 
+            entity.setParentId(dto.getParentId());
+        }
         entity.setCreatedAt(originalCreatedAt);
         entity.setCreatedBy(originalCreatedBy);
 

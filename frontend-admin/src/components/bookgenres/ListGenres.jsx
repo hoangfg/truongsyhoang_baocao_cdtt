@@ -48,6 +48,7 @@ class ListGenres extends Component {
   };
   onEdit = (values) => {
     this.setState({ ...this.state, genres: values, open: true });
+    
   };
 
   onDeleteConfirm = (genres) => {
@@ -116,6 +117,7 @@ class ListGenres extends Component {
           handleStatusChange={this.handleStatusChange}
         />
         <GenresForm
+          dataSource={genres}
           genres={this.state.genres}
           open={open}
           onCreate={this.onCreate}

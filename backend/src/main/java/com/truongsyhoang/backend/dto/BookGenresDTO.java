@@ -30,7 +30,7 @@ public class BookGenresDTO implements Serializable {
     private LocalDate createdAt;
 
     private Long createdBy;
-
+    private Long parentId;
     private LocalDate updatedAt;
 
     private Long updatedBy;

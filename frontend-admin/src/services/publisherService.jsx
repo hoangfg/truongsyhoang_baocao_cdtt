@@ -10,15 +10,16 @@ export default class publisherService {
     return await axios.get(API_PUBLISHER);
   };
   deleteById = async (id) => {
-    return await axios.delete(API_PUBLISHER+"/"+id);
+    return await axios.delete(API_PUBLISHER + "/" + id);
   };
   getById = async (id) => {
-    return await axios.get(API_PUBLISHER+"/"+id);
+    return await axios.get(API_PUBLISHER + "/" + id);
   };
   update = async (id, publisher) => {
-    return await axios.patch(API_PUBLISHER+"/"+id, publisher);
+    // console.log("se", publisher);
+    return await axios.patch(API_PUBLISHER + "/" + id, publisher);
   };
   status = async (id, publisher) => {
-    return await axios.patch(API_PUBLISHER+"/"+id+"/status", publisher);
+    return await axios.patch(API_PUBLISHER + "/" + id + "/status", publisher);
   };
 }

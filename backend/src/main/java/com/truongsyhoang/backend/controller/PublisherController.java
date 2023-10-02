@@ -49,6 +49,15 @@ public class PublisherController {
 
         Publisher entity = new Publisher();
         BeanUtils.copyProperties(dto, entity);
+
+        if (dto.getParentId() != null) {
+            var publisher = new Publisher();
+            publisher.setId(dto.getParentId());
+            entity.setParentId(publisher);
+        } else {
+            entity.setParentId(null);
+        }
+
         String name = dto.getName();
         String slug = generateSlug(name);
         entity.setSlug(slug);
@@ -63,14 +72,23 @@ public class PublisherController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody PublisherDTO dto) {
+        System.out.println(dto);
         Publisher entity = new Publisher();
         BeanUtils.copyProperties(dto, entity);
+
+        if (dto.getParentId() != null) {
+            Publisher parent = new Publisher();
+            parent.setId(dto.getParentId());
+            entity.setParentId(parent);
+        }
         String name = dto.getName();
         String slug = generateSlug(name);
+        // entity.setParentId(dto.getParent_id().getId());
         entity.setSlug(slug);
         entity.setUpdatedAt(LocalDate.now());
         entity.setUpdatedBy(1L);
         entity = publisherService.update(id, entity);
+
         dto.setId(entity.getId());
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }

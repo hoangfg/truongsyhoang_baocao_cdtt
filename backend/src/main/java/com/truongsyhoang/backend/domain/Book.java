@@ -38,15 +38,15 @@ public class Book extends AbtractEntity {
 	private String slug;
 	@Column(name = "isbn", nullable = false)
 	private String isbn;
-	@Column(name = "description", nullable = true)
+	@Column(name = "description", nullable = true, columnDefinition = "TEXT")
 	@Lob
 	private String description;
-	@Column(name = "detail", nullable = true)
+	@Column(name = "detail", nullable = true, columnDefinition = "TEXT")
 	@Lob
 	private String detail;
 	@Column(name = "price", nullable = false)
 	private double price;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "author_id")
 	private Author author;

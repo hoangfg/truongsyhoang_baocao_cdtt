@@ -3,6 +3,7 @@ package com.truongsyhoang.backend.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import com.truongsyhoang.backend.domain.Publisher;
 import com.truongsyhoang.backend.domain.Status;
 
 import jakarta.validation.constraints.Email;
@@ -38,5 +39,14 @@ public class PublisherDTO implements Serializable {
 	private Long createdBy;
 	private LocalDate updatedAt;
 	private Long updatedBy;
+	private Long parentId;
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
 
 }

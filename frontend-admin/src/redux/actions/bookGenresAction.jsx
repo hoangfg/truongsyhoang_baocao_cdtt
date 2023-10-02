@@ -14,8 +14,8 @@ export const insertGenres = (genres) => async (dispatch) => {
   const service = new bookGenresService();
 
   try {
-    const response = await service.create(genres);
     console.log(genres);
+    const response = await service.create(genres);
     console.log(response.data);
     if (response.status === 201) {
       console.log("yes", response);
