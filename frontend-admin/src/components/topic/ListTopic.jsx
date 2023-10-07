@@ -1,91 +1,79 @@
 import React, { Component } from "react";
 import withRouter from "../../helpers/withRouter";
-
 import ContentHeader from "../common/ContentHeader";
-import AuthorList from "./AuthorList";
 import { Button, Col, Modal, Row, Skeleton } from "antd";
-import AuthorForm from "./AuthorForm";
+
 import {
-  insertAuthor,
-  getAuthors,
+  insertTopics,
+  getTopics,
   deleteById,
-  updateAuthor,
-  statusAuthor,
-} from "./../../redux/actions/authorAction";
+  updateTopics,
+  statusTopics,
+} from "../../redux/actions/topicAction";
 import { connect } from "react-redux";
-import authorReducer from "./../../redux/reducers/authorReducer";
+
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-class ListAuthor extends Component {
+import TopicsList from "./TopicList";
+import TopicsForm from "./TopicForm";
+
+class ListTopics extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       open: false,
-      author: {
-        id: "",
-        name: "",
-        image: "",
-        detail: "",
-        status: 0,
-      },
+      topic: {},
     };
   }
   componentDidMount = () => {
-    this.props.getAuthors();
+    this.props.getTopics();
   };
-  // componentWillUnmount = () => {
-  //   this.props.clearState();
-  // };
+  componentWillUnmount = () => {
+    // this.props.clearState();
+  };
   onCreate = (values) => {
-    // console.log(values);
+    console.log(values);
     if (values.id) {
-      this.props.updateAuthor(values);
+      this.props.updateTopics(values);
     } else {
-      this.props.insertAuthor(values);
+      this.props.insertTopics(values);
     }
-    this.setState({ ...this.state, author: {}, open: false });
+    this.setState({ ...this.state, topic: {}, open: false });
   };
   onEdit = (values) => {
-    this.setState({ ...this.state, author: values, open: true });
+    this.setState({ ...this.state, topic: values, open: true });
   };
 
-  onDeleteConfirm = (author) => {
-    this.setState({ ...this.state, author: author });
-
-    const message = "Bạn có muốn xóa tác giả: " + author.name + " không?";
+  onDeleteConfirm = (topic) => {
+    this.setState({ ...this.state, topic: topic });
+    const message = "Bạn có muốn xóa thể loại bài viết: " + topic.name + " không?";
     Modal.confirm({
       title: "Xóa bản ghi?",
       icon: <ExclamationCircleOutlined />,
       content: message,
-      onOk: this.deleteAuthor,
+      onOk: this.deleteTopics,
       okText: "Xóa",
       cancelText: "Thoát",
-      onCancel: this.onCancelModel,
     });
   };
-  deleteAuthor = () => {
-    this.props.deleteById(this.state.author.id);
-    this.setState({ ...this.state, author: {} });
-  };
-  onCancelModel = () => {
-    this.setState({ ...this.state, author: {} });
+  deleteTopics = () => {
+    this.props.deleteById(this.state.topic.id);
   };
   handleStatusChange = async (record) => {
-    this.props.statusAuthor(record.id, {
+    this.props.statusTopics(record.id, {
       status: record.status === 0 ? 1 : 0,
     });
   };
   render() {
     const { navigate } = this.props.router;
     const { open } = this.state;
-    const { authors, isLoading } = this.props;
-
+    const { isLoading, topics } = this.props;
     if (isLoading) {
       return (
         <>
           <ContentHeader
             navigate={navigate}
-            title="Danh sách nhà xuất bản"
+            title="Danh sách thể loại bài viết"
             className="site-page_header"
           />
           <Skeleton />
@@ -99,7 +87,7 @@ class ListAuthor extends Component {
             <Col span={12}>
               <ContentHeader
                 navigate={navigate}
-                title="Danh sách nhà xuất bản"
+                title="Danh sách thể loại bài viết"
                 className="site-page_header"
               />
             </Col>
@@ -115,21 +103,19 @@ class ListAuthor extends Component {
             </Col>
           </Row>
         </div>
-
-        <AuthorList
-          dataSource={authors}
+        <TopicsList
+          dataSource={topics}
           onDeleteConfirm={this.onDeleteConfirm}
           onEdit={this.onEdit}
           handleStatusChange={this.handleStatusChange}
         />
-
-        <AuthorForm
-          author={this.state.author}
+        <TopicsForm
+          dataSource={topics}
+          topic={this.state.topic}
           open={open}
           onCreate={this.onCreate}
           onCancel={() => {
-            this.setState({ ...this.state, open: false, author: {} });
-            
+            this.setState({ ...this.state, language: {}, open: false });
           }}
         />
       </>
@@ -138,19 +124,19 @@ class ListAuthor extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  authors: state.authorReducer.authors,
+  topics: state.topicReducer.topics,
   isLoading: state.commonReducer.isLoading,
 });
 
 const mapDispatchToProps = {
-  insertAuthor,
-  getAuthors,
+  getTopics,
+  insertTopics,
   deleteById,
-  updateAuthor,
-  statusAuthor,
+  updateTopics,
+  statusTopics,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(ListAuthor));
+)(withRouter(ListTopics));

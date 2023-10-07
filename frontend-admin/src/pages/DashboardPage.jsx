@@ -1,3 +1,6 @@
+import { BsFillSignpostSplitFill } from "react-icons/bs";
+import { MdTopic } from "react-icons/md";
+import { ImNewspaper } from "react-icons/im";
 import { GiBookshelf } from "react-icons/gi";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
@@ -33,6 +36,7 @@ import ListLanguage from "../components/booklanguage/ListLanguage";
 import UploadImage from "../components/products/UploadImage";
 import AddOrEditBook from "../components/products/AddOrEditBook";
 import ListBook from "../components/products/ListBook";
+import ListTopic from "../components/topic/ListTopic";
 
 const { Header, Sider, Content } = Layout;
 
@@ -161,6 +165,31 @@ function DashboardPage() {
                 },
               ],
             },
+            {
+              key: "7",
+              icon: <ImNewspaper />,
+              label: "Topic",
+              children: [
+                // {
+                //   key: "61",
+                //   icon: <AiOutlineCloudUpload />,
+                //   label: "Upload Images",
+                //   onClick: () => navigate("/product/upload"),
+                // },
+                {
+                  key: "71",
+                  icon: <MdTopic />,
+                  label: "Topic",
+                  onClick: () => navigate("/topic"),
+                },
+                {
+                  key: "72",
+                  icon: <BsFillSignpostSplitFill />,
+                  label: "List",
+                  onClick: () => navigate("/post"),
+                },
+              ],
+            },
           ]}
         />
       </Sider>
@@ -238,6 +267,8 @@ function DashboardPage() {
                 path="/product/update/:id"
                 element={<AddOrEditBook key="u" />}
               />
+              <Route path="/topic" element={<ListTopic />}></Route>
+              <Route path="/post" element={<ListLanguage />}></Route>
             </Routes>
             <Outlet></Outlet>
           </div>

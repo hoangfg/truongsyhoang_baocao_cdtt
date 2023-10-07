@@ -6,6 +6,7 @@ import bookGenresService from "./../services/bookGenresService";
 import bookGenresReducer from "./reducers/bookGenresReducer";
 import bookLanguageReducer from "./reducers/bookLanguageReducer";
 import bookReducer from "./reducers/bookReducer";
+import topicReducer from "./reducers/topicReducer";
 const rootReducer = combineReducers({
   publisherReducer,
   commonReducer,
@@ -13,5 +14,6 @@ const rootReducer = combineReducers({
   bookGenresReducer,
   bookLanguageReducer,
   bookReducer,
+  topicReducer,
 });
 export default rootReducer;

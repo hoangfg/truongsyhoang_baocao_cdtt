@@ -30,19 +30,13 @@ public class Topic extends AbtractEntity {
     @Column(name = "parent_id", nullable = false)
     private Long parentId;
 
-    @Column(name = "sort_order", nullable = false)
-    private Integer sortOrder;
-
     @Column(name = "metakey", nullable = false)
     private String metakey;
 
     @Column(name = "metadesc", nullable = false)
     private String metadesc;
 
-
-
     @Column(name = "status", columnDefinition = "int default 0")
     private int status;
-
 
 }

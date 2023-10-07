@@ -3,25 +3,26 @@ import React, { Component, createRef } from "react";
 
 import { Input, Modal, Form, Select, Col, Divider, Row } from "antd";
 import TextArea from "antd/es/input/TextArea";
+import SunEditor from "suneditor-react";
 
-class GenresForm extends Component {
+class TopicsForm extends Component {
   form = createRef();
   constructor(props) {
     super(props);
 
     this.state = {
-      genres: { id: "", name: "", detail: "", status: 0 },
+      topic: {},
     };
   }
 
   render() {
     const { open, onCreate, onCancel, dataSource } = this.props;
-    const { genres } = this.props;
+    const { topic } = this.props;
     // console.log(dataSource);
     let filteredData = dataSource.filter((item) => item.status === 0);
-    if (genres.id !== "") {
+    if (topic.id !== "") {
       filteredData = filteredData.filter(
-        (item) => item.id !== genres.id && item.parentId !== genres.id
+        (item) => item.id !== topic.id && item.parentId !== topic.id
       );
     }
     return (
@@ -49,7 +50,7 @@ class GenresForm extends Component {
           layout="vertical"
           name="form_in_modal"
           initialValues={{ modifier: "public" }}
-          key={"f" + genres.id + genres.name}
+          key={"f" + topic.id + topic.name}
         >
           <Row style={{ display: "flex", justifyContent: "space-around" }}>
             <Col md={24}>
@@ -57,26 +58,26 @@ class GenresForm extends Component {
                 label="ID"
                 name="id"
                 labelCol={{ span: 24 }}
-                initialValue={genres.id}
-                hidden={genres.id ? false : true}
+                initialValue={topic.id}
+                hidden={topic.id ? false : true}
               >
                 <Input readOnly></Input>
               </Form.Item>
             </Col>
-            <Col xs={24} md={11}>
+            <Col xs={24} md={24}>
               {/* <Form.Item
                 label="ID"
                 name="id"
                 labelCol={{ span: 24 }}
-                initialValue={genres.id}
-                hidden={genres.id ? false : true}
+                initialValue={topic.id}
+                hidden={topic.id ? false : true}
               >
                 <Input readOnly></Input>
               </Form.Item> */}
               <Form.Item
                 label="Tên"
                 name="name"
-                initialValue={genres.name}
+                initialValue={topic.name}
                 labelCol={{ span: 24 }}
                 // wrapperCol={{ span: 24 }}
                 rules={[
@@ -93,55 +94,73 @@ class GenresForm extends Component {
                 <Input></Input>
               </Form.Item>
               <Form.Item
-                label="Thông tin"
-                name="detail"
-                initialValue={genres.detail}
+                label="Description"
+                name="metakey"
+                initialValue={topic.metakey}
                 labelCol={{ span: 24 }}
-                // wrapperCol={{ span: 24 }}
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng nhập Thông tin của tác giả.",
-                  },
-                  {
-                    min: 2,
-                    message: "Thông tin của tác giả phải có ít nhất 2 ký tự.",
+                    message: "Please enter a description.",
                   },
                 ]}
+                hasFeedback
               >
-                <TextArea rows={4} />
+                <SunEditor
+                  setOptions={{
+                    height: 500,
+                    buttonList: [
+                      [
+                        "bold",
+                        "underline",
+                        "italic",
+                        "strike",
+                        "subscript",
+                        "superscript",
+                      ],
+                      ["fontColor", "hiliteColor", "textStyle", "removeFormat"],
+                    ],
+                  }}
+                  setContents={topic.metakey}
+                />
               </Form.Item>
-
-              <Divider></Divider>
-
-              {/* {!genres.id && (
-                <Button
-                  htmlType="submit"
-                  type="primary"
-                  style={{ float: "right" }}
-                  // loading={isLoading}
-                >
-                  Lưu
-                </Button>
-              )}
-              {genres.id && (
-                <Button
-                  htmlType="button"
-                  type="primary"
-                  style={{ float: "right" }}
-                  // loading={isLoading}
-                  onClick={this.openUpdateConfirmModal}
-                >
-                  Cập nhật
-                </Button> */}
-              {/* )} */}
-            </Col>
-            <Col xs={24} md={12}>
+              <Form.Item
+                label="Description"
+                name="metadesc"
+                initialValue={topic.metadesc}
+                labelCol={{ span: 24 }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter a description.",
+                  },
+                ]}
+                hasFeedback
+              >
+                <SunEditor
+                  setOptions={{
+                    height: 500,
+                    buttonList: [
+                      [
+                        "bold",
+                        "underline",
+                        "italic",
+                        "strike",
+                        "subscript",
+                        "superscript",
+                      ],
+                      ["fontColor", "hiliteColor", "textStyle", "removeFormat"],
+                      
+                    ],
+                  }}
+                  setContents={topic.metadesc}
+                />
+              </Form.Item>
               <Form.Item
                 label="Mã cấp cha"
                 name="parentId"
                 labelCol={{ span: 24 }}
-                initialValue={genres.parentId}
+                initialValue={topic.parentId}
                 hasFeedback
               >
                 <Select placeholder="Chọn mã cấp cha">
@@ -157,14 +176,38 @@ class GenresForm extends Component {
                 label="Trạng thái"
                 name="status"
                 labelCol={{ span: 24 }}
-                initialValue={genres.status === 0 ? "0" : "1"}
+                initialValue={topic.status === 0 ? "0" : "1"}
               >
                 <Select>
                   <Select.Option value="0">Hoạt động</Select.Option>
                   <Select.Option value="1">Không hoạt động</Select.Option>
                 </Select>
               </Form.Item>
+              <Divider></Divider>
+
+              {/* {!topic.id && (
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  style={{ float: "right" }}
+                  // loading={isLoading}
+                >
+                  Lưu
+                </Button>
+              )}
+              {topic.id && (
+                <Button
+                  htmlType="button"
+                  type="primary"
+                  style={{ float: "right" }}
+                  // loading={isLoading}
+                  onClick={this.openUpdateConfirmModal}
+                >
+                  Cập nhật
+                </Button> */}
+              {/* )} */}
             </Col>
+
             <Divider></Divider>
           </Row>
         </Form>
@@ -179,4 +222,4 @@ class GenresForm extends Component {
 //   onCancel: PropTypes.func.isRequired,
 // };
 
-export default GenresForm;
+export default TopicsForm;

@@ -1,5 +1,6 @@
 import {
   LANGUAGES_SET,
+  LANGUAGES_STATE_CLEAR,
   LANGUAGE_APPEND,
   LANGUAGE_DELETE,
   LANGUAGE_SET,
@@ -32,6 +33,8 @@ const bookLanguageReducer = (state = initialState, { type, payload }) => {
         ...state,
         languages: updatedGenres,
       };
+    case LANGUAGES_STATE_CLEAR:
+      return { language: {}, languages: [] };
     default:
       return state;
   }

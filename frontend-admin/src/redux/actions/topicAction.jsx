@@ -1,26 +1,26 @@
-import bookLanguageService from "../../services/bookLanguageService";
+import topicService from "../../services/topicService";
 import {
   COMMON_ERROR_SET,
   COMMON_LOADING_SET,
   COMMON_MESSAGE_SET,
-  LANGUAGES_SET,
-  LANGUAGE_APPEND,
-  LANGUAGE_DELETE,
-  LANGUAGE_SET,
-  LANGUAGE_UPDATE,
+  TOPICS_SET,
+  TOPIC_APPEND,
+  TOPIC_DELETE,
+  TOPIC_SET,
+  TOPIC_UPDATE,
 } from "./actionTypes";
 
-export const insertLanguage = (genres) => async (dispatch) => {
-  const service = new bookLanguageService();
+export const insertTopics = (topic) => async (dispatch) => {
+  const service = new topicService();
 
   try {
-    const response = await service.create(genres);
-    console.log(genres);
+    console.log(topic);
+    const response = await service.create(topic);
     console.log(response.data);
     if (response.status === 201) {
       console.log("yes", response);
       dispatch({
-        type: LANGUAGE_SET,
+        type: TOPIC_SET,
         payload: response.data,
       });
       dispatch({
@@ -28,7 +28,7 @@ export const insertLanguage = (genres) => async (dispatch) => {
         payload: "Thêm thành công",
       });
       dispatch({
-        type: LANGUAGE_APPEND,
+        type: TOPIC_APPEND,
         payload: response.data,
       });
     } else {
@@ -53,18 +53,19 @@ export const insertLanguage = (genres) => async (dispatch) => {
     payload: false,
   });
 };
-export const getLanguage = () => async (dispatch) => {
-  const service = new bookLanguageService();
+export const getTopics = () => async (dispatch) => {
+  const service = new topicService();
+  console.log("se", service);
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
-    const response = await service.getLanguage();
-
+    const response = await service.getTopics();
+    console.log("re", response);
     if (response.status === 200) {
       dispatch({
-        type: LANGUAGES_SET,
+        type: TOPICS_SET,
         payload: response.data,
       });
     } else {
@@ -88,7 +89,7 @@ export const getLanguage = () => async (dispatch) => {
   });
 };
 export const deleteById = (id) => async (dispatch) => {
-  const service = new bookLanguageService();
+  const service = new topicService();
   try {
     dispatch({
       type: COMMON_LOADING_SET,
@@ -98,7 +99,7 @@ export const deleteById = (id) => async (dispatch) => {
     console.log(response);
     if (response.status === 200) {
       dispatch({
-        type: LANGUAGE_DELETE,
+        type: TOPIC_DELETE,
         payload: id,
       });
       dispatch({
@@ -126,7 +127,7 @@ export const deleteById = (id) => async (dispatch) => {
   });
 };
 export const getById = (id) => async (dispatch) => {
-  const service = new bookLanguageService();
+  const service = new topicService();
   try {
     dispatch({
       type: COMMON_LOADING_SET,
@@ -136,7 +137,7 @@ export const getById = (id) => async (dispatch) => {
     console.log(response);
     if (response.status === 200) {
       dispatch({
-        type: LANGUAGE_SET,
+        type: TOPIC_SET,
         payload: response.data,
       });
       console.log(response);
@@ -160,27 +161,27 @@ export const getById = (id) => async (dispatch) => {
     payload: false,
   });
 };
-export const updateLanguage = (genres) => async (dispatch) => {
-  console.log(genres);
-  const service = new bookLanguageService();
+export const updateTopics = (topic) => async (dispatch) => {
+  console.log(topic);
+  const service = new topicService();
   try {
-    const { id } = genres;
-    const response = await service.update(id, genres);
+    const { id } = topic;
+    const response = await service.update(id, topic);
 
     if (response.status === 201) {
       dispatch({
-        type: LANGUAGE_SET,
+        type: TOPIC_SET,
         payload: response.data,
       });
       dispatch({
-        type: LANGUAGE_UPDATE,
+        type: TOPIC_UPDATE,
         payload: response.data,
       });
       dispatch({
         type: COMMON_MESSAGE_SET,
         payload: "Cập nhật thành công",
       });
-      dispatch(getLanguage);
+      dispatch(getTopics);
     } else {
       dispatch({
         type: COMMON_ERROR_SET,
@@ -202,50 +203,44 @@ export const updateLanguage = (genres) => async (dispatch) => {
     payload: false,
   });
 };
-// export const statusLanguage = (id, genres) => async (dispatch) => {
-//   const service = new bookLanguageService();
-//   console.log(genres);
-//   try {
-//     // dispatch({
-//     //   type: COMMON_LOADING_SET,
-//     //   payload: true,
-//     // });
+export const statusTopics = (id, topic) => async (dispatch) => {
+  const service = new topicService();
+  console.log(topic);
+  try {
+    // dispatch({
+    //   type: COMMON_LOADING_SET,
+    //   payload: true,
+    // });
 
-//     const response = await service.status(id, genres);
+    const response = await service.status(id, topic);
 
-//     if (response.status === 200) {
-//       dispatch({
-//         type: LANGUAGE_SET,
-//         payload: response.data,
-//       });
-//       dispatch({
-//         type: COMMON_MESSAGE_SET,
-//         payload: "Cập nhật trang thái thành công",
-//       });
-//       dispatch(getLanguage());
-//     } else {
-//       dispatch({
-//         type: COMMON_ERROR_SET,
-//         payload: response.message,
-//       });
-//     }
-//   } catch (error) {
-//     dispatch({
-//       type: COMMON_ERROR_SET,
-//       payload: error.response.data
-//         ? error.response.data.message
-//         : error.message,
-//     });
-//   } finally {
-//     dispatch({
-//       type: COMMON_LOADING_SET,
-//       payload: false,
-//     });
-//   }
-// };
-export const clearLanguage = () => (dispatch) => {
-  dispatch({
-    type: LANGUAGE_SET,
-    payload: { id: "", name: "", code: "" },
-  });
+    if (response.status === 200) {
+      dispatch({
+        type: TOPIC_SET,
+        payload: response.data,
+      });
+      dispatch({
+        type: COMMON_MESSAGE_SET,
+        payload: "Cập nhật trang thái thành công",
+      });
+      dispatch(getTopics());
+    } else {
+      dispatch({
+        type: COMMON_ERROR_SET,
+        payload: response.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: COMMON_ERROR_SET,
+      payload: error.response.data
+        ? error.response.data.message
+        : error.message,
+    });
+  } finally {
+    dispatch({
+      type: COMMON_LOADING_SET,
+      payload: false,
+    });
+  }
 };

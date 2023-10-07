@@ -48,9 +48,8 @@ class ListGenres extends Component {
   };
   onEdit = (values) => {
     this.setState({ ...this.state, genres: values, open: true });
-    
   };
-
+  
   onDeleteConfirm = (genres) => {
     this.setState({ ...this.state, genres: genres });
     const message = "Bạn có muốn xóa thể loại: " + genres.name + " không?";
@@ -123,6 +122,7 @@ class ListGenres extends Component {
           onCreate={this.onCreate}
           onCancel={() => {
             this.setState({ ...this.state, open: false });
+            
           }}
         />
       </>

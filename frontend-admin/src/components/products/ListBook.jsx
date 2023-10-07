@@ -43,7 +43,7 @@ class ListBook extends Component {
       status: record.status === 0 ? 1 : 0,
     });
   };
-
+ 
   render() {
     const { navigate } = this.props.router;
     // const { open } = this.state;

@@ -16,6 +16,8 @@ export const GENRE_APPEND = "GENRE_APPEND";
 export const GENRE_DELETE = "GENRE_DELETE";
 export const GENRE_UPDATE = "GENRE_UPDATE";
 export const GENRES_STATE_CLEAR = "GENRES_STATE_CLEAR";
+export const RESET_STATE = 'RESET_STATE';
+
 
 export const LANGUAGE_SET = "LANGUAGE_SET";
 export const LANGUAGES_SET = "LANGUAGES_SET";
@@ -29,6 +31,15 @@ export const BOOKS_SET = "BOOKS_SET";
 export const BOOK_DELETE = "BOOK_DELETE";
 export const BOOK_UPDATE = "BOOK_UPDATE";
 export const BOOKS_STATE_CLEAR = "BOOKS_STATE_CLEAR";
+
+export const TOPIC_SET = "TOPIC_SET";
+export const TOPICS_SET = "TOPICS_SET";
+export const TOPIC_APPEND = "TOPIC_APPEND";
+export const TOPIC_DELETE = "TOPIC_DELETE";
+export const TOPIC_UPDATE = "TOPIC_UPDATE";
+export const TOPICS_STATE_CLEAR = "TOPICS_STATE_CLEAR";
+
+
 
 export const COMMON_ERROR_SET = "COMMON_ERROR_SET";
 export const COMMON_MESSAGE_SET = "COMMON_MESSAGE_SET";

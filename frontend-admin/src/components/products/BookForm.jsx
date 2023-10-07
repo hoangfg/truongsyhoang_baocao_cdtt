@@ -44,6 +44,7 @@ class BookForm extends Component {
       const price = parseFloat(value);
 
       if (!isNaN(price) && price > 0) {
+        
       }
     };
 

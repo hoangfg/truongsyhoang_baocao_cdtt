@@ -8,6 +8,7 @@ import {
   getLanguage,
   deleteById,
   updateLanguage,
+  clearLanguage,
 } from "../../redux/actions/bookLanguageAction";
 import { connect } from "react-redux";
 
@@ -22,7 +23,7 @@ class ListLanguage extends Component {
 
     this.state = {
       open: false,
-      languages: {
+      language: {
         id: "",
         name: "",
         code: "",
@@ -42,14 +43,14 @@ class ListLanguage extends Component {
     } else {
       this.props.insertLanguage(values);
     }
-    this.setState({ ...this.state, languages: {}, open: false });
+    this.setState({ ...this.state, language: {}, open: false });
   };
   onEdit = (values) => {
-    this.setState({ ...this.state, languages: values, open: true });
+    this.setState({ ...this.state, language: values, open: true });
   };
 
   onDeleteConfirm = (languages) => {
-    this.setState({ ...this.state, languages: languages });
+    this.setState({ ...this.state, language: languages });
     const message = "Bạn có muốn xóa ngôn ngữ: " + languages.name + " không?";
     Modal.confirm({
       title: "Xóa bản ghi?",
@@ -61,7 +62,7 @@ class ListLanguage extends Component {
     });
   };
   deleteLanguage = () => {
-    this.props.deleteById(this.state.languages.id);
+    this.props.deleteById(this.state.language.id);
   };
   handleStatusChange = async (record) => {
     this.props.statusLanguage(record.id, {
@@ -114,11 +115,11 @@ class ListLanguage extends Component {
           handleStatusChange={this.handleStatusChange}
         />
         <LanguageForm
-          languages={this.state.languages}
+          languages={this.state.language}
           open={open}
           onCreate={this.onCreate}
           onCancel={() => {
-            this.setState({ ...this.state, open: false });
+            this.setState({ ...this.state, language: {}, open: false });
           }}
         />
       </>
@@ -136,6 +137,7 @@ const mapDispatchToProps = {
   insertLanguage,
   deleteById,
   updateLanguage,
+  clearLanguage,
 };
 
 export default connect(
