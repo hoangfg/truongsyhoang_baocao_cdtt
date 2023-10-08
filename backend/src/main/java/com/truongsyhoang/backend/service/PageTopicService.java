@@ -13,28 +13,28 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.truongsyhoang.backend.domain.Author;
-import com.truongsyhoang.backend.domain.Post;
+import com.truongsyhoang.backend.domain.PageTopic;
 import com.truongsyhoang.backend.domain.Publisher;
 import com.truongsyhoang.backend.domain.Topic;
-import com.truongsyhoang.backend.dto.PostDTO;
+import com.truongsyhoang.backend.dto.PageTopicDTO;
 
 import com.truongsyhoang.backend.exception.AuthorException;
-import com.truongsyhoang.backend.repository.PostReponsitory;
+import com.truongsyhoang.backend.repository.PageTopicReponsitory;
 
 @Service
-public class PostService {
+public class PageTopicService {
     @Autowired
-    private PostReponsitory postReponsitory;
+    private PageTopicReponsitory pageTopicReponsitory;
     @Autowired
     private FileStorageService fileStorageService;
 
-    public Post insert(PostDTO dto) {
+    public PageTopic insert(PageTopicDTO dto) {
 
-        List<?> foundedList = postReponsitory.findByTitleContainsIgnoreCase(dto.getTitle());
+        List<?> foundedList = pageTopicReponsitory.findByTitleContainsIgnoreCase(dto.getTitle());
         if (foundedList.size() > 0) {
-            throw new AuthorException("Post name is existed");
+            throw new AuthorException("PageTopic name is existed");
         }
-        Post entity = new Post();
+        PageTopic entity = new PageTopic();
         BeanUtils.copyProperties(dto, entity);
 
         if (dto.getImageFile() != null) {
@@ -42,32 +42,28 @@ public class PostService {
             entity.setImage(fileName);
             dto.setImageFile(null);
         }
-        var topic = new Topic();
-        topic.setId(dto.getTopicId());
 
-        entity.setTopic(topic);
-        System.out.println(topic);
-
+        
         String name = dto.getTitle();
         String slug = generateSlug(name);
         entity.setSlug(slug);
         entity.setCreatedAt(LocalDate.now());
         entity.setCreatedBy(1L);
-        entity.setType("post");
+        entity.setType("pageTopic");
 
         // entity.setUpdatedAt(LocalDate.now());
         // entity.setUpdatedBy(1L);
-        return postReponsitory.save(entity);
+        return pageTopicReponsitory.save(entity);
     }
 
-    public Post update(Long id, PostDTO dto) {
+    public PageTopic update(Long id, PageTopicDTO dto) {
 
-        var found = postReponsitory.findById(id);
+        var found = pageTopicReponsitory.findById(id);
         if (found.isEmpty()) {
-            throw new AuthorException("Post id not found");
+            throw new AuthorException("PageTopic id not found");
         }
 
-        Post entity = found.get();
+        PageTopic entity = found.get();
 
         LocalDate originalCreatedAt = entity.getCreatedAt();
         Long originalCreatedBy = entity.getCreatedBy();
@@ -90,11 +86,6 @@ public class PostService {
         // Restore original values
         entity.setCreatedAt(originalCreatedAt);
         entity.setCreatedBy(originalCreatedBy);
-        var topic = new Topic();
-        topic.setId(dto.getTopicId());
-
-        entity.setTopic(topic);
-        System.out.println(topic);
 
         String name = dto.getTitle();
         String slug = generateSlug(name);
@@ -102,43 +93,43 @@ public class PostService {
         entity.setUpdatedAt(LocalDate.now());
         entity.setUpdatedBy(1L);
 
-        return postReponsitory.save(entity);
+        return pageTopicReponsitory.save(entity);
     }
 
     public List<?> findAll() {
-        return postReponsitory.findAll();
+        return pageTopicReponsitory.findAll();
     }
 
-    public Page<Post> findAll(Pageable pageable) {
-        return postReponsitory.findAll(pageable);
+    public Page<PageTopic> findAll(Pageable pageable) {
+        return pageTopicReponsitory.findAll(pageable);
     }
 
-    public Page<Post> findByTitle(String name, Pageable pageable) {
-        return postReponsitory.findByTitleContainsIgnoreCase(name, pageable);
+    public Page<PageTopic> findByTitle(String name, Pageable pageable) {
+        return pageTopicReponsitory.findByTitleContainsIgnoreCase(name, pageable);
     }
 
-    public Post findById(Long id) {
-        Optional<Post> found = postReponsitory.findById(id);
+    public PageTopic findById(Long id) {
+        Optional<PageTopic> found = pageTopicReponsitory.findById(id);
         if (found.isEmpty()) {
-            throw new AuthorException("Post id: " + id + " does not esisted");
+            throw new AuthorException("PageTopic id: " + id + " does not esisted");
         }
         return found.get();
     }
 
     public void deleteById(Long id) {
-        Post existed = findById(id);
+        PageTopic existed = findById(id);
         String fileName = existed.getImage();
         fileStorageService.deleteImageFile(fileName);
 
-        postReponsitory.delete(existed);
+        pageTopicReponsitory.delete(existed);
     }
 
-    public Post status(Long id, PostDTO dto) {
-        Post entity = findById(id);
+    public PageTopic status(Long id, PageTopicDTO dto) {
+        PageTopic entity = findById(id);
         entity.setStatus(dto.getStatus());
         entity.setUpdatedAt(LocalDate.now());
         entity.setUpdatedBy(1L);
-        return postReponsitory.save(entity);
+        return pageTopicReponsitory.save(entity);
     }
 
     public static String generateSlug(String name) {

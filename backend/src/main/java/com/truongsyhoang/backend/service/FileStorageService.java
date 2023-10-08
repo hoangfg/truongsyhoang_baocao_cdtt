@@ -19,11 +19,16 @@ import com.truongsyhoang.backend.exception.FileNotFoundException;
 
 @Service
 public class FileStorageService {
+    private final Path fileConfigImageStorageLocation;
     private final Path fileAuthorImageStorageLocation;
     private final Path fileBookImageStorageLocation;
     private final Path filePostImageStorageLocation;
 
     public FileStorageService(FileStorageProperties fileStorageProperties) {
+        this.fileConfigImageStorageLocation = Paths.get(fileStorageProperties
+                .getUploadConfigImageDir())
+                .toAbsolutePath()
+                .normalize();
         this.fileAuthorImageStorageLocation = Paths.get(fileStorageProperties
                 .getUploadAuthorImageDir())
                 .toAbsolutePath()
@@ -37,6 +42,7 @@ public class FileStorageService {
                 .toAbsolutePath()
                 .normalize();
         try {
+            Files.createDirectories(fileConfigImageStorageLocation);
             Files.createDirectories(fileAuthorImageStorageLocation);
             Files.createDirectories(filePostImageStorageLocation);
             Files.createDirectories(fileBookImageStorageLocation);
@@ -45,6 +51,9 @@ public class FileStorageService {
         }
     }
 
+    public String storeConfigImageFile(MultipartFile file) {
+        return storeFile(fileConfigImageStorageLocation, file);
+    }
     public String storeAuthorImageFile(MultipartFile file) {
         return storeFile(fileAuthorImageStorageLocation, file);
     }
@@ -100,6 +109,9 @@ public class FileStorageService {
         }
     }
 
+    public Resource loadConfigFileAResource(String fileName) {
+        return loadFileAsResourse(fileConfigImageStorageLocation, fileName);
+    }
     public Resource loadAuthorFileAResource(String fileName) {
         return loadFileAsResourse(fileAuthorImageStorageLocation, fileName);
     }
@@ -111,6 +123,9 @@ public class FileStorageService {
         return loadFileAsResourse(fileBookImageStorageLocation, fileName);
     }
 
+    public void deleteConfigImageFile(String fileName) {
+        deleteFile(fileConfigImageStorageLocation, fileName);
+    }
     public void deleteImageFile(String fileName) {
         deleteFile(fileAuthorImageStorageLocation, fileName);
     }

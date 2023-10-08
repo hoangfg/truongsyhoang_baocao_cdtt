@@ -16,8 +16,7 @@ export const GENRE_APPEND = "GENRE_APPEND";
 export const GENRE_DELETE = "GENRE_DELETE";
 export const GENRE_UPDATE = "GENRE_UPDATE";
 export const GENRES_STATE_CLEAR = "GENRES_STATE_CLEAR";
-export const RESET_STATE = 'RESET_STATE';
-
+export const RESET_STATE = "RESET_STATE";
 
 export const LANGUAGE_SET = "LANGUAGE_SET";
 export const LANGUAGES_SET = "LANGUAGES_SET";
@@ -45,6 +44,20 @@ export const POST_APPEND = "POST_APPEND";
 export const POST_DELETE = "POST_DELETE";
 export const POST_UPDATE = "POST_UPDATE";
 export const POSTS_STATE_CLEAR = "POSTS_STATE_CLEAR";
+
+export const PAGE_SET = "PAGE_SET";
+export const PAGES_SET = "PAGES_SET";
+export const PAGE_APPEND = "PAGE_APPEND";
+export const PAGE_DELETE = "PAGE_DELETE";
+export const PAGE_UPDATE = "PAGE_UPDATE";
+export const PAGES_STATE_CLEAR = "PAGES_STATE_CLEAR";
+
+export const CONFIG_SET = "CONFIG_SET";
+export const CONFIGS_SET = "CONFIGS_SET";
+export const CONFIG_APPEND = "CONFIG_APPEND";
+export const CONFIG_DELETE = "CONFIG_DELETE";
+export const CONFIG_UPDATE = "CONFIG_UPDATE";
+export const CONFIGS_STATE_CLEAR = "CONFIGS_STATE_CLEAR";
 
 export const COMMON_ERROR_SET = "COMMON_ERROR_SET";
 export const COMMON_MESSAGE_SET = "COMMON_MESSAGE_SET";

@@ -5,3 +5,5 @@ export const API_GENRES = "http://localhost:8080/api/genres";
 export const API_LANGUAGES = "http://localhost:8080/api/languages";
 export const API_TOPIC = "http://localhost:8080/api/topic";
 export const API_POST = "http://localhost:8080/api/post";
+export const API_PAGE = "http://localhost:8080/api/page";
+export const API_CONFIG = "http://localhost:8080/api/config";

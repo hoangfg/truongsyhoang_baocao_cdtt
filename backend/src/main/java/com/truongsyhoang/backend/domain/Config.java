@@ -25,10 +25,10 @@ public class Config extends AbtractEntity {
     private String siteName;
 
     @Column(name = "metakey", nullable = false, length = 1000)
-    private String metaKey;
+    private String metakey;
 
     @Column(name = "metadesc", nullable = false, length = 1000)
-    private String metaDesc;
+    private String metadesc;
 
     @Column(name = "author", nullable = false)
     private String author;
@@ -39,17 +39,21 @@ public class Config extends AbtractEntity {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "facebook")
+    @Column(name = "facebook", nullable = true)
     private String facebook;
 
-    @Column(name = "twitter")
+    @Column(name = "twitter", nullable = true)
     private String twitter;
 
-    @Column(name = "youtube")
+    @Column(name = "youtube", nullable = true)
     private String youtube;
 
-    @Column(name = "googleplus")
+    @Column(name = "googleplus", nullable = true)
     private String googleplus;
 
+    @Column(name = "image", length = 127)
+    private String image;
 
+    @Column(name = "status", columnDefinition = "int default 0")
+    private int status;
 }

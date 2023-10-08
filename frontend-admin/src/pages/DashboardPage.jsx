@@ -38,6 +38,8 @@ import AddOrEditBook from "../components/products/AddOrEditBook";
 import ListBook from "../components/products/ListBook";
 import ListTopic from "../components/topic/ListTopic";
 import ListPost from "../components/post/ListPost";
+import ListPage from "../components/page/ListPage";
+import ListConfig from "../components/config/ListConfig";
 
 const { Header, Sider, Content } = Layout;
 
@@ -189,6 +191,25 @@ function DashboardPage() {
                   label: "Post",
                   onClick: () => navigate("/post"),
                 },
+                {
+                  key: "73",
+                  icon: <BsFillSignpostSplitFill />,
+                  label: "Page",
+                  onClick: () => navigate("/page"),
+                },
+              ],
+            },
+            {
+              key: "8",
+              icon: <ImNewspaper />,
+              label: "Config",
+              children: [
+                {
+                  key: "81",
+                  icon: <BsListTask />,
+                  label: "List",
+                  onClick: () => navigate("/config"),
+                },
               ],
             },
           ]}
@@ -270,6 +291,8 @@ function DashboardPage() {
               />
               <Route path="/topic" element={<ListTopic />}></Route>
               <Route path="/post" element={<ListPost />}></Route>
+              <Route path="/page" element={<ListPage />}></Route>
+              <Route path="/config" element={<ListConfig />}></Route>
             </Routes>
             <Outlet></Outlet>
           </div>

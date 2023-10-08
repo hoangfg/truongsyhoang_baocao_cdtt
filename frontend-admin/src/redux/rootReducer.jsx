@@ -8,6 +8,8 @@ import bookLanguageReducer from "./reducers/bookLanguageReducer";
 import bookReducer from "./reducers/bookReducer";
 import topicReducer from "./reducers/topicReducer";
 import postReducer from './reducers/postReducer';
+import pageReducer from './reducers/pageReducer';
+import configReducer from './reducers/configReducer';
 const rootReducer = combineReducers({
   publisherReducer,
   commonReducer,
@@ -17,5 +19,7 @@ const rootReducer = combineReducers({
   bookReducer,
   topicReducer,
   postReducer,
+  pageReducer,
+  configReducer,
 });
 export default rootReducer;
