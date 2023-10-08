@@ -37,6 +37,7 @@ import UploadImage from "../components/products/UploadImage";
 import AddOrEditBook from "../components/products/AddOrEditBook";
 import ListBook from "../components/products/ListBook";
 import ListTopic from "../components/topic/ListTopic";
+import ListPost from "../components/post/ListPost";
 
 const { Header, Sider, Content } = Layout;
 
@@ -185,7 +186,7 @@ function DashboardPage() {
                 {
                   key: "72",
                   icon: <BsFillSignpostSplitFill />,
-                  label: "List",
+                  label: "Post",
                   onClick: () => navigate("/post"),
                 },
               ],
@@ -268,7 +269,7 @@ function DashboardPage() {
                 element={<AddOrEditBook key="u" />}
               />
               <Route path="/topic" element={<ListTopic />}></Route>
-              <Route path="/post" element={<ListLanguage />}></Route>
+              <Route path="/post" element={<ListPost />}></Route>
             </Routes>
             <Outlet></Outlet>
           </div>

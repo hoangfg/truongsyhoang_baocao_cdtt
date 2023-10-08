@@ -51,3 +51,10 @@
 .ant-table-body {
   max-height: 420px !important;
 }
+.custom-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+    overflow-y: auto;
+}

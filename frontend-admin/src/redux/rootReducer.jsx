@@ -7,6 +7,7 @@ import bookGenresReducer from "./reducers/bookGenresReducer";
 import bookLanguageReducer from "./reducers/bookLanguageReducer";
 import bookReducer from "./reducers/bookReducer";
 import topicReducer from "./reducers/topicReducer";
+import postReducer from './reducers/postReducer';
 const rootReducer = combineReducers({
   publisherReducer,
   commonReducer,
@@ -15,5 +16,6 @@ const rootReducer = combineReducers({
   bookLanguageReducer,
   bookReducer,
   topicReducer,
+  postReducer,
 });
 export default rootReducer;

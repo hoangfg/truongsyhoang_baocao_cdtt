@@ -21,10 +21,15 @@ import com.truongsyhoang.backend.exception.FileNotFoundException;
 public class FileStorageService {
     private final Path fileAuthorImageStorageLocation;
     private final Path fileBookImageStorageLocation;
+    private final Path filePostImageStorageLocation;
 
     public FileStorageService(FileStorageProperties fileStorageProperties) {
         this.fileAuthorImageStorageLocation = Paths.get(fileStorageProperties
                 .getUploadAuthorImageDir())
+                .toAbsolutePath()
+                .normalize();
+        this.filePostImageStorageLocation = Paths.get(fileStorageProperties
+                .getUploadPostImageDir())
                 .toAbsolutePath()
                 .normalize();
         this.fileBookImageStorageLocation = Paths.get(fileStorageProperties
@@ -33,6 +38,7 @@ public class FileStorageService {
                 .normalize();
         try {
             Files.createDirectories(fileAuthorImageStorageLocation);
+            Files.createDirectories(filePostImageStorageLocation);
             Files.createDirectories(fileBookImageStorageLocation);
         } catch (Exception ex) {
             throw new FileStorageException("Counld not create the directory where the upload files will be stored", ex);
@@ -41,6 +47,9 @@ public class FileStorageService {
 
     public String storeAuthorImageFile(MultipartFile file) {
         return storeFile(fileAuthorImageStorageLocation, file);
+    }
+    public String storePostImageFile(MultipartFile file) {
+        return storeFile(filePostImageStorageLocation, file);
     }
 
     public String storeBookImageFile(MultipartFile file) {
@@ -94,6 +103,9 @@ public class FileStorageService {
     public Resource loadAuthorFileAResource(String fileName) {
         return loadFileAsResourse(fileAuthorImageStorageLocation, fileName);
     }
+    public Resource loadPostFileAResource(String fileName) {
+        return loadFileAsResourse(filePostImageStorageLocation, fileName);
+    }
 
     public Resource loadBookFileAResource(String fileName) {
         return loadFileAsResourse(fileBookImageStorageLocation, fileName);
@@ -101,6 +113,9 @@ public class FileStorageService {
 
     public void deleteImageFile(String fileName) {
         deleteFile(fileAuthorImageStorageLocation, fileName);
+    }
+    public void deletePostImageFile(String fileName) {
+        deleteFile(filePostImageStorageLocation, fileName);
     }
 
     public void deleteBookImageFile(String fileName) {

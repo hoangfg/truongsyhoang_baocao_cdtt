@@ -32,6 +32,7 @@ class TopicsForm extends Component {
         okText="Lưu"
         cancelText="Thoát"
         onCancel={onCancel}
+        className="custom-modal"
         onOk={() => {
           this.form.current
             .validateFields()
@@ -43,7 +44,7 @@ class TopicsForm extends Component {
               console.log("Validate Failed:", info);
             });
         }}
-        style={{ marginBottom: "20px" }}
+        style={{ minHeight: "100vh", position: "absolute", top: 0, right: 0, left: 0 }}
       >
         <Form
           ref={this.form}
@@ -150,7 +151,6 @@ class TopicsForm extends Component {
                         "superscript",
                       ],
                       ["fontColor", "hiliteColor", "textStyle", "removeFormat"],
-                      
                     ],
                   }}
                   setContents={topic.metadesc}
@@ -183,7 +183,6 @@ class TopicsForm extends Component {
                   <Select.Option value="1">Không hoạt động</Select.Option>
                 </Select>
               </Form.Item>
-              <Divider></Divider>
 
               {/* {!topic.id && (
                 <Button
@@ -207,8 +206,6 @@ class TopicsForm extends Component {
                 </Button> */}
               {/* )} */}
             </Col>
-
-            <Divider></Divider>
           </Row>
         </Form>
       </Modal>

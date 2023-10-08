@@ -39,7 +39,12 @@ export const TOPIC_DELETE = "TOPIC_DELETE";
 export const TOPIC_UPDATE = "TOPIC_UPDATE";
 export const TOPICS_STATE_CLEAR = "TOPICS_STATE_CLEAR";
 
-
+export const POST_SET = "POST_SET";
+export const POSTS_SET = "POSTS_SET";
+export const POST_APPEND = "POST_APPEND";
+export const POST_DELETE = "POST_DELETE";
+export const POST_UPDATE = "POST_UPDATE";
+export const POSTS_STATE_CLEAR = "POSTS_STATE_CLEAR";
 
 export const COMMON_ERROR_SET = "COMMON_ERROR_SET";
 export const COMMON_MESSAGE_SET = "COMMON_MESSAGE_SET";
