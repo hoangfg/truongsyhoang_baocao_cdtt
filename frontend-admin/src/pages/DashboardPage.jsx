@@ -40,6 +40,7 @@ import ListTopic from "../components/topic/ListTopic";
 import ListPost from "../components/post/ListPost";
 import ListPage from "../components/page/ListPage";
 import ListConfig from "../components/config/ListConfig";
+import ListSlider from "../components/slider/ListSlider";
 
 const { Header, Sider, Content } = Layout;
 
@@ -212,6 +213,19 @@ function DashboardPage() {
                 },
               ],
             },
+            {
+              key: "9",
+              icon: <AiOutlineAlipay />,
+              label: "Slider",
+              children: [
+                {
+                  key: "91",
+                  icon: <BsListTask />,
+                  label: "List",
+                  onClick: () => navigate("/slider"),
+                },
+              ],
+            },
           ]}
         />
       </Sider>
@@ -293,6 +307,7 @@ function DashboardPage() {
               <Route path="/post" element={<ListPost />}></Route>
               <Route path="/page" element={<ListPage />}></Route>
               <Route path="/config" element={<ListConfig />}></Route>
+              <Route path="/slider" element={<ListSlider />}></Route>
             </Routes>
             <Outlet></Outlet>
           </div>

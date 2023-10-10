@@ -18,7 +18,7 @@ class TopicsForm extends Component {
   render() {
     const { open, onCreate, onCancel, dataSource } = this.props;
     const { topic } = this.props;
-    // console.log(dataSource);
+    console.log("data", dataSource);
     let filteredData = dataSource.filter((item) => item.status === 0);
     if (topic.id !== "") {
       filteredData = filteredData.filter(
@@ -44,7 +44,13 @@ class TopicsForm extends Component {
               console.log("Validate Failed:", info);
             });
         }}
-        style={{ minHeight: "100vh", position: "absolute", top: 0, right: 0, left: 0 }}
+        style={{
+          minHeight: "100vh",
+          position: "absolute",
+          top: 0,
+          right: 0,
+          left: 0,
+        }}
       >
         <Form
           ref={this.form}

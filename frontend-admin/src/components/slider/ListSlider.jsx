@@ -4,29 +4,29 @@ import ContentHeader from "../common/ContentHeader";
 import { Button, Col, Modal, Row, Skeleton } from "antd";
 
 import {
-  insertTopics,
-  getTopics,
+  insertSlider,
+  getSliders,
   deleteById,
-  updateTopics,
-  statusTopics,
-} from "../../redux/actions/topicAction";
+  updateSlider,
+  statusSlider,
+} from "../../redux/actions/sliderAction";
 import { connect } from "react-redux";
 
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import TopicsList from "./TopicList";
-import TopicsForm from "./TopicForm";
+import SlidersList from "./SliderList";
+import SlidersForm from "./SliderForm";
 
-class ListTopics extends Component {
+class ListSliders extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       open: false,
-      topic: {},
+      slider: {},
     };
   }
   componentDidMount = () => {
-    this.props.getTopics();
+    this.props.getSliders();
   };
   componentWillUnmount = () => {
     // this.props.clearState();
@@ -34,48 +34,49 @@ class ListTopics extends Component {
   onCreate = (values) => {
     console.log(values);
     if (values.id) {
-      this.props.updateTopics(values);
+      this.props.updateSlider(values);
     } else {
-      this.props.insertTopics(values);
+      console.log("var>", values);
+      this.props.insertSlider(values);
     }
-    this.setState({ ...this.state, topic: {}, open: false });
+    this.setState({ ...this.state, slider: {}, open: false });
   };
   onEdit = (values) => {
-    this.setState({ ...this.state, topic: values, open: true });
+    this.setState({ ...this.state, slider: values, open: true });
   };
 
-  onDeleteConfirm = (topic) => {
-    this.setState({ ...this.state, topic: topic });
+  onDeleteConfirm = (slider) => {
+    this.setState({ ...this.state, slider: slider });
     const message =
-      "Bạn có muốn xóa thể loại bài viết: " + topic.name + " không?";
+      "Bạn có muốn xóa thể loại ảnh bìa: " + slider.name + " không?";
     Modal.confirm({
       title: "Xóa bản ghi?",
       icon: <ExclamationCircleOutlined />,
       content: message,
-      onOk: this.deleteTopics,
+      onOk: this.deleteSliders,
       okText: "Xóa",
       cancelText: "Thoát",
     });
   };
-  deleteTopics = () => {
-    this.props.deleteById(this.state.topic.id);
+  deleteSliders = () => {
+    this.props.deleteById(this.state.slider.id);
   };
   handleStatusChange = async (record) => {
-    this.props.statusTopics(record.id, {
+    this.props.statusSlider(record.id, {
       status: record.status === 0 ? 1 : 0,
     });
   };
   render() {
     const { navigate } = this.props.router;
     const { open } = this.state;
-    const { isLoading, topics } = this.props;
-    console.log("topics", topics);
+    const { isLoading, sliders } = this.props;
+    console.log("sliders", sliders);
     if (isLoading) {
       return (
         <>
           <ContentHeader
             navigate={navigate}
-            title="Danh sách thể loại bài viết"
+            title="Danh sách thể loại ảnh bìa"
             className="site-page_header"
           />
           <Skeleton />
@@ -89,7 +90,7 @@ class ListTopics extends Component {
             <Col span={12}>
               <ContentHeader
                 navigate={navigate}
-                title="Danh sách thể loại bài viết"
+                title="Danh sách thể loại ảnh bìa"
                 className="site-page_header"
               />
             </Col>
@@ -105,15 +106,15 @@ class ListTopics extends Component {
             </Col>
           </Row>
         </div>
-        <TopicsList
-          dataSource={topics}
+        <SlidersList
+          slider={sliders}
           onDeleteConfirm={this.onDeleteConfirm}
           onEdit={this.onEdit}
           handleStatusChange={this.handleStatusChange}
         />
-        <TopicsForm
-          dataSource={topics}
-          topic={this.state.topic}
+        <SlidersForm
+          dataSource={sliders}
+          slider={this.state.slider}
           open={open}
           onCreate={this.onCreate}
           onCancel={() => {
@@ -126,19 +127,19 @@ class ListTopics extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  topics: state.topicReducer.topics,
+  sliders: state.sliderReducer.sliders,
   isLoading: state.commonReducer.isLoading,
 });
 
 const mapDispatchToProps = {
-  getTopics,
-  insertTopics,
+  getSliders,
+  insertSlider,
   deleteById,
-  updateTopics,
-  statusTopics,
+  updateSlider,
+  statusSlider,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(ListTopics));
+)(withRouter(ListSliders));

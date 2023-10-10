@@ -1,20 +1,28 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Button, Divider, Modal, Skeleton, Space, Switch, Table } from "antd";
+import {
+  Button,
+  Divider,
+  Image,
+  Modal,
+  Skeleton,
+  Space,
+  Switch,
+  Table,
+} from "antd";
 import Column from "antd/es/table/Column";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import { Image } from "antd/lib";
-import pageService from "../../services/pageService";
-export default class PageList extends Component {
+import sliderService from "./../../services/sliderService";
+
+export default class SliderList extends Component {
   render() {
-    const { dataSource, onEdit, onDeleteConfirm, handleStatusChange } =
-      this.props;
-    console.log("da",dataSource);
+    const { slider, onEdit, onDeleteConfirm, handleStatusChange } = this.props;
+    console.log("slider", slider);
     return (
       <Table
         className="content-panel_table"
-        dataSource={dataSource}
+        dataSource={slider}
         size="small"
         rowKey="id"
         pagination={{ pageSize: 6 }}
@@ -37,15 +45,15 @@ export default class PageList extends Component {
             <Space>
               <Image
                 height="50px"
-                src={pageService.getPhotoUrl(record.image)}
+                src={sliderService.getPhotoUrl(record.image)}
               ></Image>
             </Space>
           )}
         ></Column>
         <Column
           title="Tên"
-          key="title"
-          dataIndex="title"
+          key="name"
+          dataIndex="name"
           align="center"
         ></Column>
         <Column

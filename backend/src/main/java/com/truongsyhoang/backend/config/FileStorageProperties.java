@@ -15,4 +15,5 @@ public class FileStorageProperties {
     private String uploadAuthorImageDir;
     private String uploadBookImageDir;
     private String uploadPostImageDir;
+    private String uploadSliderImageDir;
 }

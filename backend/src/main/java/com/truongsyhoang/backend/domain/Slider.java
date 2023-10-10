@@ -33,12 +33,11 @@ public class Slider extends AbtractEntity {
     @Column(name = "image", nullable = false)
     private String image;
 
-    @Column(name = "sort_order", nullable = false)
+    @Column(name = "sort_order", nullable = false, columnDefinition = "int default 0")
     private Integer sortOrder;
 
     @Column(name = "position", nullable = false)
     private String position;
-
 
 
     @Column(name = "status", columnDefinition = "int default 0")

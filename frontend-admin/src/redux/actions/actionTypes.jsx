@@ -52,6 +52,13 @@ export const PAGE_DELETE = "PAGE_DELETE";
 export const PAGE_UPDATE = "PAGE_UPDATE";
 export const PAGES_STATE_CLEAR = "PAGES_STATE_CLEAR";
 
+export const SLIDER_SET = "SLIDER_SET";
+export const SLIDERS_SET = "SLIDERS_SET";
+export const SLIDER_APPEND = "SLIDER_APPEND";
+export const SLIDER_DELETE = "SLIDER_DELETE";
+export const SLIDER_UPDATE = "SLIDER_UPDATE";
+export const SLIDERS_STATE_CLEAR = "SLIDERS_STATE_CLEAR";
+
 export const CONFIG_SET = "CONFIG_SET";
 export const CONFIGS_SET = "CONFIGS_SET";
 export const CONFIG_APPEND = "CONFIG_APPEND";

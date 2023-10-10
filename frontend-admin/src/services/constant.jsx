@@ -7,3 +7,4 @@ export const API_TOPIC = "http://localhost:8080/api/topic";
 export const API_POST = "http://localhost:8080/api/post";
 export const API_PAGE = "http://localhost:8080/api/page";
 export const API_CONFIG = "http://localhost:8080/api/config";
+export const API_SLIDER = "http://localhost:8080/api/slider";

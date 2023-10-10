@@ -23,6 +23,7 @@ public class FileStorageService {
     private final Path fileAuthorImageStorageLocation;
     private final Path fileBookImageStorageLocation;
     private final Path filePostImageStorageLocation;
+    private final Path fileSliderImageStorageLocation;
 
     public FileStorageService(FileStorageProperties fileStorageProperties) {
         this.fileConfigImageStorageLocation = Paths.get(fileStorageProperties
@@ -41,10 +42,15 @@ public class FileStorageService {
                 .getUploadBookImageDir())
                 .toAbsolutePath()
                 .normalize();
+        this.fileSliderImageStorageLocation = Paths.get(fileStorageProperties
+                .getUploadBookImageDir())
+                .toAbsolutePath()
+                .normalize();
         try {
             Files.createDirectories(fileConfigImageStorageLocation);
             Files.createDirectories(fileAuthorImageStorageLocation);
             Files.createDirectories(filePostImageStorageLocation);
+            Files.createDirectories(fileSliderImageStorageLocation);
             Files.createDirectories(fileBookImageStorageLocation);
         } catch (Exception ex) {
             throw new FileStorageException("Counld not create the directory where the upload files will be stored", ex);
@@ -59,6 +65,9 @@ public class FileStorageService {
     }
     public String storePostImageFile(MultipartFile file) {
         return storeFile(filePostImageStorageLocation, file);
+    }
+    public String storeSliderImageFile(MultipartFile file) {
+        return storeFile(fileSliderImageStorageLocation, file);
     }
 
     public String storeBookImageFile(MultipartFile file) {
@@ -118,6 +127,9 @@ public class FileStorageService {
     public Resource loadPostFileAResource(String fileName) {
         return loadFileAsResourse(filePostImageStorageLocation, fileName);
     }
+    public Resource loadSliderFileAResource(String fileName) {
+        return loadFileAsResourse(fileSliderImageStorageLocation, fileName);
+    }
 
     public Resource loadBookFileAResource(String fileName) {
         return loadFileAsResourse(fileBookImageStorageLocation, fileName);
@@ -131,6 +143,9 @@ public class FileStorageService {
     }
     public void deletePostImageFile(String fileName) {
         deleteFile(filePostImageStorageLocation, fileName);
+    }
+    public void deleteSliderImageFile(String fileName) {
+        deleteFile(fileSliderImageStorageLocation, fileName);
     }
 
     public void deleteBookImageFile(String fileName) {
