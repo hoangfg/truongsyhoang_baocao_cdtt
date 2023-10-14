@@ -23,7 +23,7 @@ export default function TopNav() {
           <div className="right">
             <ul className="flexitem main-links">
               <li>
-                <Link href="#">Sign Up</Link>
+                <Link to="signin">Sign Up</Link>
               </li>
               <li>
                 <Link href="#">My Account</Link>

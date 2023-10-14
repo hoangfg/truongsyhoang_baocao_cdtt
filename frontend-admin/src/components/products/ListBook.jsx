@@ -14,7 +14,42 @@ import {
   updateBook,
   statusBook,
 } from "./../../redux/actions/bookAction";
+import StoreForm from "./StoreForm";
+import { insertStore } from "./../../redux/actions/storeAction";
 class ListBook extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      openStoreForm: false,
+      store: {},
+    };
+  }
+
+  openStoreForm = (id) => {
+    console.log("id", id);
+    // const selectedBook = this.props.books.find((book) => book.id === id);
+
+    this.setState({
+      openStoreForm: true,
+      store: {
+        ...this.state.store,
+        bookId: id,
+      },
+    });
+  };
+
+  closeStoreForm = () => {
+    this.setState({
+      openStoreForm: false,
+    });
+  };
+  onCreate = (values) => {
+    // console.log("val", values);
+    this.props.insertStore(values);
+    this.setState({ ...this.state, store: {}, open: false });
+  };
+  
   componentDidMount = () => {
     this.props.getBooks();
   };
@@ -43,10 +78,10 @@ class ListBook extends Component {
       status: record.status === 0 ? 1 : 0,
     });
   };
- 
+
   render() {
     const { navigate } = this.props.router;
-    // const { open } = this.state;
+    const { open } = this.state;
     const { books, isLoading } = this.props;
     console.log(books);
     if (isLoading) {
@@ -90,7 +125,23 @@ class ListBook extends Component {
           openDeleteConfirmModal={this.openDeleteConfirmModal}
           onEdit={this.edit}
           handleStatusChange={this.handleStatusChange}
+          openStoreForm={this.openStoreForm}
+          open={open}
+          onCreate={this.onCreate}
+          onCancel={() => {
+            this.setState({ ...this.state, open: false, page: {} });
+          }}
         />
+        {this.state.openStoreForm && (
+          <StoreForm
+            open={this.state.openStoreForm}
+            onCancel={this.closeStoreForm}
+            onCreate={this.onCreate}
+            store={this.state.store}
+            productId={this.state.book}
+            // Add any other necessary props here
+          />
+        )}
       </>
     );
   }
@@ -105,6 +156,7 @@ const mapDispatchToProps = {
   getBooks,
   deleteById,
   statusBook,
+  insertStore,
 };
 
 export default withRouter(

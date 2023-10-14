@@ -43,17 +43,17 @@ class AddOrEditBook extends Component {
     this.state = {
       step: 0,
       book: {
-        id: "",
-        name: "",
-        price: 0,
-        image: "",
-        status: 0,
-        detail: "",
-        description: "",
-        publisherId: "",
-        authorId: "",
-        genresId: "",
-        languageId: "",
+        // id: "",
+        // name: "",
+        // price: 0,
+        // image: "",
+        // status: 0,
+        // detail: "",
+        // description: "",
+        // publisherId: "",
+        // authorId: "",
+        // genresId: "",
+        // languageId: "",
       },
 
       publisherList: [], // Thêm mảng publisherList vào state
@@ -83,17 +83,17 @@ class AddOrEditBook extends Component {
     } else {
       this.setState({
         book: {
-          id: "",
-          name: "",
-          price: 0,
-          image: "",
-          status: 0,
-          detail: "",
-          description: "",
-          publisherId: "",
-          authorId: "",
-          genresId: "",
-          languageId: "",
+          // id: "",
+          // name: "",
+          // price: 0,
+          // image: "",
+          // status: 0,
+          // detail: "",
+          // description: "",
+          // publisherId: "",
+          // authorId: "",
+          // genresId: "",
+          // languageId: "",
         },
 
         bookImages: [],
@@ -320,27 +320,39 @@ class AddOrEditBook extends Component {
           </>
         ),
       },
-      {
-        key: "5",
-        label: "Store",
-        children: (
-          <>
-            <Divider />
-            <StoreForm book={book} />
-          </>
-        ),
-      },
-      {
-        key: "6",
-        label: "Sale",
-        children: (
-          <>
-            <Divider />
-            <SaleForm book={book} />
-          </>
-        ),
-      },
+      // {
+      //   key: "5",
+      //   label: "Store",
+      //   children: (
+      //     <>
+      //       <Divider />
+      //       <StoreForm book={book} />
+      //     </>
+      //   ),
+      // },
+      // {
+      //   key: "6",
+      //   label: "Sale",
+      //   children: (
+      //     <>
+      //       <Divider />
+      //       <SaleForm book={book} />
+      //     </>
+      //   ),
+      // },
     ];
+    // if (this.props.router.params.id) {
+    //   items.push({
+    //     key: "5",
+    //     label: "Store",
+    //     children: (
+    //       <>
+    //         <Divider />
+    //         <StoreForm book={book} />
+    //       </>
+    //     ),
+    //   });
+    // }
     const onFinish = (values) => {
       console.log("Received values:", values);
     };

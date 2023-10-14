@@ -1,16 +1,37 @@
 
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 
-import Home from './pages/Home';
+
 import { Provider } from "react-redux"
 import store from './redux/store';
+
+import { Routes } from 'react-router-dom';
+import Layout from './layout';
+import PageHome from './pages/home/PageHome';
+import PageCategory from './pages/page-category/PageCategory';
+import PageOffer from './pages/page-offer/PageOffer';
+import Cart from './pages/Cart/Cart';
+import CheckOut from './pages/Checkout/CheckOut';
+import SignBox from './pages/Account/SignBox';
+
 function App() {
   return (
     <Provider store={store} className="App">
 
       <BrowserRouter>
-        <Home />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<PageHome />} />
+            <Route path="product" element={<PageCategory />} />
+            <Route path="product/:id" element={<PageOffer />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="checkout" element={<CheckOut />} />
+            <Route path="signin" element={<SignBox />} />
+            {/* <Route path="*" element={<NoPage />} /> */}
+          </Route>
+
+        </Routes>
       </BrowserRouter>
 
     </Provider>

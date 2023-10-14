@@ -2382,7 +2382,8 @@ input[type="range"]::-webkit-slider-thumb {
   }
   /* slider */
   .slider > div > .wrapper {
-    width: calc(100% - (300px + 3em));
+    /* width: calc(100% - (300px + 3em)); */
+    width: var(--percent100);
     margin-left: auto;
   }
   /* product */

@@ -17,7 +17,6 @@ import { RiDeleteBin2Line } from "react-icons/ri";
 import { Image } from "antd/lib";
 import bookService from "../../services/bookService";
 import withRouter from "../../helpers/withRouter";
-
 class BookList extends Component {
   render() {
     const {
@@ -26,6 +25,8 @@ class BookList extends Component {
       openDeleteConfirmModal,
       handleStatusChange,
       onEdit,
+      onStore,
+      openStoreForm,
     } = this.props;
     // console.log(books);
     return (
@@ -104,15 +105,16 @@ class BookList extends Component {
           width={150}
           align="center"
           render={(_, record) => (
-            <Space size="middle">
-              <Tooltip placement="top" title="View detail">
+            <Space>
+              <Tooltip placement="top" title="Add store">
                 <Button
                   key={record.key}
                   type="link"
                   style={{ marginRight: "8px" }}
-                  onClick={() => navigate("/product/view/" + record.id)}
+                  onClick={() => openStoreForm(record.id)}
                 >
                   <AiOutlineFolderView
+                    size="middle"
                     color="green"
                     type="primary"
                     align="center"
@@ -126,7 +128,12 @@ class BookList extends Component {
                   style={{ marginRight: "8px" }}
                   onClick={() => onEdit(record)}
                 >
-                  <BiEdit color="blue" type="primary" align="center" />
+                  <BiEdit
+                    size="middle"
+                    color="blue"
+                    type="primary"
+                    align="center"
+                  />
                 </Button>
               </Tooltip>
               <Tooltip placement="top" title="delete">
@@ -137,7 +144,7 @@ class BookList extends Component {
                   danger
                   onClick={() => openDeleteConfirmModal(record)}
                 >
-                  <RiDeleteBin2Line align="center" color="red" />
+                  <RiDeleteBin2Line size="middle" align="center" color="red" />
                 </Button>
               </Tooltip>
             </Space>

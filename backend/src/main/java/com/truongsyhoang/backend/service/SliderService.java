@@ -70,11 +70,13 @@ public class SliderService {
 
         LocalDate originalCreatedAt = entity.getCreatedAt();
         Long originalCreatedBy = entity.getCreatedBy();
+
+        Integer originalSortOrder = entity.getSortOrder();
         String originalImage = entity.getImage();
         Slider sliderWithSortOrder = sliderReponsitory.findById(dto.getIdToUseForSortOrder())
                 .orElse(new Slider());
         Integer sortOrder = sliderWithSortOrder.getSortOrder();
-        int newSortOrder = (sortOrder != null) ? sortOrder + 1 : 0;
+        int newSortOrder = (sortOrder != null) ? sortOrder + 1 : originalSortOrder;
         BeanUtils.copyProperties(dto, entity, "createdAt", "createdBy", "image");
         entity.setSortOrder(newSortOrder);
         if (dto.getImageFile() != null && dto.getImageFile().getSize() > 0) {

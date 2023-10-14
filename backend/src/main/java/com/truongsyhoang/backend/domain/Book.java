@@ -1,9 +1,15 @@
 package com.truongsyhoang.backend.domain;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,6 +21,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -30,6 +37,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "book")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Book extends AbtractEntity {
 
 	@Column(name = "name", nullable = false)
@@ -64,6 +72,9 @@ public class Book extends AbtractEntity {
 	@ManyToMany
 	@JoinTable(name = "book_book_images", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "book_images_id"))
 	private Set<BookImages> images = new LinkedHashSet<>();
+	@JsonIgnore
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<BookStore> stores = new HashSet<>();
 
 	@OneToOne(orphanRemoval = true)
 	@JoinColumn(name = "book_image_id")
@@ -71,11 +82,6 @@ public class Book extends AbtractEntity {
 
 	@Column(name = "status", columnDefinition = "int default 0")
 	private int status;
-	@OneToOne(mappedBy = "bookId", orphanRemoval = true)
-	private BookSale sale;
-
-	@OneToOne(mappedBy = "bookId", orphanRemoval = true)
-	private BookStore store;
 
 	@PrePersist
 	@Override

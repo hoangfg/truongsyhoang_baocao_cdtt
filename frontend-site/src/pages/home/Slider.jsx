@@ -1,16 +1,31 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Swiper } from "swiper";
+import Swiper from "swiper";
+import { Navigation, Pagination } from "swiper/modules";
+// import Swiper and modules styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import "swiper/swiper-bundle.css";
 export default function Slider() {
- useEffect(() => {
-   const swiper = new Swiper(".myslider", {
-     loop: true,
-     pagination: {
-       el: ".swiper-pagination",
-     },
-   });
- }, []);
+  useEffect(() => {
+    const swiper = new Swiper(".myslider", {
+      modules: [Navigation, Pagination],
+      loop: true,
+      pagination: {
+        el: ".swiper-pagination",
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+
+      // And if we need scrollbar
+      scrollbar: {
+        el: ".swiper-scrollbar",
+      },
+    });
+  }, []);
   return (
     <div className="slider">
       <div className="container">
@@ -30,7 +45,7 @@ export default function Slider() {
               >
                 <div className="item">
                   <div className="image object-cover">
-                    <img src=".../.../assets/slider/slider0.jpg" alt="" />
+                    <img src="./assets/slider/slider0.jpg" alt="" />
                   </div>
                   <div className="text-content flexcol">
                     <h4>Shoes Fashion</h4>
@@ -54,7 +69,7 @@ export default function Slider() {
               >
                 <div className="item">
                   <div className="image object-cover">
-                    <img src=".../assets/slider/slider1.jpg" alt="1" />
+                    <img src="./assets/slider/slider1.jpg" alt="1" />
                   </div>
                   <div className="text-content flexcol">
                     <h4>Quick Fashion</h4>
@@ -78,12 +93,12 @@ export default function Slider() {
               >
                 <div className="item">
                   <div className="image object-cover">
-                    <img src=".../assets/slider/slider2.jpg" alt="1" />
+                    <img src="./assets/slider/slider2.jpg" alt="1" />
                   </div>
                   <div className="text-content flexcol">
                     <h4>Quick Offer</h4>
                     <h2>
-                      <span>Wooden Minimal SOfa</span>
+                      <span>Wooden Minimal Sofa</span>
                       <br />
                       <span>Extra 50% off</span>
                     </h2>
@@ -102,7 +117,7 @@ export default function Slider() {
               >
                 <div className="item">
                   <div className="image object-cover">
-                    <img src=".../assets/slider/slider3.jpg" alt="1" />
+                    <img src="./assets/slider/slider3.jpg" alt="1" />
                   </div>
                   <div className="text-content flexcol">
                     <h4>Best Deals</h4>
@@ -132,6 +147,9 @@ export default function Slider() {
               aria-live="assertive"
               aria-atomic="true"
             />
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-scrollbar"></div>
           </div>
         </div>
       </div>

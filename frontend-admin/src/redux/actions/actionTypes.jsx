@@ -38,6 +38,13 @@ export const TOPIC_DELETE = "TOPIC_DELETE";
 export const TOPIC_UPDATE = "TOPIC_UPDATE";
 export const TOPICS_STATE_CLEAR = "TOPICS_STATE_CLEAR";
 
+export const STORE_SET = "STORE_SET";
+export const STORES_SET = "STORES_SET";
+export const STORE_APPEND = "STORE_APPEND";
+export const STORE_DELETE = "STORE_DELETE";
+export const STORE_UPDATE = "STORE_UPDATE";
+export const STORES_STATE_CLEAR = "STORES_STATE_CLEAR";
+
 export const POST_SET = "POST_SET";
 export const POSTS_SET = "POSTS_SET";
 export const POST_APPEND = "POST_APPEND";

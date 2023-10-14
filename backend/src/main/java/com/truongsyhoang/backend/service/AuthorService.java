@@ -27,7 +27,7 @@ public class AuthorService {
     private FileStorageService fileStorageService;
 
     public Author insert(AuthorDTO dto) {
-
+        System.out.println(dto);
         List<?> foundedList = authorReponsitory.findByNameContainsIgnoreCase(dto.getName());
         if (foundedList.size() > 0) {
             throw new AuthorException("Author name is existed");
@@ -114,7 +114,7 @@ public class AuthorService {
         Author existed = findById(id);
         String fileName = existed.getImage();
         fileStorageService.deleteImageFile(fileName);
-        
+
         authorReponsitory.delete(existed);
     }
 

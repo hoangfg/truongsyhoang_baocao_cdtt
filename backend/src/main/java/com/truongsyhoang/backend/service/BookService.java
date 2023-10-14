@@ -98,23 +98,24 @@ public class BookService {
 
         dto.setId(saveBook.getId());
 
-        BookStore bookStore = new BookStore();
+        // BookStore bookStore = new BookStore();
 
-        bookStore.setBookId(saveBook);
-        bookStore.setEntryPrice(dto.getEntryPrice());
-        bookStore.setQuanlity(dto.getQuanlity());
+        // bookStore.setBookId(saveBook);
+        // bookStore.setEntryPrice(dto.getEntryPrice());
+        // bookStore.setQuanlity(dto.getQuanlity());
 
-        bookStoreReponsitory.save(bookStore);
+        // bookStoreReponsitory.save(bookStore);
 
-        if (dto.getBeginSale() != null && dto.getEndSale() != null && dto.getPriceSale() != 0) {
-            BookSale bookSale = new BookSale();
+        // if (dto.getBeginSale() != null && dto.getEndSale() != null &&
+        // dto.getPriceSale() != 0) {
+        // BookSale bookSale = new BookSale();
 
-            bookSale.setBeginSale(dto.getBeginSale()); // Set LocalDate directly
-            bookSale.setEndSale(dto.getEndSale()); // Set LocalDate directly
-            bookSale.setPriceSale(dto.getPriceSale());
-            bookSale.setBookId(saveBook);
-            bookSaleReponsitory.save(bookSale);
-        }
+        // bookSale.setBeginSale(dto.getBeginSale()); // Set LocalDate directly
+        // bookSale.setEndSale(dto.getEndSale()); // Set LocalDate directly
+        // bookSale.setPriceSale(dto.getPriceSale());
+        // bookSale.setBookId(saveBook);
+        // bookSaleReponsitory.save(bookSale);
+        // }
         return dto;
     }
 
@@ -179,31 +180,34 @@ public class BookService {
             found.setImages(imgList);
         }
 
-        Optional<BookStore> optionalBookStore = bookStoreReponsitory.findByBookId_Id(id);
-        if (optionalBookStore.isPresent()) {
-            BookStore bookStore = optionalBookStore.get();
-            bookStore.setEntryPrice(dto.getEntryPrice());
-            bookStore.setQuanlity(dto.getQuanlity());
-            bookStoreReponsitory.save(bookStore);
-        }
+        // Optional<BookStore> optionalBookStore =
+        // bookStoreReponsitory.findByBookId_Id(id);
+        // if (optionalBookStore.isPresent()) {
+        // BookStore bookStore = optionalBookStore.get();
+        // bookStore.setEntryPrice(dto.getEntryPrice());
+        // bookStore.setQuanlity(dto.getQuanlity());
+        // bookStoreReponsitory.save(bookStore);
+        // }
 
-        // Cập nhật thông tin BookSale
-        Optional<BookSale> optionalBookSale = bookSaleReponsitory.findByBookId_Id(id);
-        if (dto.getBeginSale() != null && dto.getEndSale() != null && dto.getPriceSale() != 0) {
-            if (optionalBookSale.isPresent()) {
-                BookSale bookSale = optionalBookSale.get();
-                bookSale.setBeginSale(dto.getBeginSale());
-                bookSale.setEndSale(dto.getEndSale());
-                bookSale.setPriceSale(dto.getPriceSale());
-            } else {
-                BookSale bookSale = new BookSale();
-                bookSale.setBeginSale(dto.getBeginSale());
-                bookSale.setEndSale(dto.getEndSale());
-                bookSale.setPriceSale(dto.getPriceSale());
-                bookSale.setBookId(found);
-                bookSaleReponsitory.save(bookSale);
-            }
-        }
+        // // Cập nhật thông tin BookSale
+        // Optional<BookSale> optionalBookSale =
+        // bookSaleReponsitory.findByBookId_Id(id);
+        // if (dto.getBeginSale() != null && dto.getEndSale() != null &&
+        // dto.getPriceSale() != 0) {
+        // if (optionalBookSale.isPresent()) {
+        // BookSale bookSale = optionalBookSale.get();
+        // bookSale.setBeginSale(dto.getBeginSale());
+        // bookSale.setEndSale(dto.getEndSale());
+        // bookSale.setPriceSale(dto.getPriceSale());
+        // } else {
+        // BookSale bookSale = new BookSale();
+        // bookSale.setBeginSale(dto.getBeginSale());
+        // bookSale.setEndSale(dto.getEndSale());
+        // bookSale.setPriceSale(dto.getPriceSale());
+        // bookSale.setBookId(found);
+        // bookSaleReponsitory.save(bookSale);
+        // }
+        // }
 
         return dto;
 
@@ -278,29 +282,32 @@ public class BookService {
         dto.setImage(imageDTO);
 
         // Lấy thông tin store
-        Optional<BookStore> optionalBookStore = bookStoreReponsitory.findByBookId_Id(id);
-        if (optionalBookStore.isPresent()) {
-            BookStore bookStore = optionalBookStore.get();
-            dto.setEntryPrice(bookStore.getEntryPrice());
-            dto.setQuanlity(bookStore.getQuanlity());
-        }
-        Optional<BookSale> optionalBookSale = bookSaleReponsitory.findByBookId_Id(id);
-        if (optionalBookSale.isPresent()) {
-            BookSale bookSale = optionalBookSale.get();
-            dto.setBeginSale(bookSale.getBeginSale());
-            dto.setEndSale(bookSale.getEndSale());
-            dto.setPriceSale(bookSale.getPriceSale());
-        } else {
-            dto.setBeginSale(null);
-            dto.setEndSale(null);
-            dto.setPriceSale(0); // Hoặc giá trị mặc định khác tùy theo trường hợp
-        }
+        // Optional<BookStore> optionalBookStore =
+        // bookStoreReponsitory.findByBookId_Id(id);
+        // if (optionalBookStore.isPresent()) {
+        // BookStore bookStore = optionalBookStore.get();
+        // dto.setEntryPrice(bookStore.getEntryPrice());
+        // dto.setQuanlity(bookStore.getQuanlity());
+        // }
+        // Optional<BookSale> optionalBookSale =
+        // bookSaleReponsitory.findByBookId_Id(id);
+        // if (optionalBookSale.isPresent()) {
+        // BookSale bookSale = optionalBookSale.get();
+        // dto.setBeginSale(bookSale.getBeginSale());
+        // dto.setEndSale(bookSale.getEndSale());
+        // dto.setPriceSale(bookSale.getPriceSale());
+        // } else {
+        // dto.setBeginSale(null);
+        // dto.setEndSale(null);
+        // dto.setPriceSale(0); // Hoặc giá trị mặc định khác tùy theo trường hợp
+        // }
         return dto;
     }
 
-    public ResponseEntity<?> findAll() {
-        var list = bookReponsitory.findAll();
-        var newList = list.stream().map(item -> {
+    public ResponseEntity<List<BookBriefDTO>> findAll() {
+        var list = bookReponsitory.findAllWithStoreAndSale();
+        
+        List<BookBriefDTO> newList = list.stream().map(item -> {
             BookBriefDTO dto = new BookBriefDTO();
             BeanUtils.copyProperties(item, dto);
             if (item.getAuthor() != null) {
@@ -318,19 +325,23 @@ public class BookService {
             if (item.getImage() != null) {
                 dto.setImageFileName(item.getImage().getFileName());
             }
-            Optional<BookStore> optionalBookStore = bookStoreReponsitory.findByBookId_Id(item.getId());
-            optionalBookStore.ifPresent(bookStore -> {
-                dto.setEntryPrice(bookStore.getEntryPrice());
-                dto.setQuanlity(bookStore.getQuanlity());
-            });
 
-            // Retrieve BookSale information
-            Optional<BookSale> optionalBookSale = bookSaleReponsitory.findByBookId_Id(item.getId());
-            optionalBookSale.ifPresent(bookSale -> {
-                dto.setBeginSale(bookSale.getBeginSale());
-                dto.setEndSale(bookSale.getEndSale());
-                dto.setPriceSale(bookSale.getPriceSale());
-            });
+            // Lấy thông tin từ BookStore
+            if (item.getStores() != null && !item.getStores().isEmpty()) {
+                BookStore store = item.getStores().iterator().next();
+                dto.setEntryPrice(store.getEntryPrice());
+                dto.setQuanlity(store.getQuanlity());
+            }
+
+            // Lấy thông tin sale
+            if (item.getStores() != null && !item.getStores().isEmpty()
+                    && item.getStores().iterator().next().getSale() != null) {
+                BookSale sale = item.getStores().iterator().next().getSale();
+                dto.setBeginSale(sale.getBeginSale());
+                dto.setEndSale(sale.getEndSale());
+                dto.setPriceSale(sale.getPriceSale());
+            }
+
             return dto;
         }).collect(Collectors.toList());
         return new ResponseEntity<>(newList, HttpStatus.OK);

@@ -6,7 +6,7 @@ export default function TopSearch() {
     <div className="header-main mobile-hide">
       <div className="container">
         <div className="wrapper flexitem">
-          <div className="left">
+          {/* <div className="left">
             <div className="dpt-cat">
               <div className="dpt-head">
                 <div className="main-text">All Department</div>
@@ -324,7 +324,7 @@ export default function TopSearch() {
                 </ul>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="right">
             <div className="search-box">
               <form action className="search">

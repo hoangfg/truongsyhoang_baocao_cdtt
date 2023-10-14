@@ -21,48 +21,19 @@ class SaleForm extends Component {
     let beginSaleDate;
     let endSaleDate;
 
-     if (moment(book.beginSale, "YYYY-MM-DD").isValid()) {
-       beginSaleDate = moment(book.beginSale, "YYYY-MM-DD");
-     }
+    if (moment(book.beginSale, "YYYY-MM-DD").isValid()) {
+      beginSaleDate = moment(book.beginSale, "YYYY-MM-DD");
+    }
 
-     if (moment(book.endSale, "YYYY-MM-DD").isValid()) {
-       endSaleDate = moment(book.endSale, "YYYY-MM-DD");
-     }
+    if (moment(book.endSale, "YYYY-MM-DD").isValid()) {
+      endSaleDate = moment(book.endSale, "YYYY-MM-DD");
+    }
     return (
       // <CustomForm>
       <Row>
-        <Col md={12}>
-          <Form.Item
-            label="Begin Sale"
-            name="beginSale"
-            initialValue={beginSaleDate}
-            labelCol={{ span: 24 }}
-          >
-            <DatePicker></DatePicker>
-          </Form.Item>
-          <Form.Item
-            label="End Sale"
-            name="endSale"
-            initialValue={endSaleDate}
-            labelCol={{ span: 24 }}
-          >
-            <DatePicker></DatePicker>
-          </Form.Item>
-        </Col>
-        <Col md={1}>
-          <Divider type="vertical" style={{ height: "100%" }}></Divider>
-        </Col>
-        <Col md={11}>
-          <Form.Item
-            label="Price Sale"
-            name="priceSale"
-            initialValue={book.priceSale}
-            labelCol={{ span: 24 }}
-            // wrapperCol={{ span: 24 }}
-          >
-            <Input></Input>
-          </Form.Item>
-        </Col>
+        
+
+        <Col md={11}></Col>
       </Row>
       // </CustomForm>
     );

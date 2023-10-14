@@ -11,6 +11,7 @@ import postReducer from "./reducers/postReducer";
 import pageReducer from "./reducers/pageReducer";
 import configReducer from "./reducers/configReducer";
 import sliderReducer from "./reducers/sliderReducer";
+import storeReducer from './reducers/storeReducer';
 const rootReducer = combineReducers({
   publisherReducer,
   commonReducer,
@@ -23,5 +24,6 @@ const rootReducer = combineReducers({
   pageReducer,
   configReducer,
   sliderReducer,
+  storeReducer,
 });
 export default rootReducer;

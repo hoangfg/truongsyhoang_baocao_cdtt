@@ -111,17 +111,7 @@ class SliderForm extends Component {
               </Form.Item> */}
 
               <Row style={{ display: "flex", justifyContent: "space-around" }}>
-                <Col md={24}>
-                  <Form.Item
-                    label="ID"
-                    name="id"
-                    labelCol={{ span: 24 }}
-                    initialValue={slider.id}
-                    hidden={slider.id ? false : true}
-                  >
-                    <Input readOnly></Input>
-                  </Form.Item>
-                </Col>
+               
                 <Col xs={24} md={11}>
                   {/* <Form.Item
                 label="ID"

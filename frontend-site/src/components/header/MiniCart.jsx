@@ -41,7 +41,7 @@ export default function MiniCart() {
             <li className="item">
               <div className="thumbnail object-cover">
                 <Link href="#">
-                  <img src=".../assets/products/home1.jpg" alt="5" />
+                  <img src="./assets/products/home1.jpg" alt="5" />
                 </Link>
               </div>
               <div className="item-content">
@@ -63,7 +63,7 @@ export default function MiniCart() {
             <li className="item">
               <div className="thumbnail object-cover">
                 <Link href="#">
-                  <img src=".../assets/products/home2.jpg" alt="1" />
+                  <img src="./assets/products/home2.jpg" alt="1" />
                 </Link>
               </div>
               <div className="item-content">
@@ -85,7 +85,7 @@ export default function MiniCart() {
             <li className="item">
               <div className="thumbnail object-cover">
                 <Link href="#">
-                  <img src=".../assets/products/home3.jpg" alt="3" />
+                  <img src="./assets/products/home3.jpg" alt="3" />
                 </Link>
               </div>
               <div className="item-content">
@@ -107,7 +107,7 @@ export default function MiniCart() {
             <li className="item">
               <div className="thumbnail object-cover">
                 <Link href="#">
-                  <img src=".../assets/products/home4.jpg" alt="4" />
+                  <img src="./assets/products/home4.jpg" alt="4" />
                 </Link>
               </div>
               <div className="item-content">
@@ -129,7 +129,7 @@ export default function MiniCart() {
             <li className="item">
               <div className="thumbnail object-cover">
                 <Link href="#">
-                  <img src=".../assets/products/home5.jpg" alt="5" />
+                  <img src="./assets/products/home5.jpg" alt="5" />
                 </Link>
               </div>
               <div className="item-content">
@@ -158,10 +158,10 @@ export default function MiniCart() {
             </p>
           </div>
           <div className="actions">
-            <Link href="/checkout.html" className="primary-button">
+            <Link to="/checkout" className="primary-button">
               Checkout
             </Link>
-            <Link href="/cart.html" className="secondary-button">
+            <Link to="/cart" className="secondary-button">
               View cart
             </Link>
           </div>

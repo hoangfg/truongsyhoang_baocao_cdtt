@@ -22,7 +22,7 @@ import { TbBrandAirtable } from "react-icons/tb";
 import { BsListTask } from "react-icons/bs";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
-import Home from "./../components/home/Home";
+// import Home from "./../components/layout/Home";
 import Index from "./../components/publisher/Index";
 import AddOrEdit from "./../components/publisher/AddOrEdit";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,6 +41,9 @@ import ListPost from "../components/post/ListPost";
 import ListPage from "../components/page/ListPage";
 import ListConfig from "../components/config/ListConfig";
 import ListSlider from "../components/slider/ListSlider";
+import Home from "../components/home/Home";
+import ListStore from "../components/store/ListStore";
+// import Home from './../../../../../java-project/frontend-site/src/layouts/Home';
 
 const { Header, Sider, Content } = Layout;
 
@@ -166,6 +169,19 @@ function DashboardPage() {
                   icon: <BsListTask />,
                   label: "List",
                   onClick: () => navigate("/product"),
+                },
+              ],
+            },
+            {
+              key: "6a",
+              icon: <AiOutlineAlipay />,
+              label: "Store",
+              children: [
+                {
+                  key: "6a1",
+                  icon: <BsListTask />,
+                  label: "List",
+                  onClick: () => navigate("/store"),
                 },
               ],
             },
@@ -308,6 +324,7 @@ function DashboardPage() {
               <Route path="/page" element={<ListPage />}></Route>
               <Route path="/config" element={<ListConfig />}></Route>
               <Route path="/slider" element={<ListSlider />}></Route>
+              <Route path="/store" element={<ListStore />}></Route>
             </Routes>
             <Outlet></Outlet>
           </div>
