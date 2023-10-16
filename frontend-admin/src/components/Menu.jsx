@@ -1,35 +1,59 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
+  AppstoreOutlined,
+  CalendarOutlined,
+  LinkOutlined,
+  MailOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
-export default function Menu() {
+import { Menu, Input } from "antd";
+
+function getItem(label, key, icon, children, type) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  };
+}
+
+const items = [
+  getItem("Navigation One", "1", <MailOutlined />),
+  getItem("Navigation Two", "2", <CalendarOutlined />),
+  getItem("Navigation Two", "sub1", <AppstoreOutlined />, [
+    getItem("Option 3", "3"),
+    getItem("Option 4", "4"),
+    getItem("Submenu", "sub1-2", null, [
+      getItem("Option 5", "5"),
+      getItem("Option 6", "6"),
+    ]),
+  ]),
+  getItem("Navigation Three", "sub2", <SettingOutlined />, [
+    getItem("Option 7", "7"),
+    getItem("Option 8", "8"),
+    getItem("Option 9", "9"),
+    getItem("Option 10", "10"),
+  ]),
+  getItem(
+    <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+      Ant Design
+    </a>,
+    "link",
+    <LinkOutlined />
+  ),
+];
+
+export default function MenuList() {
+  const menuItems = items.map((item) => (
+    <Menu.Item key={item.key} icon={item.icon}>
+      {item.label}
+    </Menu.Item>
+  ));
+
   return (
-    <Menu
-      theme="dark"
-      mode="inline"
-      defaultSelectedKeys={["1"]}
-      items={[
-        {
-          key: "1",
-          icon: <UserOutlined />,
-          label: "nav 1",
-        },
-        {
-          key: "2",
-          icon: <VideoCameraOutlined />,
-          label: "nav 2",
-        },
-        {
-          key: "3",
-          icon: <UploadOutlined />,
-          label: "nav 3",
-        },
-      ]}
-    />
+    <Input style={{ width: 256 }} placeholder="Select a menu item">
+      <Menu mode="inline">{menuItems}</Menu>
+    </Input>
   );
 }

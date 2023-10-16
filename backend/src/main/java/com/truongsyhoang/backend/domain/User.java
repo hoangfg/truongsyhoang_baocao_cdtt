@@ -1,12 +1,18 @@
 package com.truongsyhoang.backend.domain;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -40,12 +46,6 @@ public class User extends AbtractEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "remember_token", nullable = true)
-    private String rememberToken;
-
-    @Column(name = "actived_token", nullable = true)
-    private String activedToken;
-
     @Column(name = "expires_at", nullable = true)
     private LocalDate expiresAt;
 
@@ -60,5 +60,16 @@ public class User extends AbtractEntity {
 
     @Column(name = "status", columnDefinition = "int default 0")
     private int status;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    @JsonIgnoreProperties("users")
+    private Role role;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    private List<Token> tokens;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    private List<Orders> orders;
 
 }

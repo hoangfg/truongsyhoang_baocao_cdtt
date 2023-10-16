@@ -43,6 +43,8 @@ import ListConfig from "../components/config/ListConfig";
 import ListSlider from "../components/slider/ListSlider";
 import Home from "../components/home/Home";
 import ListStore from "../components/store/ListStore";
+import MenuList from "../components/menu/MenuList";
+import ListMenu from "../components/menu/ListMenu";
 // import Home from './../../../../../java-project/frontend-site/src/layouts/Home';
 
 const { Header, Sider, Content } = Layout;
@@ -242,6 +244,19 @@ function DashboardPage() {
                 },
               ],
             },
+            {
+              key: "10a",
+              icon: <AiOutlineAlipay />,
+              label: "menu",
+              children: [
+                {
+                  key: "10a1",
+                  icon: <BsListTask />,
+                  label: "List",
+                  onClick: () => navigate("/menu"),
+                },
+              ],
+            },
           ]}
         />
       </Sider>
@@ -325,6 +340,7 @@ function DashboardPage() {
               <Route path="/config" element={<ListConfig />}></Route>
               <Route path="/slider" element={<ListSlider />}></Route>
               <Route path="/store" element={<ListStore />}></Route>
+              <Route path="/menu" element={<ListMenu />}></Route>
             </Routes>
             <Outlet></Outlet>
           </div>

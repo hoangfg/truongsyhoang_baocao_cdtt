@@ -72,7 +72,7 @@ class AddOrEdit extends Component {
         //   }
         // }
       );
-
+      
       console.log("1", filteredPublisherList);
       this.setState({
         ...this.state,
@@ -185,10 +185,9 @@ class AddOrEdit extends Component {
       title = "Thêm nhà xuất bản";
     }
     let select = publisher.parentId;
-   
+
     if (select !== null && select !== undefined) {
       select = publisher.parentId.id;
-     
     }
 
     return (
@@ -207,8 +206,8 @@ class AddOrEdit extends Component {
           Layout="vertical"
           className="form"
           onFinish={this.onSubmitForm}
-          key={publisher.id}
           ref={this.formRef}
+          key={publisher.id}
           disabled={isLoading}
         >
           <Row style={{ display: "flex", justifyContent: "space-around" }}>
