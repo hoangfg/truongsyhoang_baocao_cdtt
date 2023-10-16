@@ -32,7 +32,7 @@ class ListMenu extends Component {
       menu: {
         name: "",
         link: "",
-        position: "mainmenu",
+        position: "",
         type: "",
         table_id: "",
       },
@@ -80,7 +80,7 @@ class ListMenu extends Component {
         PageList: pageListResponse.data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       message.error("Error: " + error);
     }
   };
@@ -144,7 +144,7 @@ class ListMenu extends Component {
       TopicList,
       selectedItems,
     } = this.state;
-    console.log("menus", menus);
+    // console.log("menus", menus);
     if (isLoading) {
       return (
         <>

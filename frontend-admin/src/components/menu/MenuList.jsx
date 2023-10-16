@@ -93,7 +93,7 @@ class MenuList extends Component {
       this.setState({
         selectedPublishers: selectedPublishers.filter((id) => id !== value),
       });
-      console.log(selectedPublishers);
+      // console.log(selectedPublishers);
     }
   };
 
@@ -118,7 +118,7 @@ class MenuList extends Component {
     // console.log("genresList:", genresList);
     // console.log("languageList:", languageList);
     // console.log("PageList:", PageList);
-    console.log("selectedItems:", dataSoure);
+    // console.log("selectedItems:", dataSoure);
 
     const items = [
       {
@@ -153,7 +153,7 @@ class MenuList extends Component {
                 publisherList.map((item) => (
                   <div>
                     <Form.Item name="table_id">
-                      {console.log("name", item.name)}
+                      {/* {console.log("name", item.name)} */}
                       <Radio.Group>
                         <Radio value={item.id}>{item.name}</Radio>
                       </Radio.Group>

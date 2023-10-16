@@ -114,7 +114,7 @@ public class MenuService {
             }
 
         }
-        List<?> foundedList = menuReponsitory.findByNameContainsIgnoreCase(dto.getName());
+        List<?> foundedList = menuReponsitory.findByNameAndPositionIgnoringCase(dto.getName(), dto.getPosition());
         if (foundedList.size() > 0) {
             throw new AuthorException("menu name is existed");
         }

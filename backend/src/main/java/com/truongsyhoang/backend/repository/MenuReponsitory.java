@@ -11,6 +11,8 @@ import com.truongsyhoang.backend.domain.Post;
 public interface MenuReponsitory extends JpaRepository<Menu, Long> {
     List<Menu> findByNameContainsIgnoreCase(String name);
 
+    List<Menu> findByNameAndPositionIgnoringCase(String name, String position);
+
     @Query("SELECT MAX(s.sort_order) FROM Menu s")
     Long findMaxSortOrder();
 }
