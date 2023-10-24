@@ -30,7 +30,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/menus")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
+
 public class MenuController {
 
     @Autowired

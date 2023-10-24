@@ -1,14 +1,20 @@
 import React from "react";
 
-export default function SideBarItem() {
+export default function SideBarItem({ name, checked, onChange, checkId }) {
   return (
     <li>
-      <input type="checkbox" name="checkbox" id="beauty" />
-      <label htmlFor="beauty">
+      <input
+        id={checkId}
+        type="checkbox"
+        name="name"
+        checked={checked}
+        onChange={onChange}
+      />
+      <label htmlFor={checkId}>
         <span className="checked" />
-        <span>Beauty</span>
+        <span>{name}</span>
       </label>
-      <span className="count">2</span>
+      {/* <span className="count">{item.count}</span> */}
     </li>
   );
 }

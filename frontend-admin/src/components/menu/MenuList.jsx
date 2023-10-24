@@ -152,7 +152,7 @@ class MenuList extends Component {
               {publisherList &&
                 publisherList.map((item) => (
                   <div>
-                    <Form.Item name="table_id">
+                    <Form.Item name="table_id" key={"pub" + item.id}>
                       {/* {console.log("name", item.name)} */}
                       <Radio.Group>
                         <Radio value={item.id}>{item.name}</Radio>
@@ -193,11 +193,9 @@ class MenuList extends Component {
               {authorList &&
                 authorList.map((item) => (
                   <>
-                    <Form.Item name="table_id">
+                    <Form.Item name="table_id" key={"aut" + item.id}>
                       <Radio.Group>
-                        <Radio value={item.id} key={"aut" + item.id}>
-                          {item.name}
-                        </Radio>
+                        <Radio value={item.id}>{item.name}</Radio>
                       </Radio.Group>
                     </Form.Item>
                     {/* <Form.Item
@@ -243,11 +241,9 @@ class MenuList extends Component {
               {genresList &&
                 genresList.map((item) => (
                   <>
-                    <Form.Item name="table_id">
+                    <Form.Item name="table_id" key={"gen" + item.id}>
                       <Radio.Group>
-                        <Radio value={item.id} key={"gen" + item.id}>
-                          {item.name}
-                        </Radio>
+                        <Radio value={item.id}>{item.name}</Radio>
                       </Radio.Group>
                     </Form.Item>
                   </>
@@ -284,11 +280,9 @@ class MenuList extends Component {
               {languageList &&
                 languageList.map((item) => (
                   <>
-                    <Form.Item name="table_id">
+                    <Form.Item name="table_id" key={"lan" + item.id}>
                       <Radio.Group>
-                        <Radio value={item.id} key={"lan" + item.id}>
-                          {item.name}
-                        </Radio>
+                        <Radio value={item.id}>{item.name}</Radio>
                       </Radio.Group>
                     </Form.Item>
                   </>
@@ -323,11 +317,9 @@ class MenuList extends Component {
               {PageList &&
                 PageList.map((item) => (
                   <>
-                    <Form.Item name="table_id">
+                    <Form.Item name="table_id" key={"page" + item.id}>
                       <Radio.Group>
-                        <Radio value={item.id} key={"page" + item.id}>
-                          {item.name}
-                        </Radio>
+                        <Radio value={item.id}>{item.name}</Radio>
                       </Radio.Group>
                     </Form.Item>
                   </>
@@ -364,11 +356,9 @@ class MenuList extends Component {
               {TopicList &&
                 TopicList.map((item) => (
                   <>
-                    <Form.Item name="table_id">
+                    <Form.Item name="table_id" key={"top" + item.id}>
                       <Radio.Group>
-                        <Radio value={item.id} key={"top" + item.id}>
-                          {item.name}
-                        </Radio>
+                        <Radio value={item.id}>{item.name}</Radio>
                       </Radio.Group>
                     </Form.Item>
                   </>

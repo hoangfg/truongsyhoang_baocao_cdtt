@@ -43,7 +43,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/books")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
+
 public class BookController {
     @Autowired
     private FileStorageService fileStorageService;
@@ -131,6 +132,10 @@ public class BookController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         return new ResponseEntity<>(bookService.getBookById(id), HttpStatus.OK);
+    }
+    @GetMapping("/{slug}/slug")
+    public ResponseEntity<?> getBySlug(@PathVariable String slug) {
+        return new ResponseEntity<>(bookService.getBySlug(slug), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

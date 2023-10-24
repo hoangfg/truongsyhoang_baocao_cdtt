@@ -19,7 +19,7 @@ import lombok.Setter;
 public class BookDTO implements Serializable {
     private Long id;
     private String name;
-
+    private String slug;
     private String description;
     private String detail;
     private double price;

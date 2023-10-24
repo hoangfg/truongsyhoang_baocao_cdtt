@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Swiper from "swiper";
-import { Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 // import Swiper and modules styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -10,7 +10,7 @@ import "swiper/swiper-bundle.css";
 export default function Slider() {
   useEffect(() => {
     const swiper = new Swiper(".myslider", {
-      modules: [Navigation, Pagination],
+      modules: [Autoplay, Pagination, Navigation],
       loop: true,
       pagination: {
         el: ".swiper-pagination",
@@ -23,6 +23,10 @@ export default function Slider() {
       // And if we need scrollbar
       scrollbar: {
         el: ".swiper-scrollbar",
+      },
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
       },
     });
   }, []);

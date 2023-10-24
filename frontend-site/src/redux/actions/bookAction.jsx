@@ -196,6 +196,40 @@ export const getById = (id) => async (dispatch) => {
     payload: false,
   });
 };
+export const getBySlug = (slug) => async (dispatch) => {
+  const service = new bookService();
+  try {
+    dispatch({
+      type: COMMON_LOADING_SET,
+      payload: true,
+    });
+    const response = await service.getBySlug(slug);
+    console.log("1", response.data);
+    if (response.status === 200) {
+      dispatch({
+        type: BOOK_SET,
+        payload: response.data,
+      });
+    } else {
+      dispatch({
+        type: COMMON_ERROR_SET,
+        payload: response.message,
+      });
+    }
+  } catch (error) {
+    console.log("error:" + error);
+    dispatch({
+      type: COMMON_ERROR_SET,
+      payload: error.response.data
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+  dispatch({
+    type: COMMON_LOADING_SET,
+    payload: false,
+  });
+};
 export const clearState = () => (dispatch) => {
   dispatch({ type: BOOKS_STATE_CLEAR });
 };

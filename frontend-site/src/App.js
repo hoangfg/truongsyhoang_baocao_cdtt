@@ -14,6 +14,7 @@ import PageOffer from './pages/page-offer/PageOffer';
 import Cart from './pages/Cart/Cart';
 import CheckOut from './pages/Checkout/CheckOut';
 import SignBox from './pages/Account/SignBox';
+import NoPage from './layout/NoPage/NoPage';
 
 function App() {
   return (
@@ -23,14 +24,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<PageHome />} />
-            <Route path="product" element={<PageCategory />} />
-            <Route path="product/:id" element={<PageOffer />} />
+            <Route path="product" element={<PageCategory title="Tất cả sản phẩm" />} />
+
+            <Route path="/product/:slug" element={<PageOffer />} />
             <Route path="cart" element={<Cart />} />
             <Route path="checkout" element={<CheckOut />} />
             <Route path="signin" element={<SignBox />} />
-            {/* <Route path="*" element={<NoPage />} /> */}
+
           </Route>
 
+          <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>
 

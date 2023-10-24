@@ -1,6 +1,7 @@
 package com.truongsyhoang.backend.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +19,6 @@ public interface BookReponsitory extends JpaRepository<Book, Long> {
     List<Book> findAllWithStoreAndSale();
 
     List<Book> findAllBy();
+
+    Optional<Book> findBySlug(String slug);
 }

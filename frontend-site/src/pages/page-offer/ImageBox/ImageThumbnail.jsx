@@ -1,6 +1,7 @@
 import React from "react";
+import bookService from "../../../services/bookService";
 
-export default function ImageThumbnail({ onThumbnailClick }) {
+export default function ImageThumbnail({ onThumbnailClick, thumb }) {
   return (
     <div
       thumbslider
@@ -18,12 +19,11 @@ export default function ImageThumbnail({ onThumbnailClick }) {
         <li
           className="thumbnail-show swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active"
           role="group"
-          aria-label="1 / 3"
           data-swiper-slide-index={0}
           style={{ width: "129.667px", marginRight: 32 }}
           onClick={() => onThumbnailClick(0)}
         >
-          <img src="/assets/products/apparel4.jpg" alt="" />
+          <img src={bookService.getPhotoUrl(thumb)} alt="" />
         </li>
       </ul>
       <span

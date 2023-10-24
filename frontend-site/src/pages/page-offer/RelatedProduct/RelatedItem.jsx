@@ -1,14 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import bookService from "../../../services/bookService";
 
-export default function RelatedItem() {
+export default function RelatedItem(book) {
+  const navigate = useNavigate();
+
+  const handleNavigate = (slug) => {
+    navigate(`/product/${slug}`);
+  };
   return (
     <div className="item">
       <div className="media">
         <div className="thumbnail object-cover">
-          <Link to="/product/:id">
-            <img src="/assets/products/apparel1.jpg" alt="" />
-          </Link>
+          <a onClick={() => handleNavigate(book.book.slug)}>
+            <img
+              src={bookService.getPhotoUrl(book.book.imageFileName)}
+              alt=""
+            />
+          </a>
         </div>
         <div className="hoverable">
           <ul>
@@ -18,9 +27,9 @@ export default function RelatedItem() {
               </Link>
             </li>
             <li>
-              <Link to="/product/:id">
+              <a href={`/product/${book.book.slug}`}>
                 <i className="ri-eye-line" />
-              </Link>
+              </a>
             </li>
             <li>
               <Link href="#">
@@ -48,11 +57,17 @@ export default function RelatedItem() {
           <span className="mini-text">(1,548)</span>
         </div>
         <h3 className="main-links">
-          <Link href="#">Under Armour Man's Tech</Link>
+          <a href={`/product/${book.book.slug}`}>{book.book.name}</a>
         </h3>
         <div className="price">
-          <span className="current">$56.50</span>
-          <span className="normal mini-text">$76.00</span>
+          {book.book.priceSale !== 0 ? (
+            <>
+              <span className="current">{book.book.priceSale}</span>
+              <span className="normal mini-text">{book.book.price}</span>
+            </>
+          ) : (
+            <span className="current">{book.book.price}</span>
+          )}
         </div>
         <div className="stock mini-text" data-stock={5000}>
           <div className="qty">
@@ -61,7 +76,7 @@ export default function RelatedItem() {
             </span>
             <span>
               Stock:
-              <strong className="qty-available">107</strong>
+              <strong className="qty-available">{book.book.quanlity}</strong>
             </span>
           </div>
           <div className="bar">

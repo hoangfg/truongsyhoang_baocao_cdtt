@@ -49,7 +49,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/genres")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
+
 public class BookGenresController {
     @Autowired
     private BookGenresService bookGenresService;

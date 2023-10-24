@@ -1,27 +1,104 @@
-import React from "react";
+import React, { useState } from "react";
 import SideBarItem from "./SideBarItem";
 import SideBarPriceRange from "./SideBarPriceRange";
 
-export default function SideBar() {
+export default function SideBar({
+  authors,
+  genres,
+  languages,
+  publishers,
+  onCheckboxChange,
+
+  onLanguageChange,
+  onGenreChange,
+  onAuthorChange,
+  onPublisherChange,
+}) {
+  // const [checkedItems, setCheckedItems] = useState({
+  //   languages: [],
+  //   genres: [],
+  //   authors: [],
+  //   publishers: [],
+  // });
+
+  let filteredGenres = genres.filter((item) => item.status === 0);
+
+  let filteredAuthors = authors.filter((item) => item.status === 0);
+
   return (
     <div className="row sidebar">
       <div className="filter">
         <div className="filter-block" id="category">
-          <h4>Category</h4>
+          <h4>Languages</h4>
           <ul>
-            <SideBarItem />
+            <>
+              {languages &&
+                languages.map((item) => (
+                  <>
+                    <SideBarItem
+                      key={"l" + item.id}
+                      checkId={"l" + item.id}
+                      name={item.name}
+                      // checked={checkedItems.languages.includes(item.name)}
+                      onChange={() => onLanguageChange(item.name)}
+                    />
+                  </>
+                ))}
+            </>
           </ul>
         </div>
         <div className="filter-block" id="activity">
-          <h4>Activity</h4>
+          <h4>Genres</h4>
           <ul>
-            <SideBarItem />
+            <>
+              {filteredGenres &&
+                filteredGenres.map((item) => (
+                  <SideBarItem
+                    key={"g" + item.id}
+                    checkId={"g" + item.id}
+                    name={item.name}
+                    // checked={checkedItems.genres.includes(item.name)}
+                    onChange={() => onGenreChange(item.name)}
+                  />
+                ))}
+            </>
           </ul>
         </div>
         <div className="filter-block">
-          <h4>Brand</h4>
+          <h4>Author</h4>
           <ul>
-            <SideBarItem />
+            <>
+              {filteredAuthors &&
+                filteredAuthors.map((item) => (
+                  <SideBarItem
+                    key={"a" + item.id}
+                    checkId={"a" + item.id}
+                    name={item.name}
+                    // checked={checkedItems.authors.includes(item.name)}
+                    onChange={() => onAuthorChange(item.name)}
+                  />
+                ))}
+            </>
+          </ul>
+        </div>
+        <div className="filter-block">
+          <h4>Publishers</h4>
+          <ul>
+            <>
+              {publishers &&
+                publishers
+                  .filter((pub) => pub.status === "Visible")
+                  .map((item) => (
+                    <React.Fragment key={"p" + item.id}>
+                      <SideBarItem
+                        checkId={"p" + item.id}
+                        name={item.name}
+                        // checked={checkedItems.publishers.includes(item.name)}
+                        onChange={() => onPublisherChange(item.name)}
+                      />
+                    </React.Fragment>
+                  ))}
+            </>
           </ul>
         </div>
         {/* <div className="filter-block products" id="color">
@@ -49,10 +126,10 @@ export default function SideBar() {
             </li>
           </ul>
         </div> */}
-        <div className="filter-block pricing">
+        {/* <div className="filter-block pricing">
           <h4>Price</h4>
           <SideBarPriceRange />
-        </div>
+        </div> */}
       </div>
     </div>
   );

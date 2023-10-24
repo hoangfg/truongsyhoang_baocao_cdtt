@@ -1,6 +1,7 @@
 import React from "react";
 
-export default function Sold() {
+export default function Sold({ quanlity }) {
+  console.log("quanlity", quanlity);
   return (
     <div className="stock mini-text" data-stock={5000}>
       <div className="qty">
@@ -10,7 +11,7 @@ export default function Sold() {
         </span>
         <span>
           Stock:
-          <strong className="qty-available">107</strong>
+          <strong className="qty-available">{quanlity}</strong>
         </span>
       </div>
       <div className="bar">

@@ -22,15 +22,15 @@ export default function NavigationCat() {
           <li>Brand</li>
         </ul>
       </div>
-      <div className="item-perpage mobile-hide">
+      {/* <div className="item-perpage mobile-hide">
         <div className="label">Items 10 per page</div>
         <div className="desktop-hide">10</div>
-        {/* <i class="ri-arrow-down-s-line"></i> */}
-      </div>
-      <div className="item-options">
+        <i class="ri-arrow-down-s-line"></i>
+      </div> */}
+      {/* <div className="item-options">
         <div className="label">
-          <span className="mobile-hide">Show 10 per page</span>
-          <div className="desktop-hide">10</div>
+          <span className="mobile-hide">Show 12 per page</span>
+          <div className="desktop-hide">12</div>
           <i className="ri-arrow-down-s-line" />
         </div>
         <ul>
@@ -39,7 +39,7 @@ export default function NavigationCat() {
           <li>30</li>
           <li>All</li>
         </ul>
-      </div>
+      </div> */}
     </>
   );
 }

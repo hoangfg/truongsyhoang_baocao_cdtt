@@ -38,6 +38,20 @@ export const TOPIC_DELETE = "TOPIC_DELETE";
 export const TOPIC_UPDATE = "TOPIC_UPDATE";
 export const TOPICS_STATE_CLEAR = "TOPICS_STATE_CLEAR";
 
+export const STORE_SET = "STORE_SET";
+export const STORES_SET = "STORES_SET";
+export const STORE_APPEND = "STORE_APPEND";
+export const STORE_DELETE = "STORE_DELETE";
+export const STORE_UPDATE = "STORE_UPDATE";
+export const STORES_STATE_CLEAR = "STORES_STATE_CLEAR";
+
+export const MENU_SET = "MENU_SET";
+export const MENUS_SET = "MENUS_SET";
+export const MENU_APPEND = "MENU_APPEND";
+export const MENU_DELETE = "MENU_DELETE";
+export const MENU_UPDATE = "MENU_UPDATE";
+export const MENUS_STATE_CLEAR = "MENUS_STATE_CLEAR";
+
 export const POST_SET = "POST_SET";
 export const POSTS_SET = "POSTS_SET";
 export const POST_APPEND = "POST_APPEND";
@@ -51,6 +65,13 @@ export const PAGE_APPEND = "PAGE_APPEND";
 export const PAGE_DELETE = "PAGE_DELETE";
 export const PAGE_UPDATE = "PAGE_UPDATE";
 export const PAGES_STATE_CLEAR = "PAGES_STATE_CLEAR";
+
+export const SLIDER_SET = "SLIDER_SET";
+export const SLIDERS_SET = "SLIDERS_SET";
+export const SLIDER_APPEND = "SLIDER_APPEND";
+export const SLIDER_DELETE = "SLIDER_DELETE";
+export const SLIDER_UPDATE = "SLIDER_UPDATE";
+export const SLIDERS_STATE_CLEAR = "SLIDERS_STATE_CLEAR";
 
 export const CONFIG_SET = "CONFIG_SET";
 export const CONFIGS_SET = "CONFIGS_SET";

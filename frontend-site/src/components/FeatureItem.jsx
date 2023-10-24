@@ -1,13 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import bookService from "../services/bookService";
 
-export default function FeatureItem() {
+export default function FeatureItem(props) {
+  const {
+    id,
+    imageFileName,
+    name,
+    price,
+    priceSale,
+    // quanlity,
+    // authorName,
+    // beginSale,
+    // endSale,
+    // entryPrice,
+    // isbn,
+    // languageName,
+    // publisherName,
+    // bookGenresName,
+    slug,
+  } = props;
+  // console.log(slug);
   return (
     <div className="item">
       <div className="media">
         <div className="thumbnail object-cover">
-          <Link to="/product/:id">
-            <img src="/assets/products/apparel1.jpg" alt="" />
+          <Link to={`/product/${slug}`}>
+            {/* <img src="/assets/products/apparel1.jpg" alt="" /> */}
+            <img src={bookService.getPhotoUrl(imageFileName)} alt="" />
           </Link>
         </div>
         <div className="hoverable">
@@ -18,7 +38,7 @@ export default function FeatureItem() {
               </Link>
             </li>
             <li>
-              <Link href="#">
+              <Link to={`/product/${slug}`}>
                 <i className="ri-eye-line" />
               </Link>
             </li>
@@ -39,11 +59,17 @@ export default function FeatureItem() {
           <span className="mini-text">(1,548)</span>
         </div>
         <h3 className="main-links">
-          <Link to="/product/:id">Under Armour Man's Tech</Link>
+          <Link to={`/product/${slug}`}>{name}</Link>
         </h3>
         <div className="price">
-          <span className="current">$56.50</span>
-          <span className="normal mini-text">$76.00</span>
+          {priceSale !== 0 ? (
+            <>
+              <span className="current">{priceSale}</span>
+              <span className="normal mini-text">{price}</span>
+            </>
+          ) : (
+            <span className=" mini-text">{price}</span>
+          )}
         </div>
       </div>
     </div>

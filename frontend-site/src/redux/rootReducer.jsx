@@ -7,9 +7,12 @@ import bookGenresReducer from "./reducers/bookGenresReducer";
 import bookLanguageReducer from "./reducers/bookLanguageReducer";
 import bookReducer from "./reducers/bookReducer";
 import topicReducer from "./reducers/topicReducer";
-import postReducer from './reducers/postReducer';
-import pageReducer from './reducers/pageReducer';
-import configReducer from './reducers/configReducer';
+import postReducer from "./reducers/postReducer";
+import pageReducer from "./reducers/pageReducer";
+import configReducer from "./reducers/configReducer";
+import sliderReducer from "./reducers/sliderReducer";
+import storeReducer from "./reducers/storeReducer";
+import menuReducer from "./reducers/menuReducer";
 const rootReducer = combineReducers({
   publisherReducer,
   commonReducer,
@@ -21,5 +24,8 @@ const rootReducer = combineReducers({
   postReducer,
   pageReducer,
   configReducer,
+  sliderReducer,
+  storeReducer,
+  menuReducer,
 });
 export default rootReducer;

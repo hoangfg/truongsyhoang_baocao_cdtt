@@ -31,7 +31,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/topic")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
+
 public class TopicController {
     @Autowired
     private TopicService topicService;

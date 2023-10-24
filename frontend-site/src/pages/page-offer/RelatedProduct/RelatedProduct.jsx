@@ -2,7 +2,14 @@ import React from "react";
 import RelatedItem from "./RelatedItem";
 import { Link } from "react-router-dom";
 
-export default function RelatedProduct() {
+export default function RelatedProduct({ books, genres, id }) {
+  console.log("re", books);
+  console.log("re1", genres);
+  let filteredRelated = books.filter(
+    (item) =>
+      item.status === 0 && item.id !== id && item.bookGenresName === genres
+  );
+  console.log("filteredRelated", filteredRelated);
   return (
     <div className="column">
       <div className="sectop flexitem">
@@ -18,7 +25,8 @@ export default function RelatedProduct() {
         </div>
       </div>
       <div className="products main flexwrap">
-        <RelatedItem />
+        {filteredRelated &&
+          filteredRelated.map((item) => <RelatedItem book={item} />)}
       </div>
     </div>
   );

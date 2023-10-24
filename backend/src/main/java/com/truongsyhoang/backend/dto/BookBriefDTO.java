@@ -22,6 +22,8 @@ public class BookBriefDTO implements Serializable {
     private String slug;
     private String isbn;
     private double price;
+    private String description;
+    private String detail;
     private String authorName;
     private String languageName;
     private String publisherName;

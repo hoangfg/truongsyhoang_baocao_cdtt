@@ -47,7 +47,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/config")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
+
 public class ConfigController {
     @Autowired
     private ConfigService configService;

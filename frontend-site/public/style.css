@@ -500,7 +500,7 @@ form.search button:hover {
   height: var(--percent100);
   background-color: var(--white-color);
   overflow: auto;
-  z-index: 1000;
+  z-index: 100;
   transform: translateX(-100%);
   visibility: hidden;
   transition: transform 0.4s, visibility 0.4s;
@@ -955,6 +955,8 @@ form.search button:hover {
 }
 .banner .image {
   text-align: right;
+  max-height: 300px;
+  overflow: hidden;
 }
 .banner .get-gray {
   background-color: var(--border-color);
@@ -1232,6 +1234,7 @@ form.search button:hover {
 .products .big-image:hover .swiper-button-next {
   transform: translateX(10px);
 }
+
 .products .big-image:hover .swiper-button-prev {
   transform: translateX(-10px);
 }

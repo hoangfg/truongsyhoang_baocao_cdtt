@@ -12,8 +12,11 @@ export default class bookService {
   deleteById = async (id) => {
     return await axios.delete(API_BOOK + "/" + id);
   };
-  getById = async (id) => {
-    return await axios.get(API_BOOK + "/" + id);
+  // getById = async (id) => {
+  //   return await axios.get(API_BOOK + "/" + id);
+  // };
+  getBySlug = async (slug) => {
+    return await axios.get(API_BOOK + "/" + `${slug}` + "/slug");
   };
   update = async (id, book) => {
     // let formData = new FormData();

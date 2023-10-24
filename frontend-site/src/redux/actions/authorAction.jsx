@@ -15,8 +15,8 @@ export const insertAuthor = (author) => async (dispatch) => {
 
   try {
     const response = await service.create(author);
-    console.log(author);
-    console.log(response.data);
+    // console.log(author);
+    // console.log(response.data);
     if (response.status === 201) {
       console.log("yes", response);
       dispatch({
@@ -32,14 +32,14 @@ export const insertAuthor = (author) => async (dispatch) => {
         payload: response.data,
       });
     } else {
-      console.log("no1");
+      // console.log("no1");
       dispatch({
         type: COMMON_ERROR_SET,
         payload: response.message,
       });
     }
   } catch (error) {
-    console.log("no", error);
+    // console.log("no", error);
     dispatch({
       type: COMMON_ERROR_SET,
       payload: error.response.data

@@ -280,6 +280,81 @@ public class BookService {
         BookImagesDTO imageDTO = new BookImagesDTO();
         BeanUtils.copyProperties(found.getImage(), imageDTO);
         dto.setImage(imageDTO);
+        if (found.getStores() != null && !found.getStores().isEmpty()) {
+            BookStore store = found.getStores().iterator().next();
+            dto.setEntryPrice(store.getEntryPrice());
+            dto.setQuanlity(store.getQuanlity());
+        }
+
+        // Lấy thông tin sale
+        if (found.getStores() != null && !found.getStores().isEmpty()
+                && found.getStores().iterator().next().getSale() != null) {
+            BookSale sale = found.getStores().iterator().next().getSale();
+            dto.setBeginSale(sale.getBeginSale());
+            dto.setEndSale(sale.getEndSale());
+            dto.setPriceSale(sale.getPriceSale());
+        }
+        // Lấy thông tin store
+        // Optional<BookStore> optionalBookStore =
+        // bookStoreReponsitory.findByBookId_Id(id);
+        // if (optionalBookStore.isPresent()) {
+        // BookStore bookStore = optionalBookStore.get();
+        // dto.setEntryPrice(bookStore.getEntryPrice());
+        // dto.setQuanlity(bookStore.getQuanlity());
+        // }
+        // Optional<BookSale> optionalBookSale =
+        // bookSaleReponsitory.findByBookId_Id(id);
+        // if (optionalBookSale.isPresent()) {
+        // BookSale bookSale = optionalBookSale.get();
+        // dto.setBeginSale(bookSale.getBeginSale());
+        // dto.setEndSale(bookSale.getEndSale());
+        // dto.setPriceSale(bookSale.getPriceSale());
+        // } else {
+        // dto.setBeginSale(null);
+        // dto.setEndSale(null);
+        // dto.setPriceSale(0); // Hoặc giá trị mặc định khác tùy theo trường hợp
+        // }
+        return dto;
+    }
+
+    public BookBriefDTO getBySlug(String slug) {
+        var found = bookReponsitory.findBySlug(slug)
+                .orElseThrow(() -> new AuthorException("Book slug Khồn tồn tại"));
+        BookBriefDTO dto = new BookBriefDTO();
+        BeanUtils.copyProperties(found, dto);
+        if (dto.getStatus() == 1) {
+            throw new AuthorException("Book slug không tồn tại");
+        }
+        if (found.getAuthor() != null) {
+            dto.setAuthorName(found.getAuthor().getName());
+        }
+        if (found.getGenres() != null) {
+            dto.setBookGenresName(found.getGenres().getName());
+        }
+        if (found.getLanguage() != null) {
+            dto.setLanguageName(found.getLanguage().getName());
+        }
+        if (found.getPublisher() != null) {
+            dto.setPublisherName(found.getPublisher().getName());
+        }
+        if (found.getImage() != null) {
+            dto.setImageFileName(found.getImage().getFileName());
+        }
+
+        if (found.getStores() != null && !found.getStores().isEmpty()) {
+            BookStore store = found.getStores().iterator().next();
+            dto.setEntryPrice(store.getEntryPrice());
+            dto.setQuanlity(store.getQuanlity());
+        }
+
+        // Lấy thông tin sale
+        if (found.getStores() != null && !found.getStores().isEmpty()
+                && found.getStores().iterator().next().getSale() != null) {
+            BookSale sale = found.getStores().iterator().next().getSale();
+            dto.setBeginSale(sale.getBeginSale());
+            dto.setEndSale(sale.getEndSale());
+            dto.setPriceSale(sale.getPriceSale());
+        }
 
         // Lấy thông tin store
         // Optional<BookStore> optionalBookStore =
@@ -306,7 +381,7 @@ public class BookService {
 
     public ResponseEntity<List<BookBriefDTO>> findAll() {
         var list = bookReponsitory.findAllWithStoreAndSale();
-        
+
         List<BookBriefDTO> newList = list.stream().map(item -> {
             BookBriefDTO dto = new BookBriefDTO();
             BeanUtils.copyProperties(item, dto);

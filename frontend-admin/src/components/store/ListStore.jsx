@@ -75,7 +75,7 @@ class ListStore extends Component {
         <>
           <ContentHeader
             navigate={navigate}
-            title="Danh sách ngôn ngữ"
+            title="Danh sách kho"
             className="site-page_header"
           />
           <Skeleton />
@@ -89,11 +89,11 @@ class ListStore extends Component {
             <Col span={12}>
               <ContentHeader
                 navigate={navigate}
-                title="Danh sách ngôn ngữ"
+                title="Danh sách kho"
                 className="site-page_header"
               />
             </Col>
-            <Col md={12} style={{ textAlign: "right" }}>
+            {/* <Col md={12} style={{ textAlign: "right" }}>
               <Button
                 type="primary"
                 onClick={() => {
@@ -102,7 +102,7 @@ class ListStore extends Component {
               >
                 Thêm ngôn ngữ
               </Button>
-            </Col>
+            </Col> */}
           </Row>
         </div>
         <StoreList

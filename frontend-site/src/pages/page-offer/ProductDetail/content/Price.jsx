@@ -1,10 +1,16 @@
 import React from "react";
 
-export default function Price() {
+export default function Price({ price, priceSale }) {
   return (
     <div className="price">
-      <span className="current">$129.99</span>
-      <span className="normal">$189.99</span>
+      {priceSale !== 0 ? (
+        <>
+          <span className="current">{priceSale}</span>
+          <span className="normal">{price}</span>
+        </>
+      ) : (
+        <span className="current">{price}</span>
+      )}
     </div>
   );
 }
