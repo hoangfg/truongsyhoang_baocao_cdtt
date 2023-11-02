@@ -11,6 +11,7 @@ class Product extends Component {
       selectedPublishers,
       productsToShow,
       sortBy,
+      type,
     } = this.props;
 
     let filteredBooks = books.filter((book) => {
@@ -39,7 +40,22 @@ class Product extends Component {
 
       return languagesMatch && genresMatch && authorsMatch && publishersMatch;
     });
-
+    if (type === "sale") {
+      filteredBooks = filteredBooks.filter(
+        (filteredItem) =>
+          filteredItem.beginSale &&
+          filteredItem.priceSale &&
+          filteredItem.endSale &&
+          new Date(filteredItem.endSale) > new Date()
+      );
+    }
+    if(type==="genres") {
+      // filteredBooks = filteredBooks.filter(
+      //   (filteredItem) =>
+      //     // filteredItem.bookGenresName === ""
+          
+      // );
+    }
     switch (sortBy) {
       case "name_ASC":
         filteredBooks.sort((a, b) => a.name.localeCompare(b.name));
@@ -55,7 +71,7 @@ class Product extends Component {
         break;
       // Thêm các trường hợp sắp xếp khác nếu cần
       default:
-        // Mặc định, không sắp xếp
+        filteredBooks.sort((a, b) => b.id - a.id);
         break;
     }
 

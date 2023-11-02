@@ -24,12 +24,17 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<PageHome />} />
-            <Route path="product" element={<PageCategory title="Tất cả sản phẩm" />} />
+            <Route path="product" element={<PageCategory title="Tất cả sản phẩm" type="product" />} />
+            <Route path="sale" element={<PageCategory title="Sản phẩm khuyến mãi" type="sale" />} />
 
             <Route path="/product/:slug" element={<PageOffer />} />
             <Route path="cart" element={<Cart />} />
             <Route path="checkout" element={<CheckOut />} />
             <Route path="signin" element={<SignBox />} />
+            <Route
+              path="/product/genres/:slug"
+              element={<PageCategory title="Sản phẩm theo thể loại" type="genres" />}
+            />
 
           </Route>
 

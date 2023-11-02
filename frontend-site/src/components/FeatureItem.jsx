@@ -20,6 +20,8 @@ export default function FeatureItem(props) {
     // bookGenresName,
     slug,
   } = props;
+  const discountPercentage = ((price - priceSale) / price) * 100;
+
   // console.log(slug);
   return (
     <div className="item">
@@ -50,7 +52,13 @@ export default function FeatureItem(props) {
           </ul>
         </div>
         <div className="discount circle flexcenter">
-          <span>25%</span>
+          {priceSale !== 0 ? (
+            <>
+              <span>{Math.round(discountPercentage)}%</span>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <div className="content">

@@ -21,8 +21,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "author")
-public class Author extends AbtractEntity{
-	
+public class Author extends AbtractEntity {
+
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
 	@Column(name = "slug", length = 255)
@@ -30,11 +30,10 @@ public class Author extends AbtractEntity{
 	@Column(name = "image", length = 127)
 	private String image;
 	@Lob
-	@Column(name = "detail")
+	@Column(name = "detail", columnDefinition = "TEXT")
 	private String detail;
-	
-	@Column(name = "status",  columnDefinition = "int default 0")
+
+	@Column(name = "status", columnDefinition = "int default 0")
 	private int status;
-	
 
 }
