@@ -100,7 +100,7 @@ class ListTopics extends Component {
                   this.setState({ ...this.state, open: true });
                 }}
               >
-                Thêm tác giả
+                Thêm thể loại bài viết
               </Button>
             </Col>
           </Row>

@@ -6,6 +6,7 @@ class FooterWidget extends Component {
     const { pages, publishers, posts } = this.props;
     let filterPage = pages.filter((item) => item.status === 0);
     let filterPost = posts.filter((item) => item.status === 0);
+    console.log("filterPost", filterPage);
     return (
       <div className="widgets">
         <div className="container">
@@ -13,7 +14,7 @@ class FooterWidget extends Component {
             <div className="flexwrap">
               <div className="row">
                 <div className="item mini-links">
-                  <h4>Help &amp; Contact</h4>
+                  <h4>HỖ TRỢ</h4>
                   <ul className="flexcol">
                     <li>
                       <Link href="#">Your Account</Link>
@@ -41,7 +42,20 @@ class FooterWidget extends Component {
               </div>
               <div className="row">
                 <div className="item mini-links">
-                  <h4>Publishers</h4>
+                  <h4>Thông tin</h4>
+                  <ul className="flexcol">
+                    {filterPage &&
+                      filterPage.map((item) => (
+                        <li>
+                          <Link to={`/post/${item.slug}`}>{item.title}</Link>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              </div>
+              <div className="row">
+                <div className="item mini-links">
+                  <h4>Nhà xuất bản</h4>
                   <ul className="flexcol">
                     {publishers &&
                       publishers
@@ -60,7 +74,7 @@ class FooterWidget extends Component {
               </div>
               <div className="row">
                 <div className="item mini-links">
-                  <h4>Post</h4>
+                  <h4>Bài viết</h4>
                   <ul className="flexcol">
                     {filterPost &&
                       filterPost.map((item) => (
@@ -71,22 +85,6 @@ class FooterWidget extends Component {
                   </ul>
                 </div>
               </div>
-              {filterPage ? (
-                <div className="row">
-                  <div className="item mini-links">
-                    <h4>Abour Us</h4>
-                    <ul className="flexcol">
-                      {filterPage.map((item) => {
-                        <li>
-                          <Link to={`/page/${item.slug}`}>{item.title}</Link>
-                        </li>;
-                      })}
-                    </ul>
-                  </div>
-                </div>
-              ) : (
-                <></>
-              )}
             </div>
           </div>
         </div>

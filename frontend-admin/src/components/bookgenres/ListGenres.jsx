@@ -104,7 +104,7 @@ class ListGenres extends Component {
                   this.setState({ ...this.state, open: true });
                 }}
               >
-                Thêm tác giả
+                Thêm thể loại
               </Button>
             </Col>
           </Row>

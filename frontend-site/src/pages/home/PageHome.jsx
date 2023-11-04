@@ -11,6 +11,8 @@ import withRouter from "../../helpers/withRouter";
 import { getAuthors } from "./../../redux/actions/authorAction";
 import { getBooks } from "./../../redux/actions/bookAction";
 import { getGenres } from "./../../redux/actions/bookGenresAction";
+import { getSliders } from "./../../redux/actions/sliderAction";
+import sliderReducer from "./../../redux/reducers/sliderReducer";
 
 class PageHome extends Component {
   constructor(props) {
@@ -25,17 +27,18 @@ class PageHome extends Component {
     this.props.getAuthors();
     this.props.getBooks();
     this.props.getGenres();
+    this.props.getSliders();
   };
   render() {
-    const { authors, books, genres, isLoading } = this.props;
-    // console.log(genres);
+    const { authors, books, genres, sliders, isLoading } = this.props;
+    console.log(sliders);
     return (
       <>
-        <Slider></Slider>
+        <Slider sliders={sliders}></Slider>
         <ListBrand />
-        {/* <Trending /> */}
+        {/* <Trending books={books} /> */}
         <Feature genres={genres} books={books} />
-        <Banners authors={authors} books={books} />
+        {/* <Banners authors={authors} books={books} /> */}
         <Modal />
       </>
     );
@@ -45,6 +48,7 @@ const mapStateToProps = (state) => ({
   authors: state.authorReducer.authors,
   books: state.bookReducer.books,
   genres: state.bookGenresReducer.genres,
+  sliders: state.sliderReducer.sliders,
   isLoading: state.commonReducer.isLoading,
 });
 
@@ -52,6 +56,7 @@ const mapDispatchToProps = {
   getAuthors,
   getBooks,
   getGenres,
+  getSliders,
 };
 
 export default connect(

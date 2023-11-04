@@ -7,7 +7,10 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/swiper-bundle.css";
-export default function Slider() {
+import sliderService from "../../services/sliderService";
+export default function Slider(props) {
+  const sliders = props.sliders;
+  const filterSliders = sliders.filter((sliders) => sliders.status === 0);
   useEffect(() => {
     const swiper = new Swiper(".myslider", {
       modules: [Autoplay, Pagination, Navigation],
@@ -40,102 +43,37 @@ export default function Slider() {
               id="swiper-wrapper-f0026133bcba9a28"
               aria-live="polite"
             >
-              <div
-                className="swiper-slide swiper-slide-active"
-                role="group"
-                aria-label="1 / 4"
-                data-swiper-slide-index={0}
-                style={{ width: 588 }}
-              >
-                <div className="item">
-                  <div className="image object-cover">
-                    <img src="./assets/slider/slider0.jpg" alt="" />
-                  </div>
-                  <div className="text-content flexcol">
-                    <h4>Shoes Fashion</h4>
-                    <h2>
-                      <span>Come and get !!!</span>
-                      <br />
-                      <span>Brand New Shoes</span>
-                    </h2>
-                    <Link href="#" className="primary-button">
-                      Shop Now
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="swiper-slide swiper-slide-next"
-                role="group"
-                aria-label="2 / 4"
-                data-swiper-slide-index={1}
-                style={{ width: 588 }}
-              >
-                <div className="item">
-                  <div className="image object-cover">
-                    <img src="./assets/slider/slider1.jpg" alt="1" />
-                  </div>
-                  <div className="text-content flexcol">
-                    <h4>Quick Fashion</h4>
-                    <h2>
-                      <span>Fit Your Wardrode</span>
-                      <br />
-                      <span>With luxury items</span>
-                    </h2>
-                    <Link href="#" className="primary-button">
-                      Shop Now
-                    </Link>
+              {filterSliders.map((item) => (
+                <div
+                  className="swiper-slide swiper-slide-active"
+                  role="group"
+                  aria-label="1 / 4"
+                  data-swiper-slide-index={0}
+                  style={{ width: 588 }}
+                >
+                  <div className="item">
+                    <div className="image object-cover">
+                      <Link to={item.link}>
+                        <img
+                          src={sliderService.getPhotoUrl(item?.image)}
+                          alt=""
+                        />
+                      </Link>
+                    </div>
+                    <div className="text-content flexcol">
+                      <h4>{item.name}</h4>
+                      {/* <h2>
+                        <span>Come and get !!!</span>
+                        <br />
+                        <span>Brand New Shoes</span>
+                      </h2> */}
+                      <Link to={item.link} className="primary-button">
+                        Shop Now
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="swiper-slide"
-                role="group"
-                aria-label="3 / 4"
-                data-swiper-slide-index={2}
-                style={{ width: 588 }}
-              >
-                <div className="item">
-                  <div className="image object-cover">
-                    <img src="./assets/slider/slider2.jpg" alt="1" />
-                  </div>
-                  <div className="text-content flexcol">
-                    <h4>Quick Offer</h4>
-                    <h2>
-                      <span>Wooden Minimal Sofa</span>
-                      <br />
-                      <span>Extra 50% off</span>
-                    </h2>
-                    <Link href="#" className="primary-button">
-                      Shop Now
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="swiper-slide"
-                role="group"
-                aria-label="4 / 4"
-                data-swiper-slide-index={3}
-                style={{ width: 588 }}
-              >
-                <div className="item">
-                  <div className="image object-cover">
-                    <img src="./assets/slider/slider3.jpg" alt="1" />
-                  </div>
-                  <div className="text-content flexcol">
-                    <h4>Best Deals</h4>
-                    <h2>
-                      <span>Home Workout Accessoroses</span>
-                      <br />
-                      <span>Push the limit</span>
-                    </h2>
-                    <Link href="#" className="primary-button">
-                      Shop Now
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
             <div className="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal">
               <span

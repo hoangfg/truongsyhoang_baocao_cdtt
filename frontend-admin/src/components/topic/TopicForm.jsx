@@ -28,7 +28,7 @@ class TopicsForm extends Component {
     return (
       <Modal
         open={open}
-        title={<span style={{ fontSize: "20px" }}>Thêm tác giả</span>}
+        title={<span style={{ fontSize: "20px" }}>Thêm thể loại bài viết</span>}
         okText="Lưu"
         cancelText="Thoát"
         onCancel={onCancel}

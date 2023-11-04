@@ -1,4 +1,5 @@
 import {
+  AUTHORS_LOADING_SET,
   AUTHORS_SET,
   AUTHOR_APPEND,
   AUTHOR_DELETE,
@@ -10,12 +11,15 @@ import {
 const initialState = {
   author: {},
   authors: [],
+  isLoading: false,
 };
 
 const authorReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case AUTHOR_SET:
       return { ...state, author: payload };
+    case AUTHORS_LOADING_SET:
+      return { ...state, isLoading: payload };
     case AUTHORS_SET:
       return { ...state, authors: payload };
     case AUTHOR_APPEND:
@@ -26,10 +30,10 @@ const authorReducer = (state = initialState, { type, payload }) => {
         authors: state.authors.filter((item) => item.id !== payload),
       };
     case AUTHOR_UPDATE:
-      const newAuthor = state.authors.filter((item) => item.id !== payload.id)
+      const newAuthor = state.authors.filter((item) => item.id !== payload.id);
       return {
         ...state,
-        authors: [payload, ...newAuthor]
+        authors: [payload, ...newAuthor],
       };
 
     default:

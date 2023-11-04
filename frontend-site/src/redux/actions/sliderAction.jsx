@@ -10,49 +10,7 @@ import {
   COMMON_MESSAGE_SET,
 } from "./actionTypes";
 
-export const insertSlider = (slider) => async (dispatch) => {
-  const service = new sliderService();
 
-  try {
-    const response = await service.create(slider);
-    console.log("dataRe", slider);
-    console.log(response.data);
-    if (response.status === 201) {
-      console.log("yes", response);
-      dispatch({
-        type: SLIDER_SET,
-        payload: response.data,
-      });
-      dispatch({
-        type: COMMON_MESSAGE_SET,
-        payload: "Thêm thành công",
-      });
-      dispatch({
-        type: SLIDER_APPEND,
-        payload: response.data,
-      });
-    } else {
-      console.log("no1");
-      dispatch({
-        type: COMMON_ERROR_SET,
-        payload: response.message,
-      });
-    }
-  } catch (error) {
-    console.log("no", error);
-    dispatch({
-      type: COMMON_ERROR_SET,
-      payload: error.response.data
-        ? error.response.data.message
-        : error.message,
-    });
-    // console.log("error:" + error);
-  }
-  dispatch({
-    type: COMMON_LOADING_SET,
-    payload: false,
-  });
-};
 export const getSliders = () => async (dispatch) => {
   const service = new sliderService();
   try {

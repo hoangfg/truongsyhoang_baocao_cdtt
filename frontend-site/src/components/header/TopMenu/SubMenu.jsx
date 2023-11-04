@@ -2,20 +2,36 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ChildSubMenu from "./ChildSubMenu";
 
-export default function SubMenu() {
+export default function SubMenu(props) {
+  const submenus = props.item;
+  const menus = props.menus;
+
+  const filterSubmenu = menus.filter(
+    (menus) =>
+      menus.status === 0 &&
+      menus.parent_id === submenus.id &&
+      menus.position === "mainmenu"
+  );
+  console.log("m", filterSubmenu);
   return (
     <div className="mega">
       <div className="container">
         <div className="wrapper">
-          <div className="flexcol submenu">
-            <div className="row">
-              <h4>Women's Clothing</h4>
-              <ul>
-                <ChildSubMenu />
-              </ul>
+          {submenus.map((item) => (
+            <div className="flexcol submenu">
+              <div className="row">
+                <h4>
+                  <Link to={`/${item?.link}`}>{item.name}</Link>
+                </h4>
+                {filterSubmenu.length > 0 && (
+                  <ul>
+                    <ChildSubMenu filterSubmenu={filterSubmenu} />
+                  </ul>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="flexcol submenu">
+          ))}
+          {/* <div className="flexcol submenu">
             <div className="row">
               <h4>Jewlry</h4>
             </div>
@@ -86,7 +102,7 @@ export default function SubMenu() {
                 </Link>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

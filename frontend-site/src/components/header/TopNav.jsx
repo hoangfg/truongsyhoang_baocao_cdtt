@@ -13,23 +13,23 @@ export default function TopNav() {
                 <Link href="#">Blog</Link>
               </li>
               <li>
-                <Link href="#">Featured Products</Link>
+                <Link href="#">Sản phẩm nổi bật</Link>
               </li>
               <li>
-                <Link href="#">Wishlist</Link>
+                <Link href="#">Danh sách yêu thích</Link>
               </li>
             </ul>
           </div>
           <div className="right">
             <ul className="flexitem main-links">
               <li>
-                <Link to="signin">Sign Up</Link>
+                <Link to="signin">Đăng ký</Link>
               </li>
               <li>
-                <Link href="#">My Account</Link>
+                <Link href="#">Tài khoản của tôi</Link>
               </li>
               <li>
-                <Link href="#">Order Tracking</Link>
+                <Link href="#">Theo dõi đơn hàng</Link>
               </li>
               <li>
                 <Link href="#">

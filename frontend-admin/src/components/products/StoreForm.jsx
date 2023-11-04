@@ -24,7 +24,7 @@ class StoreForm extends Component {
     const { open, onCreate, onCancel, store, productId, onEdit } = this.props;
     let beginSaleDate;
     let endSaleDate;
-    console.log("pr", productId);
+
     if (moment(store.beginSale, "YYYY-MM-DD").isValid()) {
       beginSaleDate = moment(store.beginSale, "YYYY-MM-DD");
     }
@@ -32,7 +32,7 @@ class StoreForm extends Component {
     if (moment(store.endSale, "YYYY-MM-DD").isValid()) {
       endSaleDate = moment(store.endSale, "YYYY-MM-DD");
     }
-    console.log("gg", book);
+
     
     return (
       <Modal

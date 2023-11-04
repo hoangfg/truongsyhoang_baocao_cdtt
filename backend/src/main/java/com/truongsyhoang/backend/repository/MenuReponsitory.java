@@ -15,4 +15,7 @@ public interface MenuReponsitory extends JpaRepository<Menu, Long> {
 
     @Query("SELECT MAX(s.sort_order) FROM Menu s")
     Long findMaxSortOrder();
+
+    @Query("SELECT m FROM Menu m ORDER BY m.sort_order ASC, m.position DESC")
+    List<Menu> findAllSortedBySortOrderAndPosition();
 }

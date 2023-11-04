@@ -23,8 +23,7 @@ class CkediterForm extends Component {
 
   render() {
     const { book } = this.props;
-    console.log("book trong SelectForm:", book);
-    console.log(book);
+
     return (
       <Row>
         <Col md={11}>

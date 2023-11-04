@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.truongsyhoang.backend.domain.Author;
+import com.truongsyhoang.backend.domain.Book;
 import com.truongsyhoang.backend.dto.AuthorDTO;
 import com.truongsyhoang.backend.dto.BookDTO;
 import com.truongsyhoang.backend.dto.BookImagesDTO;
@@ -107,13 +108,11 @@ public class BookController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody BookDTO dto, BindingResult result) {
-        ResponseEntity<?> responseEntity = mapValidationErrorService.mapValidationFields(result);
-        if (responseEntity != null) {
-            return responseEntity;
-        }
-        var updateDto = bookService.update(id, dto);
-        return new ResponseEntity<>(updateDto, HttpStatus.OK);
+    public ResponseEntity<?> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
+        Book updatedBook = bookService.update(id, bookDTO);
+        System.out.println(updatedBook);
+        return new ResponseEntity<>(updatedBook, HttpStatus.ACCEPTED);
+     
     }
 
     @GetMapping("/find")
@@ -133,6 +132,7 @@ public class BookController {
     public ResponseEntity<?> getById(@PathVariable Long id) {
         return new ResponseEntity<>(bookService.getBookById(id), HttpStatus.OK);
     }
+
     @GetMapping("/{slug}/slug")
     public ResponseEntity<?> getBySlug(@PathVariable String slug) {
         return new ResponseEntity<>(bookService.getBySlug(slug), HttpStatus.OK);

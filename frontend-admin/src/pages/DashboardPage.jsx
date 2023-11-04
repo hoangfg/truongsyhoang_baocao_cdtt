@@ -88,24 +88,24 @@ function DashboardPage() {
             {
               key: "1",
               icon: <HomeOutlined />,
-              label: "Home",
+              label: "Trang chủ",
               onClick: () => navigate("/"),
             },
             {
               key: "2",
               icon: <TbBrandAirtable />,
-              label: "Publisher",
+              label: "Nhà xuất bản",
               children: [
                 {
                   key: "21",
                   icon: <BsListTask />,
-                  label: "List",
+                  label: "Danh sách",
                   onClick: () => navigate("/publishers"),
                 },
                 {
                   key: "22",
                   icon: <MdOutlineCreateNewFolder />,
-                  label: "Add",
+                  label: "Thêm",
                   onClick: () => navigate("/publishers/add"),
                 },
               ],
@@ -113,12 +113,12 @@ function DashboardPage() {
             {
               key: "3",
               icon: <MdOutlineEmojiPeople />,
-              label: "Author",
+              label: "Tác giả",
               children: [
                 {
                   key: "31",
                   icon: <BsListTask />,
-                  label: "List",
+                  label: "Danh sách",
                   onClick: () => navigate("/authors"),
                 },
               ],
@@ -126,12 +126,12 @@ function DashboardPage() {
             {
               key: "4",
               icon: <GiRegeneration />,
-              label: "Genres",
+              label: "Thể loại",
               children: [
                 {
                   key: "41",
                   icon: <BsListTask />,
-                  label: "List",
+                  label: "Danh sách",
                   onClick: () => navigate("/genres"),
                 },
               ],
@@ -139,12 +139,12 @@ function DashboardPage() {
             {
               key: "5",
               icon: <AiOutlineAlipay />,
-              label: "Language",
+              label: "Ngôn ngữ",
               children: [
                 {
                   key: "51",
                   icon: <BsListTask />,
-                  label: "List",
+                  label: "Danh sách",
                   onClick: () => navigate("/language"),
                 },
               ],
@@ -152,7 +152,7 @@ function DashboardPage() {
             {
               key: "6",
               icon: <GiBookshelf />,
-              label: "Product",
+              label: "Sản phẩm",
               children: [
                 // {
                 //   key: "61",
@@ -163,13 +163,13 @@ function DashboardPage() {
                 {
                   key: "62",
                   icon: <BsListTask />,
-                  label: "Add Book",
+                  label: "Thêm",
                   onClick: () => navigate("/product/add"),
                 },
                 {
                   key: "63",
                   icon: <BsListTask />,
-                  label: "List",
+                  label: "Danh sách",
                   onClick: () => navigate("/product"),
                 },
               ],
@@ -177,12 +177,12 @@ function DashboardPage() {
             {
               key: "6a",
               icon: <AiOutlineAlipay />,
-              label: "Store",
+              label: "Kho",
               children: [
                 {
                   key: "6a1",
                   icon: <BsListTask />,
-                  label: "List",
+                  label: "Danh sách",
                   onClick: () => navigate("/store"),
                 },
               ],
@@ -190,7 +190,7 @@ function DashboardPage() {
             {
               key: "7",
               icon: <ImNewspaper />,
-              label: "Topic",
+              label: "Bài viết",
               children: [
                 // {
                 //   key: "61",
@@ -201,19 +201,19 @@ function DashboardPage() {
                 {
                   key: "71",
                   icon: <MdTopic />,
-                  label: "Topic",
+                  label: "Thể loại",
                   onClick: () => navigate("/topic"),
                 },
                 {
                   key: "72",
                   icon: <BsFillSignpostSplitFill />,
-                  label: "Post",
+                  label: "Bài viết",
                   onClick: () => navigate("/post"),
                 },
                 {
                   key: "73",
                   icon: <BsFillSignpostSplitFill />,
-                  label: "Page",
+                  label: "Trang đơn",
                   onClick: () => navigate("/page"),
                 },
               ],
@@ -226,7 +226,7 @@ function DashboardPage() {
                 {
                   key: "81",
                   icon: <BsListTask />,
-                  label: "List",
+                  label: "Danh sách",
                   onClick: () => navigate("/config"),
                 },
               ],
@@ -239,7 +239,7 @@ function DashboardPage() {
                 {
                   key: "91",
                   icon: <BsListTask />,
-                  label: "List",
+                  label: "Danh sách",
                   onClick: () => navigate("/slider"),
                 },
               ],
@@ -252,7 +252,7 @@ function DashboardPage() {
                 {
                   key: "10a1",
                   icon: <BsListTask />,
-                  label: "List",
+                  label: "Danh sách",
                   onClick: () => navigate("/menu"),
                 },
               ],

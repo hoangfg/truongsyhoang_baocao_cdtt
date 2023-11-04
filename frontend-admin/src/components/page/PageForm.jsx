@@ -62,7 +62,7 @@ class PageForm extends Component {
     return (
       <Modal
         open={open}
-        title={<span style={{ fontSize: "20px" }}>Thêm tác giả</span>}
+        title={<span style={{ fontSize: "20px" }}>Thêm trang đơn</span>}
         okText="Lưu"
         cancelText="Thoát"
         onCancel={onCancel}

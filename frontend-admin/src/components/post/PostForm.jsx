@@ -62,7 +62,7 @@ class PostForm extends Component {
     return (
       <Modal
         open={open}
-        title={<span style={{ fontSize: "20px" }}>Thêm tác giả</span>}
+        title={<span style={{ fontSize: "20px" }}>Thêm bài viết</span>}
         okText="Lưu"
         cancelText="Thoát"
         onCancel={onCancel}

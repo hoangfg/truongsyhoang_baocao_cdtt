@@ -27,9 +27,6 @@ class ListBook extends Component {
   }
 
   openStoreForm = (id) => {
-    console.log("id", id);
-    // const selectedBook = this.props.books.find((book) => book.id === id);
-
     this.setState({
       openStoreForm: true,
       store: {
@@ -45,17 +42,24 @@ class ListBook extends Component {
     });
   };
   onCreate = (values) => {
-    // console.log("val", values);
     this.props.insertStore(values);
     this.setState({ ...this.state, store: {}, open: false });
   };
-  
+
   componentDidMount = () => {
     this.props.getBooks();
   };
   edit = (book) => {
     const { navigate } = this.props.router;
     navigate("/product/update/" + book.id);
+  };
+  add = () => {
+    this.setState({
+      openStoreForm: true,
+      store: {},
+    });
+    const { navigate } = this.props.router;
+    navigate("/product/add");
   };
   openDeleteConfirmModal = (book) => {
     this.setState({ ...this.state, book: book });
@@ -83,7 +87,7 @@ class ListBook extends Component {
     const { navigate } = this.props.router;
     const { open } = this.state;
     const { books, isLoading } = this.props;
-    console.log(books);
+
     if (isLoading) {
       return (
         <>
@@ -99,7 +103,7 @@ class ListBook extends Component {
     return (
       <>
         <div className="content-header">
-          <Row type="flex" justify="space-between" align="middle">
+          <Row type="flex" justify="space-between">
             <Col span={12}>
               <ContentHeader
                 navigate={navigate}
@@ -108,12 +112,7 @@ class ListBook extends Component {
               />
             </Col>
             <Col md={12} style={{ textAlign: "right" }}>
-              <Button
-                type="primary"
-                onClick={() => {
-                  navigate("/product/add");
-                }}
-              >
+              <Button type="primary" onClick={this.add}>
                 Thêm
               </Button>
             </Col>

@@ -1,4 +1,5 @@
 import {
+  GENRES_LOADING_SET,
   GENRES_SET,
   GENRE_APPEND,
   GENRE_DELETE,
@@ -9,12 +10,15 @@ import {
 const initialState = {
   genre: {},
   genres: [],
+  isLoading: false,
 };
 
 const bookGenresReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case GENRE_SET:
       return { ...state, genre: payload }; // Updated to set 'genre' instead of 'genres'
+    case GENRES_LOADING_SET:
+      return { ...state, isLoading: payload };
     case GENRES_SET:
       return { ...state, genres: payload }; // Corrected the property name to 'genres'
     case GENRE_APPEND:

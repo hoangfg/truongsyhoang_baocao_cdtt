@@ -19,7 +19,7 @@ export default function ImageBox(props) {
       initialSlide: currentImageIndex,
     });
   }, [currentImageIndex]);
-  const { image } = props;
+  const { image, discountPercentage } = props;
   console.log("12", image);
   const [toggler, setToggler] = useState(false);
   const handleThumbnailClick = (index) => {
@@ -34,19 +34,21 @@ export default function ImageBox(props) {
         sources={[bookService.getPhotoUrl(image)]}
       />
       <div className="item is_sticky">
-        <div className="price">
-          <div className="discount">
-            32% <br />
-            OFF
+        {discountPercentage != 0 && (
+          <div className="price">
+            <div className="discount">
+              -{Math.round(discountPercentage)}% <br />
+              OFF
+            </div>
           </div>
-        </div>
+        )}
         <div className="big-image swiper-initialized swiper-horizontal swiper-autoheight swiper-backface-hidden">
           <div
             className="big-image-wrapper swiper-wrapper"
             id="swiper-wrapper-500b6df2f3bf3333"
             aria-live="polite"
             style={{
-              height: 680,
+              height: 580,
               transitionDuration: "0ms",
               // transform: "translate3d(-906px, 0px, 0px)",
             }}
@@ -57,7 +59,7 @@ export default function ImageBox(props) {
                 role="group"
                 // aria-label="2 / 3"
                 data-swiper-slide-index={0}
-                style={{ width: 453 }}
+                style={{ width: 353 }}
               >
                 <Link>
                   <img

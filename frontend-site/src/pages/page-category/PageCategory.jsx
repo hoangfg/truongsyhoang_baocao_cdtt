@@ -1,33 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import SideBar from "./sidebar/SideBar";
-import Detail from "./../page-offer/ProductDetail/content/description/Detail";
-import NavigationCat from "./section/NavigationCat";
-import Product from "./product/Product";
-import Banners from "./../banners/Banners";
+import Banners from "../banners/Banners";
 import Modal from "../../components/Modal";
 import { connect } from "react-redux";
-import { getAuthors } from "./../../redux/actions/authorAction";
-import { getPublishers } from "./../../redux/actions/publisherAction";
-import { getBooks } from "./../../redux/actions/bookAction";
-import { getGenres } from "./../../redux/actions/bookGenresAction";
-import { getLanguage } from "./../../redux/actions/bookLanguageAction";
 import withRouter from "../../helpers/withRouter";
-const PageCategory = (props) => {
-  // constructor(props) {
-  //   super(props);
+import { getAuthors } from "../../redux/actions/authorAction";
+import { getPublishers } from "../../redux/actions/publisherAction";
+import { getBooks } from "../../redux/actions/bookAction";
+import { getGenres } from "../../redux/actions/bookGenresAction";
+import { getLanguage } from "../../redux/actions/bookLanguageAction";
+import SideBar from "./sidebar/SideBar";
+import Product from "./product/Product";
+import Loading from "../../components/Loading";
+function PageCategory(props) {
+  const {
+    authors,
+    books,
+    genres,
+    publishers,
+    languages,
+    title,
+    type,
+    isLoadingBooks,
+    isLoadingAuthors,
+    isLoadingGenres,
+    isLoadingLanguages,
+    isLoadingPublishers,
+  } = props;
 
-  //   this.state = {
-  //     productsToShow: 12,
-  //     productsToAdd: 9,
-  //     sortBy: "default",
-  //     open: false,
-  //     selectedLanguages: [], // Lưu trữ các ngôn ngữ được chọn
-  //     selectedGenres: [], // Lưu trữ các thể loại được chọn
-  //     selectedAuthors: [], // Lưu trữ các tác giả được chọn
-  //     selectedPublishers: [], // Lưu trữ các nhà xuất bản được chọn
-  //   };
-  // }
   const [productsToShow, setProductsToShow] = useState(12);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -35,114 +34,60 @@ const PageCategory = (props) => {
   const [selectedPublishers, setSelectedPublishers] = useState([]);
   const [sortBy, setSortBy] = useState("default");
 
-  useEffect(() => {
-    props.getAuthors();
-    props.getBooks();
-    props.getGenres();
-    props.getPublishers();
-    props.getLanguage();
-  }, []);
-  const handleCheckboxChange = (category, itemName) => {
-    this.setState((prevState) => {
-      const updatedItems = {
-        ...prevState.checkedItems,
-        [category]: [...prevState.checkedItems[category]],
-      };
+  const handleCheckboxChange = (category, itemName) => {};
 
-      if (updatedItems[category].includes(itemName)) {
-        updatedItems[category] = updatedItems[category].filter(
-          (name) => name !== itemName
-        );
-      } else {
-        updatedItems[category] = [...updatedItems[category], itemName];
-      }
-
-      return { checkedItems: updatedItems };
-    });
+  const handleLanguageChange = (languageName) => {
+    setSelectedLanguages((prev) =>
+      prev.includes(languageName)
+        ? prev.filter((item) => item !== languageName)
+        : [...prev, languageName]
+    );
   };
 
-  const handleLanguageChange = (languageId) => {
-    this.setState((prevState) => ({
-      selectedLanguages: prevState.selectedLanguages.includes(languageId)
-        ? prevState.selectedLanguages.filter((id) => id !== languageId)
-        : [...prevState.selectedLanguages, languageId],
-    }));
+  const handleGenreChange = (genreName) => {
+    setSelectedGenres((prev) =>
+      prev.includes(genreName)
+        ? prev.filter((item) => item !== genreName)
+        : [...prev, genreName]
+    );
   };
 
-  const handleGenreChange = (genreId) => {
-    this.setState((prevState) => ({
-      selectedGenres: prevState.selectedGenres.includes(genreId)
-        ? prevState.selectedGenres.filter((id) => id !== genreId)
-        : [...prevState.selectedGenres, genreId],
-    }));
+  const handleAuthorChange = (authorName) => {
+    setSelectedAuthors((prev) =>
+      prev.includes(authorName)
+        ? prev.filter((item) => item !== authorName)
+        : [...prev, authorName]
+    );
   };
 
-  const handleAuthorChange = (authorId) => {
-    this.setState((prevState) => ({
-      selectedAuthors: prevState.selectedAuthors.includes(authorId)
-        ? prevState.selectedAuthors.filter((id) => id !== authorId)
-        : [...prevState.selectedAuthors, authorId],
-    }));
-  };
-
-  const handlePublisherChange = (publisherId) => {
-    this.setState((prevState) => ({
-      selectedPublishers: prevState.selectedPublishers.includes(publisherId)
-        ? prevState.selectedPublishers.filter((id) => id !== publisherId)
-        : [...prevState.selectedPublishers, publisherId],
-    }));
+  const handlePublisherChange = (publisherName) => {
+    setSelectedPublishers((prev) =>
+      prev.includes(publisherName)
+        ? prev.filter((item) => item !== publisherName)
+        : [...prev, publisherName]
+    );
   };
 
   // const handleSortChange = (e) => {
   //   const sortType = e.target.value;
   //   this.setState({ sortBy: sortType });
   // };
-  const componentDidMount = () => {
-    this.props.getAuthors();
-    this.props.getBooks();
-    this.props.getGenres();
-    this.props.getPublishers();
-    this.props.getLanguage();
-  };
   const handleSortChange = (e) => {
-    setSortBy(e.target.value);
+    const sortType = e.target.value;
+    setSortBy(sortType);
   };
 
   const loadMore = () => {
     setProductsToShow((prev) => prev + 9);
   };
+  useEffect(() => {
+    props.getAuthors();
+    props.getBooks();
+    props.getGenres();
+    props.getLanguage();
+    props.getPublishers();
+  }, []);
 
-  // render() {
-  //   const {
-  //     title,
-  //     authors,
-  //     books,
-  //     genres,
-  //     isLoading,
-  //     languages,
-  //     publishers,
-  //     type,
-  //   } = this.props;
-
-  //   const {
-  //     selectedLanguages,
-  //     selectedGenres,
-  //     selectedAuthors,
-  //     selectedPublishers,
-  //     sortBy,
-  //   } = this.state;
-  const {
-    authors,
-    books,
-    genres,
-    isLoading,
-    languages,
-    publishers,
-    type,
-    title,
-  } = props;
-
-  const { name } = useParams();
   return (
     <>
       <div className="single-category">
@@ -163,22 +108,16 @@ const PageCategory = (props) => {
                       //   authors: selectedAuthors,
                       //   publishers: selectedPublishers,
                       // }}
-                      onCheckboxChange={this.handleCheckboxChange}
-                      onLanguageChange={this.handleLanguageChange}
-                      onGenreChange={this.handleGenreChange}
-                      onAuthorChange={this.handleAuthorChange}
-                      onPublisherChange={this.handlePublisherChange}
+                      onCheckboxChange={handleCheckboxChange}
+                      onLanguageChange={handleLanguageChange}
+                      onGenreChange={handleGenreChange}
+                      onAuthorChange={handleAuthorChange}
+                      onPublisherChange={handlePublisherChange}
+                      isLoadingAuthors={isLoadingAuthors}
+                      isLoadingGenres={isLoadingGenres}
+                      isLoadingLanguages={isLoadingLanguages}
+                      isLoadingPublishers={isLoadingPublishers}
                     />
-
-                    {/* <div className="filter-block">
-                        <button
-                          type="submit"
-                          className="primary-button"
-                          onclick="submitFilters()"
-                        >
-                          Submit
-                        </button>
-                      </div> */}
                   </div>
                 </div>
                 <div className="section">
@@ -187,7 +126,7 @@ const PageCategory = (props) => {
                       <div className="breadcrumb">
                         <ul className="flexitem">
                           <li>
-                            <a href="#">Home</a>
+                            <a href="#">Trang chủ</a>
                           </li>
                           <li>{title}</li>
                         </ul>
@@ -223,61 +162,61 @@ const PageCategory = (props) => {
                           <div className="label">
                             <span className="mobile-hide">Sort by default</span>
                             <div className="desktop-hide">Default</div>
+                            <select value={sortBy} onChange={handleSortChange}>
+                              <option value="default">Default</option>
+                              <option value="name_ASC">Tên: A - Z</option>
+                              <option value="name_DESC">Tên: Z - A</option>
+                              <option value="price_ASC">Giá tăng dần</option>
+                              <option value="price_DESC">Giá giảm dần</option>
+                            </select>
                           </div>
-                          <select
-                            value={sortBy}
-                            onChange={this.handleSortChange}
-                          >
-                            <option value="default">Default</option>
-                            <option value="name_ASC">Tên: A - Z</option>
-                            <option value="name_DESC">Tên: Z - A</option>
-                            <option value="price_ASC">Giá tăng dần</option>
-                            <option value="price_DESC">Giá giảm dần</option>
-                          </select>
                         </div>
                       </div>
                     </div>
                   </div>
-
                   <Product
                     books={books}
                     selectedLanguages={selectedLanguages}
                     selectedGenres={selectedGenres}
                     selectedAuthors={selectedAuthors}
                     selectedPublishers={selectedPublishers}
-                    productsToShow={this.state.productsToShow}
+                    isLoadingBooks={isLoadingBooks}
+                    // productsToShow={this.state.productsToShow}
                     sortBy={sortBy}
                     type={type}
                   />
 
-                  {books.length > this.state.productsToShow && (
+                  {/* {books.length > this.state.productsToShow && (
                     <div className="load-more flexcenter">
                       <a onClick={this.loadMore} className="secondary-button">
                         Load more
                       </a>
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Banners authors={authors} books={books} />
+
+      {/* <Banners authors={authors} books={books} /> */}
       <Modal />
     </>
   );
-};
-// }
+}
 const mapStateToProps = (state) => ({
   authors: state.authorReducer.authors,
   books: state.bookReducer.books,
   genres: state.bookGenresReducer.genres,
-  isLoading: state.commonReducer.isLoading,
   publishers: state.publisherReducer.publishers,
   languages: state.bookLanguageReducer.languages,
+  isLoadingBooks: state.bookReducer.isLoading,
+  isLoadingAuthors: state.authorReducer.isLoading,
+  isLoadingPublishers: state.publisherReducer.isLoading,
+  isLoadingGenres: state.bookGenresReducer.isLoading,
+  isLoadingLanguages: state.bookLanguageReducer.isLoading,
 });
-
 const mapDispatchToProps = {
   getAuthors,
   getBooks,

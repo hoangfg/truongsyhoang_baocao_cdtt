@@ -6,11 +6,11 @@ export default function Sold({ quanlity }) {
     <div className="stock mini-text" data-stock={5000}>
       <div className="qty">
         <span>
-          Sold:
+          Đã bán:
           <strong className="qty-sold">3549</strong>
         </span>
         <span>
-          Stock:
+          Còn:
           <strong className="qty-available">{quanlity}</strong>
         </span>
       </div>

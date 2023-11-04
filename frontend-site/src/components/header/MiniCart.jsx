@@ -35,7 +35,7 @@ export default function MiniCart() {
   return (
     <div className="mini-cart">
       <div className="content">
-        <div className="cart-head">5 items is cart</div>
+        <div className="cart-head">5 sản phẩm trong giỏ hàng</div>
         <div className="cart-body">
           <ul className="products mini">
             <li className="item">
@@ -152,17 +152,17 @@ export default function MiniCart() {
         </div>
         <div className="cart-footer">
           <div className="subtotal">
-            <p>Subtotal</p>
+            <p>Tổng</p>
             <p>
               <strong>$1.622</strong>
             </p>
           </div>
           <div className="actions">
             <Link to="/checkout" className="primary-button">
-              Checkout
+              Thanh toán
             </Link>
             <Link to="/cart" className="secondary-button">
-              View cart
+              Giỏ hàng
             </Link>
           </div>
         </div>

@@ -61,7 +61,7 @@ export default function ProductDetail(props) {
         <Sold quanlity={book.quanlity} />
         <Offer />
         {/* <Type /> */}
-        <AddToCart />
+        {book.quanlity > 0 && <AddToCart />}
         <div className="description collapse">
           <ul>
             {/* Information  */}
@@ -75,20 +75,20 @@ export default function ProductDetail(props) {
                 className="icon-small"
                 onClick={() => toggleSection("information")}
               >
-                Information
+                Thông tin sản phẩm
               </a>
               <ul className="content">
                 <li>
-                  <span>Author: </span> <span>{book.authorName}</span>
+                  <span>Tác giả: </span> <span>{book.authorName}</span>
                 </li>
                 <li>
-                  <span>Publisher: </span> <span>{book.publisherName}</span>
+                  <span>Nhà xuất bản: </span> <span>{book.publisherName}</span>
                 </li>
                 <li>
-                  <span>Language: </span> <span>{book.languageName}</span>
+                  <span>Ngôn ngữ: </span> <span>{book.languageName}</span>
                 </li>
                 <li>
-                  <span>Genres: </span> <span>{book.bookGenresName}</span>
+                  <span>Thể loại: </span> <span>{book.bookGenresName}</span>
                 </li>
               </ul>
             </li>
@@ -102,7 +102,7 @@ export default function ProductDetail(props) {
                 className="icon-small"
                 onClick={() => toggleSection("detail")}
               >
-                Detail
+                Chi tiết
               </a>
               <div className="content">
                 <div dangerouslySetInnerHTML={{ __html: book.description }} />
@@ -118,7 +118,7 @@ export default function ProductDetail(props) {
                 className="icon-small"
                 onClick={() => toggleSection("custom")}
               >
-                Detail
+                Mô tả
               </a>
               <div className="content">
                 {/* <table>
@@ -186,7 +186,7 @@ export default function ProductDetail(props) {
                 className="icon-small"
                 onClick={() => toggleSection("review")}
               >
-                Review
+                Bình luận
               </a>
               <div className="content">
                 <div className="reviews">

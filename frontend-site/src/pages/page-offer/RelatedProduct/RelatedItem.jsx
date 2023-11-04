@@ -2,21 +2,21 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import bookService from "../../../services/bookService";
 
-export default function RelatedItem(book) {
+export default function RelatedItem(props) {
   const navigate = useNavigate();
 
   const handleNavigate = (slug) => {
     navigate(`/product/${slug}`);
   };
+  const book = props.book;
+  const discountPercentage =
+    ((book?.price - book?.priceSale) / book?.price) * 100;
   return (
     <div className="item">
       <div className="media">
         <div className="thumbnail object-cover">
-          <a onClick={() => handleNavigate(book.book.slug)}>
-            <img
-              src={bookService.getPhotoUrl(book.book.imageFileName)}
-              alt=""
-            />
+          <a onClick={() => handleNavigate(book.slug)}>
+            <img src={bookService.getPhotoUrl(book.imageFileName)} alt="" />
           </a>
         </div>
         <div className="hoverable">
@@ -27,7 +27,7 @@ export default function RelatedItem(book) {
               </Link>
             </li>
             <li>
-              <a href={`/product/${book.book.slug}`}>
+              <a href={`/product/${book.slug}`}>
                 <i className="ri-eye-line" />
               </a>
             </li>
@@ -38,12 +38,16 @@ export default function RelatedItem(book) {
             </li>
           </ul>
         </div>
-        <div className="discount circle flexcenter">
-          <span>25%</span>
-        </div>
+        {book?.priceSale !== 0 && (
+          <div className="discount circle flexcenter">
+            <>
+              <span>-{Math.round(discountPercentage)}%</span>
+            </>
+          </div>
+        )}
       </div>
       <div className="content">
-        <div className="offer flexitem">
+        {/* <div className="offer flexitem">
           <p className="mini-text">Offer ends at</p>
           <ul className="flexcenter">
             <li>1</li>
@@ -51,22 +55,37 @@ export default function RelatedItem(book) {
             <li>27</li>
             <li>07</li>
           </ul>
-        </div>
+        </div> */}
         <div className="rating">
           <div className="stars" />
           <span className="mini-text">(1,548)</span>
         </div>
         <h3 className="main-links">
-          <a href={`/product/${book.book.slug}`}>{book.book.name}</a>
+          <a href={`/product/${book.slug}`}>{book.name}</a>
         </h3>
         <div className="price">
-          {book.book.priceSale !== 0 ? (
+          {book?.priceSale !== 0 ? (
             <>
-              <span className="current">{book.book.priceSale}</span>
-              <span className="normal mini-text">{book.book.price}</span>
+              <span className="current">
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(book?.priceSale)}
+              </span>
+              <span className="normal mini-text">
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(book?.price)}
+              </span>
             </>
           ) : (
-            <span className="current">{book.book.price}</span>
+            <span className="current ">
+              {new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(book?.price)}
+            </span>
           )}
         </div>
         <div className="stock mini-text" data-stock={5000}>
@@ -76,11 +95,11 @@ export default function RelatedItem(book) {
             </span>
             <span>
               Stock:
-              <strong className="qty-available">{book.book.quanlity}</strong>
+              <strong className="qty-available">{book.quanlity}</strong>
             </span>
           </div>
           <div className="bar">
-            <div className="available" style={{ width: "70.98%" }} />
+            <div className="available" style={{ width: "100%" }} />
           </div>
         </div>
       </div>

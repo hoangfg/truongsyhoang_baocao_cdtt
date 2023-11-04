@@ -23,7 +23,6 @@ class PageOffer extends Component {
   }
 
   componentDidMount = () => {
-
     const { slug } = this.props.router.params;
 
     this.props.getAuthors();
@@ -33,6 +32,11 @@ class PageOffer extends Component {
 
   render() {
     const { authors, books, isLoading, book } = this.props;
+    let discountPercentage = 0;
+    if (book.priceSale !== 0) {
+      discountPercentage =
+        ((book?.price - book?.priceSale) / book?.price) * 100;
+    }
 
     console.log("book", book.publisher);
     return (
@@ -43,7 +47,7 @@ class PageOffer extends Component {
               <div className="breadcrumb">
                 <ul className="flexitem">
                   <li>
-                    <a href="#">Home</a>
+                    <a href="#">Trang chủ</a>
                   </li>
                   <li>
                     <a href="#">{book.bookGenresName}</a>
@@ -56,7 +60,10 @@ class PageOffer extends Component {
                 <div className="products one">
                   <div className="flexwrap">
                     <div className="row">
-                      <ImageBox image={book.imageFileName} />
+                      <ImageBox
+                        discountPercentage={discountPercentage}
+                        image={book.imageFileName}
+                      />
                     </div>
                     <div className="row">
                       <ProductDetail book={book} />
@@ -78,7 +85,7 @@ class PageOffer extends Component {
             </div>
           </div>
         </div>
-        <Banners authors={authors} books={books} />
+        {/* <Banners authors={authors} books={books} /> */}
       </>
     );
   }

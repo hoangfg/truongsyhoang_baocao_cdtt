@@ -203,6 +203,7 @@ export const updateBook = (id, book, navigate) => async (dispatch) => {
   const service = new bookService();
   try {
     const { id } = book;
+    console.log("up", book);
     const response = await service.update(id, book);
 
     if (response.status === 201) {

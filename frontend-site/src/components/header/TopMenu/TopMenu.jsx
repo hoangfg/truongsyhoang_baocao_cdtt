@@ -3,7 +3,23 @@ import { Link } from "react-router-dom";
 import MiniCart from "../MiniCart";
 import Menu from "./Menu";
 
-export default function TopMenu() {
+import { getMenus } from "../../../redux/actions/menuAction";
+import { connect } from "react-redux";
+import withRouter from "../../../helpers/withRouter";
+import { useEffect } from "react";
+function TopMenu(props) {
+  const { menus } = props;
+
+  useEffect(() => {
+    props.getMenus();
+  }, []);
+  const filterMenus = menus.filter(
+    (menus) =>
+      menus.status === 0 &&
+      menus.parent_id === 0 &&
+      menus.position === "mainmenu"
+  );
+  console.log("f", filterMenus);
   return (
     <div className="header-nav">
       <div className="container">
@@ -20,7 +36,13 @@ export default function TopMenu() {
             </div>
             <nav className="mobile-hide">
               <ul className="flexitem second-links">
-                <Menu />
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                {filterMenus &&
+                  filterMenus
+                    .slice(0, 5)
+                    .map((item) => <Menu item={item} menus={menus} />)}
               </ul>
             </nav>
           </div>
@@ -58,3 +80,16 @@ export default function TopMenu() {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  menus: state.menuReducer.menus,
+  isLoading: state.commonReducer.isLoading,
+});
+
+const mapDispatchToProps = {
+  getMenus,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(TopMenu));

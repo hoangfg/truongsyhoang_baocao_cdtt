@@ -17,7 +17,6 @@ import bookService from "../../services/bookService";
 class BookForm extends Component {
   form = React.createRef();
   handleRemoveImage = (params) => {
-    console.log("remove");
     if (params.fileName) {
       this.props.handleRemoveImage(params);
     } else if (params.response && params.response.fileName) {
@@ -39,12 +38,11 @@ class BookForm extends Component {
   };
   render() {
     const { book } = this.props;
-    console.log("123", book);
+
     const handlePriceChange = (value) => {
       const price = parseFloat(value);
 
       if (!isNaN(price) && price > 0) {
-        
       }
     };
 

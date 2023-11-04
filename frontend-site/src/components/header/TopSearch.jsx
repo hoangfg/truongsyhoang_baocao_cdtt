@@ -331,13 +331,8 @@ export default function TopSearch() {
                 <span className="icon-large">
                   <i className="ri-search-line" />
                 </span>
-                <input
-                  type="search"
-                  name
-                  id
-                  placeholder="Search for Products"
-                />
-                <button type="submit">Search</button>
+                <input type="search" name id placeholder="Tìm kiếm sản phẩm" />
+                <button type="submit">Tìm kiếm</button>
               </form>
             </div>
           </div>

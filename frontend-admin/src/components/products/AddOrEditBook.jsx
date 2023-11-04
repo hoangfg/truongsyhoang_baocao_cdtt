@@ -166,7 +166,7 @@ class AddOrEditBook extends Component {
         languageList: languageListResponse.data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       message.error("Error: " + error);
     }
   };
@@ -214,17 +214,18 @@ class AddOrEditBook extends Component {
           });
           if (values.id) {
             this.props.updateBook(values.id, newValues, navigate);
+            console.log(newValues);
           } else {
             this.props.insertBook(newValues, navigate);
           }
           console.log("v: ", values.id + newValues);
         })
         .catch((info) => {
-          console.log(info);
+        
           message.error("Invalid data. Please check again.");
         });
     } else {
-      console.error("Form ref is not defined.");
+      // console.error("Form ref is not defined.");
     }
   };
   handleFormChange = (changedValues) => {
@@ -237,7 +238,7 @@ class AddOrEditBook extends Component {
   };
 
   handleRemoveImage = (params) => {
-    console.log("remove");
+    // console.log("remove");
     if (params.fileName) {
       bookService.deleteBookImage(params.fileName);
     } else if (params.response && params.response.fileName) {
@@ -259,7 +260,7 @@ class AddOrEditBook extends Component {
     const { publisherList, authorList, genresList, languageList, bookImages } =
       this.state;
     const { book } = this.props;
-    console.log("Book in BookForm:", book);
+    // console.log("Book in BookForm:", book);
     const title = "Book";
     const items = [
       {
@@ -354,7 +355,7 @@ class AddOrEditBook extends Component {
     //   });
     // }
     const onFinish = (values) => {
-      console.log("Received values:", values);
+      // console.log("Received values:", values);
     };
     // console.log(this.state);
 

@@ -24,7 +24,7 @@ export default class bookService {
     // }
     // formData.append("detail", book.detail);
     // formData.append("status", book.status);
-
+    console.log("up", book);
     return await axios.patch(API_BOOK + "/" + id, book);
   };
   status = async (id, statusData) => {

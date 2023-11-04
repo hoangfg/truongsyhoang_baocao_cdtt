@@ -1,4 +1,5 @@
 import {
+  BOOKS_LOADING_SET,
   BOOKS_SET,
   BOOKS_STATE_CLEAR,
   BOOK_DELETE,
@@ -9,12 +10,15 @@ import {
 const initialState = {
   book: {},
   books: [],
+  isLoading: false,
 };
 
 const bookReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case BOOK_SET:
       return { ...state, book: payload };
+    case BOOKS_LOADING_SET:
+      return { ...state, isLoading: payload };
     case BOOKS_SET:
       return { ...state, books: payload };
     case BOOK_DELETE:

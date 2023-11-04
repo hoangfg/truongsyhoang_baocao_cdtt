@@ -101,7 +101,7 @@ class ListSliders extends Component {
                   this.setState({ ...this.state, open: true });
                 }}
               >
-                Thêm tác giả
+                Thêm 
               </Button>
             </Col>
           </Row>

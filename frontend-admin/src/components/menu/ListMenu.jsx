@@ -102,7 +102,7 @@ class ListMenu extends Component {
   onDeleteConfirm = (menu) => {
     this.setState({ ...this.state, menu: menu });
 
-    const message = "Bạn có muốn xóa tác giả: " + menu.name + " không?";
+    const message = "Bạn có muốn xóa : " + menu.name + " không?";
     Modal.confirm({
       title: "Xóa bản ghi?",
       icon: <ExclamationCircleOutlined />,

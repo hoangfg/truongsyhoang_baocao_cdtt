@@ -10,7 +10,7 @@ export default function AddToCart() {
         <button className="plus circle">+</button>
       </div>
       <div className="button-cart">
-        <button className="primary-button">Add to Cart</button>
+        <button className="primary-button">Thêm vào giỏ hàng</button>
       </div>
       <WishShare />
     </div>

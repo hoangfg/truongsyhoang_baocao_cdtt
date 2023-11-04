@@ -842,9 +842,13 @@ form.search button:hover {
   margin-right: 0.25em;
 }
 .products .price .normal {
+  font-size: 16px;
   color: var(--light-text-color);
   text-decoration: line-through;
 }
+/* .products .price .mini-text {
+  font-size: calc(0.7em + 1vw);
+} */
 .products .stock .qty {
   display: flex;
   justify-content: space-between;
@@ -984,10 +988,10 @@ form.search button:hover {
 
 .banners .product-categories .item {
   display: flex;
-  padding: 1.5em;
+  padding: 1em;
 }
 .banners .product-categories .image {
-  max-width: 150px;
+  width: 100px;
 }
 .mini-links ul {
   font-size: var(--font-small);
@@ -1212,7 +1216,7 @@ form.search button:hover {
   margin-bottom: 1em;
 }
 .products.one :where(.big-image, .small-image) img {
-  object-fit: cover;
+  object-fit: contain;
   width: var(--percent100);
   height: var(--percent100);
   display: block;

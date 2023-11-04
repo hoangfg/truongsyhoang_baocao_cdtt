@@ -15,8 +15,8 @@ import com.truongsyhoang.backend.domain.Book;
 public interface BookReponsitory extends JpaRepository<Book, Long> {
     Page<Book> findByNameContainsIgnoreCase(String name, Pageable pageable);
 
-    @Query("SELECT b FROM Book b LEFT JOIN FETCH b.stores s LEFT JOIN FETCH s.sale")
-    List<Book> findAllWithStoreAndSale();
+    @Query("SELECT b FROM Book b LEFT JOIN FETCH b.stores s LEFT JOIN FETCH s.sale ORDER BY b.id DESC")
+    List<Book> findAllWithStoreAndSaleOrderByIdDesc();
 
     List<Book> findAllBy();
 

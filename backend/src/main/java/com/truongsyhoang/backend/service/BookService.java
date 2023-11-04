@@ -119,13 +119,128 @@ public class BookService {
         return dto;
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public BookDTO update(Long id, BookDTO dto) {
-        var found = bookReponsitory.findById(id).orElseThrow(() -> new AuthorException("Book id không tồn tại"));
-        String ignoreFields[] = new String[] { "createdBy", "images", "updatedBy" };
-        BeanUtils.copyProperties(dto, found, ignoreFields);
+    // @Transactional(rollbackFor = Exception.class)
+    public Book update(Long id, BookDTO dto) {
+        // var found = bookReponsitory.findById(id).orElseThrow(() -> new
+        // AuthorException("Book id không tồn tại"));
+        // String ignoreFields[] = new String[] { "createdBy", "images", "updatedBy" };
+        // System.out.println(found);
+        // BeanUtils.copyProperties(dto, found, ignoreFields);
 
-        if (dto.getImage().getId() != null && !dto.getImage().getId().equals(found.getImage().getId())) {
+        // if (dto.getImage().getId() != null &&
+        // !dto.getImage().getId().equals(found.getImage().getId())) {
+        // fileStorageService.deleteBookImageFile(found.getImage().getFileName());
+        // BookImages img = new BookImages();
+        // BeanUtils.copyProperties(dto.getImage(), img);
+        // img = bookImagesReponsitory.save(img);
+        // found.setImage(img);
+        // }
+
+        // if (dto.getAuthorId() != null) {
+        // var author = new Author();
+        // author.setId(dto.getAuthorId());
+        // found.setAuthor(author);
+        // } else {
+        // found.setAuthor(found.getAuthor());
+        // }
+
+        // if (dto.getPublisherId() != null) {
+        // var publisher = new Publisher();
+        // publisher.setId(dto.getPublisherId());
+        // found.setPublisher(publisher);
+        // }
+
+        // if (dto.getLanguageId() != null) {
+        // var language = new BookLanguage();
+        // language.setId(dto.getLanguageId());
+        // found.setLanguage(language);
+        // }
+
+        // if (dto.getGenresId() != null) {
+        // var genres = new BookGenres();
+        // genres.setId(dto.getGenresId());
+        // found.setGenres(genres);
+        // }
+
+        // if (dto.getName() != null) {
+        // String name = dto.getName();
+        // String slug = generateSlug(name);
+        // found.setSlug(slug);
+        // }
+
+        // found.setUpdatedBy(1L);
+
+        // if (dto.getImages() != null && !dto.getImages().isEmpty()) {
+        // var toDeleteFile = new ArrayList<BookImages>();
+        // found.getImages().forEach(item -> {
+        // var existed = dto.getImages().stream().anyMatch(img ->
+        // img.getId().equals(item.getId()));
+        // if (!existed) {
+        // toDeleteFile.add(item);
+        // }
+        // });
+
+        // if (!toDeleteFile.isEmpty()) {
+        // toDeleteFile.forEach(item -> {
+        // fileStorageService.deleteBookImageFile(item.getFileName());
+        // bookImagesReponsitory.delete(item);
+        // });
+        // }
+
+        // var imgList = dto.getImages().stream().map(item -> {
+        // BookImages img = new BookImages();
+        // BeanUtils.copyProperties(item, img);
+        // return img;
+        // }).collect(Collectors.toSet());
+
+        // found.setImages(imgList);
+        // }
+
+        // found = bookReponsitory.save(found);
+        var found = bookReponsitory.findById(id).orElseThrow(() -> new AuthorException("Book id không tồn tại"));
+
+        // Update basic fields
+        if (dto.getName() != null) {
+            found.setName(dto.getName());
+            found.setSlug(generateSlug(dto.getName()));
+        }
+
+        found.setPrice(dto.getPrice());
+        found.setStatus(dto.getStatus());
+        if (dto.getDescription() != null) {
+            found.setDescription(dto.getDescription());
+        }
+
+        if (dto.getDetail() != null) {
+            found.setDetail(dto.getDetail());
+        }
+
+        // Update relationships
+        if (dto.getAuthorId() != null) {
+            var author = new Author();
+            author.setId(dto.getAuthorId());
+            found.setAuthor(author);
+        }
+
+        if (dto.getLanguageId() != null) {
+            var language = new BookLanguage();
+            language.setId(dto.getLanguageId());
+            found.setLanguage(language);
+        }
+
+        if (dto.getPublisherId() != null) {
+            var publisher = new Publisher();
+            publisher.setId(dto.getPublisherId());
+            found.setPublisher(publisher);
+        }
+
+        if (dto.getGenresId() != null) {
+            var genres = new BookGenres();
+            genres.setId(dto.getGenresId());
+            found.setGenres(genres);
+        }
+        if (dto.getImage() != null &&
+                !dto.getImage().getName().equals(found.getImage().getName())) {
             fileStorageService.deleteBookImageFile(found.getImage().getFileName());
             BookImages img = new BookImages();
             BeanUtils.copyProperties(dto.getImage(), img);
@@ -133,84 +248,14 @@ public class BookService {
             found.setImage(img);
         }
 
-        var author = new Author();
-        author.setId(dto.getAuthorId());
-        found.setAuthor(author);
-
-        var publisher = new Publisher();
-        publisher.setId(dto.getPublisherId());
-        found.setPublisher(publisher);
-
-        var language = new BookLanguage();
-        language.setId(dto.getLanguageId());
-        found.setLanguage(language);
-
-        var genres = new BookGenres();
-        genres.setId(dto.getGenresId());
-        found.setGenres(genres);
-
-        String name = dto.getName();
-        String slug = generateSlug(name);
-        found.setSlug(slug);
-
+        found.setUpdatedAt(LocalDate.now());
         found.setUpdatedBy(1L);
+        System.out.println(found);
+        System.out.println(dto);
+        // BookDTO updatedBookDTO = new BookDTO();
+        // BeanUtils.copyProperties(found, updatedBookDTO);
 
-        if (dto.getImages() != null && !dto.getImages().isEmpty()) {
-            var toDeleteFile = new ArrayList<BookImages>();
-            found.getImages().forEach(item -> {
-                var existed = dto.getImages().stream().anyMatch(img -> img.getId().equals(item.getId()));
-                if (!existed) {
-                    toDeleteFile.add(item);
-                }
-            });
-
-            if (!toDeleteFile.isEmpty()) {
-                toDeleteFile.forEach(item -> {
-                    fileStorageService.deleteBookImageFile(item.getFileName());
-                    bookImagesReponsitory.delete(item);
-                });
-            }
-
-            var imgList = dto.getImages().stream().map(item -> {
-                BookImages img = new BookImages();
-                BeanUtils.copyProperties(item, img);
-                return img;
-            }).collect(Collectors.toSet());
-
-            found.setImages(imgList);
-        }
-
-        // Optional<BookStore> optionalBookStore =
-        // bookStoreReponsitory.findByBookId_Id(id);
-        // if (optionalBookStore.isPresent()) {
-        // BookStore bookStore = optionalBookStore.get();
-        // bookStore.setEntryPrice(dto.getEntryPrice());
-        // bookStore.setQuanlity(dto.getQuanlity());
-        // bookStoreReponsitory.save(bookStore);
-        // }
-
-        // // Cập nhật thông tin BookSale
-        // Optional<BookSale> optionalBookSale =
-        // bookSaleReponsitory.findByBookId_Id(id);
-        // if (dto.getBeginSale() != null && dto.getEndSale() != null &&
-        // dto.getPriceSale() != 0) {
-        // if (optionalBookSale.isPresent()) {
-        // BookSale bookSale = optionalBookSale.get();
-        // bookSale.setBeginSale(dto.getBeginSale());
-        // bookSale.setEndSale(dto.getEndSale());
-        // bookSale.setPriceSale(dto.getPriceSale());
-        // } else {
-        // BookSale bookSale = new BookSale();
-        // bookSale.setBeginSale(dto.getBeginSale());
-        // bookSale.setEndSale(dto.getEndSale());
-        // bookSale.setPriceSale(dto.getPriceSale());
-        // bookSale.setBookId(found);
-        // bookSaleReponsitory.save(bookSale);
-        // }
-        // }
-
-        return dto;
-
+        return bookReponsitory.save(found);
     }
 
     private Set<BookImages> saveBookEntity(BookDTO dto) {
@@ -380,7 +425,7 @@ public class BookService {
     }
 
     public ResponseEntity<List<BookBriefDTO>> findAll() {
-        var list = bookReponsitory.findAllWithStoreAndSale();
+        var list = bookReponsitory.findAllWithStoreAndSaleOrderByIdDesc();
 
         List<BookBriefDTO> newList = list.stream().map(item -> {
             BookBriefDTO dto = new BookBriefDTO();

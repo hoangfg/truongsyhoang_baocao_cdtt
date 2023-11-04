@@ -42,11 +42,9 @@ class Feature extends Component {
                       new Date(filteredItem.endSale) > new Date()
                   )
                   .sort((a, b) => b.id - a.id)
+                  .slice(0, 4)
                   .map((filteredItem) => (
                     <>
-                      {console.log("h", new Date(filteredItem.endSale))}
-                      {console.log("h1", new Date())}
-
                       <FeatureItem key={filteredItem.id} {...filteredItem} />
                     </>
                   ))}
@@ -73,6 +71,7 @@ class Feature extends Component {
               <div className="products main flexwrap">
                 {filteredBook
                   .sort((a, b) => b.id - a.id)
+                  .slice(0, 4)
                   .map((filteredItem) => (
                     <FeatureItem key={filteredItem.id} {...filteredItem} />
                   ))}
@@ -102,6 +101,7 @@ class Feature extends Component {
                   <div className="products main flexwrap">
                     {filteredBook
                       .filter((book) => book.bookGenresName === item.name)
+                      .slice(0, 8)
                       .map((filteredItem) => (
                         <FeatureItem key={filteredItem.id} {...filteredItem} />
                       ))}

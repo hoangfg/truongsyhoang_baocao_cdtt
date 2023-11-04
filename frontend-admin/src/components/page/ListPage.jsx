@@ -55,7 +55,7 @@ class ListPage extends Component {
   onDeleteConfirm = (page) => {
     this.setState({ ...this.state, page: page });
 
-    const message = "Bạn có muốn xóa tác giả: " + page.name + " không?";
+    const message = "Bạn có muốn xóa trang đơn: " + page.name + " không?";
     Modal.confirm({
       title: "Xóa bản ghi?",
       icon: <ExclamationCircleOutlined />,
@@ -113,7 +113,7 @@ class ListPage extends Component {
                   this.setState({ ...this.state, open: true });
                 }}
               >
-                Thêm tác giả
+                Thêm trang đơn
               </Button>
             </Col>
           </Row>

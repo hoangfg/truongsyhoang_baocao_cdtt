@@ -1,19 +1,15 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-export default function ChildSubMenu() {
+export default function ChildSubMenu(props) {
+  const childSub = props.filterSubmenu;
   return (
     <>
-      <li>
-        <Link href="#">Dress</Link>
-      </li>
+      {childSub.map((item) => (
+        <li>
+          <Link to={`/${item?.link}`}>{item.name}</Link>
+        </li>
+      ))}
     </>
   );
 }
-/**
- *************** 
- *1*2*3*   *   * 
- ******* B * M *
- *4*5*6*   *   * 
- *************** 
- */

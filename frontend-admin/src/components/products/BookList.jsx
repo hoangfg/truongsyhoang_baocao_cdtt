@@ -50,7 +50,7 @@ class BookList extends Component {
       onStore,
       openStoreForm,
     } = this.props;
-    // console.log(books);
+
     const { filteredBooks, isSearching } = this.state;
     return (
       <>

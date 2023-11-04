@@ -71,7 +71,7 @@ class ListPost extends Component {
   onDeleteConfirm = (post) => {
     this.setState({ ...this.state, post: post });
 
-    const message = "Bạn có muốn xóa tác giả: " + post.name + " không?";
+    const message = "Bạn có muốn xóa bài viết: " + post.name + " không?";
     Modal.confirm({
       title: "Xóa bản ghi?",
       icon: <ExclamationCircleOutlined />,
@@ -129,7 +129,7 @@ class ListPost extends Component {
                   this.setState({ ...this.state, open: true });
                 }}
               >
-                Thêm tác giả
+                Thêm bài viết
               </Button>
             </Col>
           </Row>

@@ -16,7 +16,6 @@ import { connect } from "react-redux";
 import configReducer from "../../redux/reducers/configReducer";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 
-
 class ListConfig extends Component {
   constructor(props) {
     super(props);
@@ -24,19 +23,15 @@ class ListConfig extends Component {
     this.state = {
       open: false,
       config: {},
-     
     };
   }
 
   componentDidMount = () => {
     this.props.getConfigs();
-
-    
   };
   // componentWillUnmount = () => {
   //   this.props.clearState();
   // };
-  
 
   onCreate = (values) => {
     // console.log(values);
@@ -55,7 +50,7 @@ class ListConfig extends Component {
   onDeleteConfirm = (config) => {
     this.setState({ ...this.state, config: config });
 
-    const message = "Bạn có muốn xóa tác giả: " + config.siteName + " không?";
+    const message = "Bạn có muốn xóa : " + config.siteName + " không?";
     Modal.confirm({
       title: "Xóa bản ghi?",
       icon: <ExclamationCircleOutlined />,
@@ -82,7 +77,7 @@ class ListConfig extends Component {
     const { navigate } = this.props.router;
     const { open, topicList } = this.state;
     const { configs, isLoading } = this.props;
-    console.log("topicList", topicList);
+    console.log("topicList", configs.length);
     if (isLoading) {
       return (
         <>
@@ -107,14 +102,18 @@ class ListConfig extends Component {
               />
             </Col>
             <Col md={12} style={{ textAlign: "right" }}>
-              <Button
-                type="primary"
-                onClick={() => {
-                  this.setState({ ...this.state, open: true });
-                }}
-              >
-                Thêm tác giả
-              </Button>
+              {configs.length < 1 ? (
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    this.setState({ ...this.state, open: true });
+                  }}
+                >
+                  Thêm
+                </Button>
+              ) : (
+                <></>
+              )}
             </Col>
           </Row>
         </div>
@@ -127,7 +126,6 @@ class ListConfig extends Component {
         />
 
         <ConfigForm
-        
           config={this.state.config}
           open={open}
           onCreate={this.onCreate}

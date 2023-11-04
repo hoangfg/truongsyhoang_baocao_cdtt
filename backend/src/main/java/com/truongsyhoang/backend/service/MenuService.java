@@ -160,7 +160,7 @@ public class MenuService {
     }
 
     public List<Menu> findAll() {
-        return menuReponsitory.findAll();
+        return menuReponsitory.findAllSortedBySortOrderAndPosition();
     }
 
     public Menu findById(Long id) {

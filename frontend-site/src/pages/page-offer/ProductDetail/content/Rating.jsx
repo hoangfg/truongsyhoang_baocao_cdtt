@@ -8,7 +8,7 @@ export default function Rating() {
         2.251 reviews
       </a>
       <a href className="add-review mini-text">
-        Add Your Review
+        Thêm đánh giá
       </a>
     </div>
   );

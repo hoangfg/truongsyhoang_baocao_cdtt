@@ -60,12 +60,15 @@ public class FileStorageService {
     public String storeConfigImageFile(MultipartFile file) {
         return storeFile(fileConfigImageStorageLocation, file);
     }
+
     public String storeAuthorImageFile(MultipartFile file) {
         return storeFile(fileAuthorImageStorageLocation, file);
     }
+
     public String storePostImageFile(MultipartFile file) {
         return storeFile(filePostImageStorageLocation, file);
     }
+
     public String storeSliderImageFile(MultipartFile file) {
         return storeFile(fileSliderImageStorageLocation, file);
     }
@@ -79,54 +82,52 @@ public class FileStorageService {
     }
 
     private String storeFile(Path location, MultipartFile file) {
-        UUID uuid = UUID.randomUUID();
-        String ext = StringUtils.getFilenameExtension(file.getOriginalFilename());
-        String filename = uuid.toString() + "." + ext;
+        String originalFilename = StringUtils.cleanPath(file.getOriginalFilename());
 
         try {
-            if (filename.contains("..")) {
-                throw new FileStorageException("Sorry! Filename contains ivalid path sequence " + filename);
+            if (originalFilename.contains("..")) {
+                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + originalFilename);
             }
-            Path targetLocation = location.resolve(filename);
+            Path targetLocation = location.resolve(originalFilename);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            return filename;
+            return originalFilename;
         } catch (Exception e) {
-            throw new FileStorageException("Could not store file" + filename + " .Please try again!", e);
+            throw new FileStorageException("Could not store file " + originalFilename + ". Please try again!", e);
         }
     }
 
     private UploadedFileInfo storeUploadedFile(Path location, MultipartFile file) {
-        UUID uuid = UUID.randomUUID();
-        String ext = StringUtils.getFilenameExtension(file.getOriginalFilename());
-        String filename = uuid.toString() + "." + ext;
+        String originalFilename = StringUtils.cleanPath(file.getOriginalFilename());
 
         try {
-            if (filename.contains("..")) {
-                throw new FileStorageException("Sorry! Filename contains ivalid path sequence " + filename);
+            if (originalFilename.contains("..")) {
+                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + originalFilename);
             }
-            Path targetLocation = location.resolve(filename);
+            Path targetLocation = location.resolve(originalFilename);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             UploadedFileInfo info = new UploadedFileInfo();
-            info.setFileName(filename);
-            info.setUri(uuid.toString());
-            info.setName(StringUtils.getFilename(file.getOriginalFilename()));
-            System.out.println("1: " + uuid + " 2:" + ext + " 3:" + filename);
+            info.setFileName(originalFilename);
+            info.setUri(originalFilename); // You can use the originalFilename or any other unique identifier.
+            info.setName(StringUtils.getFilename(originalFilename));
             return info;
         } catch (Exception e) {
-            throw new FileStorageException("Could not store file" + filename + " .Please try again!", e);
+            throw new FileStorageException("Could not store file " + originalFilename + ". Please try again!", e);
         }
     }
 
     public Resource loadConfigFileAResource(String fileName) {
         return loadFileAsResourse(fileConfigImageStorageLocation, fileName);
     }
+
     public Resource loadAuthorFileAResource(String fileName) {
         return loadFileAsResourse(fileAuthorImageStorageLocation, fileName);
     }
+
     public Resource loadPostFileAResource(String fileName) {
         return loadFileAsResourse(filePostImageStorageLocation, fileName);
     }
+
     public Resource loadSliderFileAResource(String fileName) {
         return loadFileAsResourse(fileSliderImageStorageLocation, fileName);
     }
@@ -138,12 +139,15 @@ public class FileStorageService {
     public void deleteConfigImageFile(String fileName) {
         deleteFile(fileConfigImageStorageLocation, fileName);
     }
+
     public void deleteImageFile(String fileName) {
         deleteFile(fileAuthorImageStorageLocation, fileName);
     }
+
     public void deletePostImageFile(String fileName) {
         deleteFile(filePostImageStorageLocation, fileName);
     }
+
     public void deleteSliderImageFile(String fileName) {
         deleteFile(fileSliderImageStorageLocation, fileName);
     }

@@ -1,4 +1,5 @@
 import {
+  LANGUAGES_LOADING_SET,
   LANGUAGES_SET,
   LANGUAGES_STATE_CLEAR,
   LANGUAGE_APPEND,
@@ -10,12 +11,15 @@ import {
 const initialState = {
   language: {},
   languages: [],
+  isLoading: false,
 };
 
 const bookLanguageReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case LANGUAGE_SET:
       return { ...state, language: payload }; // Updated to set 'language' instead of 'languages'
+    case LANGUAGES_LOADING_SET:
+      return { ...state, isLoading: payload };
     case LANGUAGES_SET:
       return { ...state, languages: payload }; // Corrected the property name to 'languages'
     case LANGUAGE_APPEND:

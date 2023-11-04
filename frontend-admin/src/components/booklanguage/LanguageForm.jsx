@@ -21,7 +21,7 @@ class LanguageForm extends Component {
     return (
       <Modal
         open={open}
-        title={<span style={{ fontSize: "20px" }}>Thêm tác giả</span>}
+        title={<span style={{ fontSize: "20px" }}>Thêm ngôn ngữ</span>}
         okText="Lưu"
         cancelText="Thoát"
         onCancel={onCancel}
@@ -76,11 +76,11 @@ class LanguageForm extends Component {
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng nhập Thông tin của tác giả.",
+                    message: "Vui lòng nhập Thông tin của ngôn ngữ.",
                   },
                   {
                     min: 2,
-                    message: "Thông tin của tác giả phải có ít nhất 2 ký tự.",
+                    message: "Thông tin của ngôn ngữ phải có ít nhất 2 ký tự.",
                   },
                 ]}
               >
