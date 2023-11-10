@@ -12,7 +12,7 @@ export default function SubMenu(props) {
       menus.parent_id === submenus.id &&
       menus.position === "mainmenu"
   );
-  console.log("m", filterSubmenu);
+
   return (
     <div className="mega">
       <div className="container">

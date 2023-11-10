@@ -11,6 +11,10 @@ import { getLanguage } from "../../redux/actions/bookLanguageAction";
 import SideBar from "./sidebar/SideBar";
 import Product from "./product/Product";
 import Loading from "../../components/Loading";
+import ReactPaginate from "react-paginate";
+import { useParams } from "react-router-dom";
+import Pagination from "react-pagination-library";
+import "react-pagination-library/build/css/index.css";
 function PageCategory(props) {
   const {
     authors,
@@ -26,14 +30,15 @@ function PageCategory(props) {
     isLoadingLanguages,
     isLoadingPublishers,
   } = props;
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
   const [productsToShow, setProductsToShow] = useState(12);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedAuthors, setSelectedAuthors] = useState([]);
   const [selectedPublishers, setSelectedPublishers] = useState([]);
   const [sortBy, setSortBy] = useState("default");
-
+  const { slug } = useParams();
   const handleCheckboxChange = (category, itemName) => {};
 
   const handleLanguageChange = (languageName) => {
@@ -87,7 +92,47 @@ function PageCategory(props) {
     props.getLanguage();
     props.getPublishers();
   }, []);
+  var slugName = "";
 
+  if (type === "genres") {
+    let genresFil = genres.find((genre) => genre.slug === slug);
+    slugName = genresFil?.name;
+  }
+
+  if (type === "author") {
+    let authorFil = authors.find((author) => author.slug === slug);
+    slugName = authorFil?.name;
+  }
+
+  if (type === "publisher") {
+    console.log("Publishers:", publishers); // Check if publishers array is defined and has data
+    console.log("Slug:", slug); // Check the value of slug
+    if (publishers && Array.isArray(publishers)) {
+      let publisherFil = publishers.find(
+        (publisher) => publisher.slug === slug
+      );
+      console.log("pub", publisherFil);
+      slugName = publisherFil?.name;
+    } else {
+      console.error("Publishers is not defined or is not an array.");
+    }
+  }
+  if (type === "language") {
+    let languageFil = languages.find((language) => language.slug === slug);
+    slugName = languageFil?.name;
+  }
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = books.slice(indexOfFirstItem, indexOfLastItem);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  const changeCurrentPage = (numPage) => {
+    setCurrentPage(numPage);
+  };
+  if (type === "search") {
+    slugName = slug;
+  }
   return (
     <>
       <div className="single-category">
@@ -117,6 +162,7 @@ function PageCategory(props) {
                       isLoadingGenres={isLoadingGenres}
                       isLoadingLanguages={isLoadingLanguages}
                       isLoadingPublishers={isLoadingPublishers}
+                      type={type}
                     />
                   </div>
                 </div>
@@ -128,11 +174,15 @@ function PageCategory(props) {
                           <li>
                             <a href="#">Trang chủ</a>
                           </li>
-                          <li>{title}</li>
+                          <li>
+                            {title} {slugName}
+                          </li>
                         </ul>
                       </div>
                       <div className="page-title">
-                        <h1>{title}</h1>
+                        <h1>
+                          {title} {slugName}
+                        </h1>
                       </div>
                       {/* <div className="cat-description">
                           <p>
@@ -175,7 +225,7 @@ function PageCategory(props) {
                     </div>
                   </div>
                   <Product
-                    books={books}
+                    books={currentItems}
                     selectedLanguages={selectedLanguages}
                     selectedGenres={selectedGenres}
                     selectedAuthors={selectedAuthors}
@@ -184,8 +234,24 @@ function PageCategory(props) {
                     // productsToShow={this.state.productsToShow}
                     sortBy={sortBy}
                     type={type}
+                    slug={slug}
+                    // genres={genres}
+                    slugName={slugName}
                   />
-
+                  {Math.ceil(books.length / itemsPerPage) > 1 && (
+                    <Pagination
+                      currentPage={currentPage}
+                      totalPages={Math.ceil(books.length / itemsPerPage)}
+                      onPageChange={handlePageChange}
+                      theme="bottom-border"
+                      changeCurrentPage={changeCurrentPage}
+                    />
+                  )}
+                  {/* <Paginate
+                    totalPages={Math.ceil(books.length / itemsPerPage)}
+                    currentPage={currentPage}
+                    onPageChange={handlePageChange}
+                  /> */}
                   {/* {books.length > this.state.productsToShow && (
                     <div className="load-more flexcenter">
                       <a onClick={this.loadMore} className="secondary-button">

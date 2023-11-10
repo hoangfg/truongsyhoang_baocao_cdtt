@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -31,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.truongsyhoang.backend.domain.Author;
 import com.truongsyhoang.backend.domain.Book;
 import com.truongsyhoang.backend.dto.AuthorDTO;
+import com.truongsyhoang.backend.dto.BookBriefDTO;
 import com.truongsyhoang.backend.dto.BookDTO;
 import com.truongsyhoang.backend.dto.BookImagesDTO;
 import com.truongsyhoang.backend.exception.FileStorageException;
@@ -112,7 +114,7 @@ public class BookController {
         Book updatedBook = bookService.update(id, bookDTO);
         System.out.println(updatedBook);
         return new ResponseEntity<>(updatedBook, HttpStatus.ACCEPTED);
-     
+
     }
 
     @GetMapping("/find")
@@ -127,6 +129,8 @@ public class BookController {
 
         return new ResponseEntity<>(bookService.findAll(), HttpStatus.OK);
     }
+
+    
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {

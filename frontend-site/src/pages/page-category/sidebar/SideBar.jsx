@@ -17,6 +17,7 @@ export default function SideBar({
   onGenreChange,
   onAuthorChange,
   onPublisherChange,
+  type,
 }) {
   // const [checkedItems, setCheckedItems] = useState({
   //   languages: [],
@@ -54,114 +55,122 @@ export default function SideBar({
   return (
     <div className="row sidebar">
       <div className="filter">
-        <div className="filter-block" id="category">
-          <h4>Languages</h4>
-          <ul>
-            {isLoadingLanguages ? (
-              <Rhombus />
-            ) : (
-              languages &&
-              languages
-                .slice(0, numToShowLanguages)
-                .map((item) => (
-                  <SideBarItem
-                    key={"l" + item.id}
-                    checkId={"l" + item.id}
-                    name={item.name}
-                    onChange={() => onLanguageChange(item.name)}
-                  />
-                ))
-            )}
-            {languages.length > numToShowLanguages && (
-              <li style={{ cursor: "pointer" }}>
-                <span onClick={handleShowMoreLanguages}>Xem thêm</span>
-              </li>
-            )}
-          </ul>
-        </div>
-        <div className="filter-block" id="activity">
-          <h4>Genres</h4>
-          <ul>
-            <>
-              {isLoadingGenres ? (
+        {type !== "language" && (
+          <div className="filter-block" id="category">
+            <h4>Ngôn ngữ</h4>
+            <ul>
+              {isLoadingLanguages ? (
                 <Rhombus />
               ) : (
-                genres &&
-                genres
-                  .slice(0, numToShowGenres)
+                languages &&
+                languages
+                  .slice(0, numToShowLanguages)
                   .map((item) => (
                     <SideBarItem
-                      key={"g" + item.id}
-                      checkId={"g" + item.id}
+                      key={"l" + item.id}
+                      checkId={"l" + item.id}
                       name={item.name}
-                      onChange={() => onGenreChange(item.name)}
+                      onChange={() => onLanguageChange(item.name)}
                     />
                   ))
               )}
-              {genres.length > numToShowGenres && (
+              {languages.length > numToShowLanguages && (
                 <li style={{ cursor: "pointer" }}>
-                  <span onClick={handleShowMoreGenres}>Xem thêm</span>
+                  <span onClick={handleShowMoreLanguages}>Xem thêm</span>
                 </li>
               )}
-            </>
-          </ul>
-        </div>
-        <div className="filter-block">
-          <h4>Author</h4>
-          <ul>
-            <>
-              {isLoadingAuthors ? (
-                <Rhombus />
-              ) : (
-                authors &&
-                authors
-                  .slice(0, numToShowAuthors)
-                  .map((item) => (
-                    <SideBarItem
-                      key={"a" + item.id}
-                      checkId={"a" + item.id}
-                      name={item.name}
-                      onChange={() => onAuthorChange(item.name)}
-                    />
-                  ))
-              )}
-              {authors.length > numToShowAuthors && (
-                <li style={{ cursor: "pointer" }}>
-                  <span onClick={handleShowMoreAuthors}>Xem thêm</span>
-                </li>
-              )}
-            </>
-          </ul>
-        </div>
-        <div className="filter-block">
-          <h4>Publishers</h4>
-          <ul>
-            <>
-              {isLoadingPublishers ? (
-                <Rhombus />
-              ) : (
-                publishers &&
-                publishers
-                  .slice(0, numToShowPublishers)
-                  .filter((pub) => pub.status === "Visible")
-                  .map((item) => (
-                    <React.Fragment key={"p" + item.id}>
+            </ul>
+          </div>
+        )}
+        {type !== "genres" && (
+          <div className="filter-block" id="activity">
+            <h4>Thể loại</h4>
+            <ul>
+              <>
+                {isLoadingGenres ? (
+                  <Rhombus />
+                ) : (
+                  genres &&
+                  genres
+                    .slice(0, numToShowGenres)
+                    .map((item) => (
                       <SideBarItem
-                        checkId={"p" + item.id}
+                        key={"g" + item.id}
+                        checkId={"g" + item.id}
                         name={item.name}
-                        onChange={() => onPublisherChange(item.name)}
+                        onChange={() => onGenreChange(item.name)}
                       />
-                    </React.Fragment>
-                  ))
-              )}
-              {publishers && publishers.length > numToShowPublishers && (
-                <li style={{ cursor: "pointer" }}>
-                  <span onClick={handleShowMorePublishers}>Xem thêm</span>
-                </li>
-              )}
-            </>
-          </ul>
-        </div>
+                    ))
+                )}
+                {genres.length > numToShowGenres && (
+                  <li style={{ cursor: "pointer" }}>
+                    <span onClick={handleShowMoreGenres}>Xem thêm</span>
+                  </li>
+                )}
+              </>
+            </ul>
+          </div>
+        )}
+        {type !== "author" && (
+          <div className="filter-block">
+            <h4>Tác giả</h4>
+            <ul>
+              <>
+                {isLoadingAuthors ? (
+                  <Rhombus />
+                ) : (
+                  authors &&
+                  authors
+                    .slice(0, numToShowAuthors)
+                    .map((item) => (
+                      <SideBarItem
+                        key={"a" + item.id}
+                        checkId={"a" + item.id}
+                        name={item.name}
+                        onChange={() => onAuthorChange(item.name)}
+                      />
+                    ))
+                )}
+                {authors.length > numToShowAuthors && (
+                  <li style={{ cursor: "pointer" }}>
+                    <span onClick={handleShowMoreAuthors}>Xem thêm</span>
+                  </li>
+                )}
+              </>
+            </ul>
+          </div>
+        )}
+        {type !== "publisher" && (
+          <div className="filter-block">
+            <h4>Nhà xuất bản</h4>
+            <ul>
+              <>
+                {isLoadingPublishers ? (
+                  <Rhombus />
+                ) : (
+                  publishers &&
+                  publishers
+                    .slice(0, numToShowPublishers)
+                    .filter((pub) => pub.status === "Visible")
+                    .map((item) => (
+                      <React.Fragment key={"p" + item.id}>
+                        <SideBarItem
+                          checkId={"p" + item.id}
+                          name={item.name}
+                          onChange={() => onPublisherChange(item.name)}
+                        />
+                      </React.Fragment>
+                    ))
+                )}
+                {publishers && publishers.length > numToShowPublishers && (
+                  <li style={{ cursor: "pointer" }}>
+                    <span onClick={handleShowMorePublishers}>Xem thêm</span>
+                  </li>
+                )}
+              </>
+            </ul>
+          </div>
+        )}
         {/* <div className="filter-block products" id="color">
           <h4>Color</h4>
           <ul className="bycolor variant flexitem">

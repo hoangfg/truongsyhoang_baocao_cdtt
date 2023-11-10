@@ -150,6 +150,15 @@ public class PostController {
 
     }
 
+    @GetMapping("/slug/{slug}")
+    public ResponseEntity<?> getPostBySlug(@PathVariable String slug) {
+        var entity = postService.findBySlug(slug);
+        PostDTO dto = new PostDTO();
+        BeanUtils.copyProperties(entity, dto);
+
+        return new ResponseEntity<>(entity, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePost(@PathVariable long id) {
         postService.deleteById(id);

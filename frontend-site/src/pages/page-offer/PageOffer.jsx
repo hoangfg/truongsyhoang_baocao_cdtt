@@ -9,6 +9,7 @@ import { getAuthors } from "./../../redux/actions/authorAction";
 import { getBooks, getBySlug } from "./../../redux/actions/bookAction";
 import FsLightbox from "fslightbox-react";
 import bookService from "../../services/bookService";
+import { Link } from "react-router-dom";
 
 class PageOffer extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class PageOffer extends Component {
         ((book?.price - book?.priceSale) / book?.price) * 100;
     }
 
-    console.log("book", book.publisher);
+
     return (
       <>
         <div className="single-product" key={"f" + book}>
@@ -47,10 +48,10 @@ class PageOffer extends Component {
               <div className="breadcrumb">
                 <ul className="flexitem">
                   <li>
-                    <a href="#">Trang chủ</a>
+                    <Link to="/">Trang chủ</Link>
                   </li>
                   <li>
-                    <a href="#">{book.bookGenresName}</a>
+                    <Link href="#">{book.bookGenresName}</Link>
                   </li>
                   <li>{book.name}</li>
                 </ul>

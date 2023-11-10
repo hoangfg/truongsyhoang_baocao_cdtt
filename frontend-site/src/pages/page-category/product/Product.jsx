@@ -13,6 +13,8 @@ function Product(props) {
     sortBy,
     type,
     isLoadingBooks,
+    slug,
+    slugName,
   } = props;
   let filteredBooks = books.filter((book) => {
     const bookLanguages = book.languageName ? [book.languageName] : [];
@@ -49,11 +51,35 @@ function Product(props) {
         new Date(filteredItem.endSale) > new Date()
     );
   }
+  if (type === "language") {
+    filteredBooks = filteredBooks.filter((book) => {
+      return book.languageName === slugName;
+    });
+  }
   if (type === "genres") {
-    // filteredBooks = filteredBooks.filter(
-    //   (filteredItem) =>
-    //     // filteredItem.bookGenresName === ""
-    // );
+    filteredBooks = filteredBooks.filter((book) => {
+      return book.bookGenresName === slugName;
+    });
+  }
+  if (type === "author") {
+    filteredBooks = filteredBooks.filter((book) => {
+      return book.authorName === slugName;
+    });
+  }
+  if (type === "publisher") {
+    filteredBooks = filteredBooks.filter((book) => {
+      return book.publisherName === slugName;
+    });
+  }
+  if (type === "search") {
+    filteredBooks = filteredBooks.filter((book) => {
+      return (
+        book.name.toLowerCase().includes(slugName.toLowerCase()) ||
+        book.authorName.toLowerCase().includes(slugName.toLowerCase()) ||
+        book.publisherName.toLowerCase().includes(slugName.toLowerCase()) ||
+        book.bookGenresName.toLowerCase().includes(slugName.toLowerCase())
+      );
+    });
   }
   let sortedBooks = [...filteredBooks];
   switch (sortBy) {
@@ -72,17 +98,19 @@ function Product(props) {
     default:
       break;
   }
-  console.log("sortedBooks:", sortedBooks);
+  console.log("sortedBooks:", filteredBooks);
   return (
     <>
       {isLoadingBooks === true ? (
         <Loading />
-      ) : (
+      ) : filteredBooks.length > 0 ? (
         <div className="products main flexwrap">
           {sortedBooks.slice(0, productsToShow).map((filteredItem) => (
             <FeatureItem key={filteredItem.id} {...filteredItem} />
           ))}
         </div>
+      ) : (
+        <div>Không có sản phẩm</div>
       )}
     </>
   );

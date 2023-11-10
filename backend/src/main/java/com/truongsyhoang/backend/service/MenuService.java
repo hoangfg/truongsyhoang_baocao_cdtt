@@ -56,7 +56,7 @@ public class MenuService {
                 System.out.println(publisher);
                 if (publisher != null) {
                     dto.setName(publisher.getName());
-                    dto.setLink(publisher.getSlug());
+                    dto.setLink(dto.getType() + "/" + publisher.getSlug());
                 } else {
                     throw new AuthorException("publisher is not");
                 }
@@ -66,7 +66,7 @@ public class MenuService {
                 Author author = authorService.findById(dto.getTable_id());
                 if (author != null) {
                     dto.setName(author.getName());
-                    dto.setLink(author.getSlug());
+                    dto.setLink(dto.getType() + "/" + author.getSlug());
                 } else {
                     throw new AuthorException("author is not");
                 }
@@ -76,7 +76,7 @@ public class MenuService {
                 BookGenres genre = genresService.findById(dto.getTable_id());
                 if (genre != null) {
                     dto.setName(genre.getName());
-                    dto.setLink(genre.getSlug());
+                    dto.setLink(dto.getType() + "/" + genre.getSlug());
                 } else {
                     throw new AuthorException("genre is not");
                 }
@@ -86,7 +86,7 @@ public class MenuService {
                 BookLanguage language = bookLanguageService.findById(dto.getTable_id());
                 if (language != null) {
                     dto.setName(language.getName());
-                    dto.setLink(language.getSlug());
+                    dto.setLink(dto.getType() + "/" + language.getSlug());
                 } else {
                     throw new AuthorException("language is not");
                 }
@@ -96,7 +96,7 @@ public class MenuService {
                 Topic topic = topicService.findById(dto.getTable_id());
                 if (topic != null) {
                     dto.setName(topic.getName());
-                    dto.setLink(topic.getSlug());
+                    dto.setLink(dto.getType() + "/" + topic.getSlug());
                 } else {
                     throw new AuthorException("topic is not");
                 }
@@ -106,7 +106,7 @@ public class MenuService {
                 PageTopic page = pageTopicService.findById(dto.getTable_id());
                 if (page != null) {
                     dto.setName(page.getTitle());
-                    dto.setLink(page.getSlug());
+                    dto.setLink(dto.getType() + "/" + page.getSlug());
                 } else {
                     throw new AuthorException("page is not");
                 }

@@ -6,6 +6,7 @@ export default class bookService {
     // console.log(": ", book);
     return await axios.post(API_BOOK, book);
   };
+
   getBooks = async () => {
     return await axios.get(API_BOOK);
   };

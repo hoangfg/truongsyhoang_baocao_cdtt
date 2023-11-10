@@ -10,53 +10,7 @@ import {
   COMMON_MESSAGE_SET,
 } from "./actionTypes";
 
-export const insertPage = (page) => async (dispatch) => {
-  const service = new pageService();
-  console.log("ser", service);
-  try {
-    const response = await service.create(page);
-    if (response && response.data) {
-      console.log("page", page);
-      console.log("repon ", response.data);
-      if (response.status === 201) {
-        console.log("yes", response);
-        dispatch({
-          type: PAGE_SET,
-          payload: response.data,
-        });
-        dispatch({
-          type: COMMON_MESSAGE_SET,
-          payload: "Thêm thành công",
-        });
-        dispatch({
-          type: PAGE_APPEND,
-          payload: response.data,
-        });
-      } else {
-        console.log("no1");
-        dispatch({
-          type: COMMON_ERROR_SET,
-          payload: response.message,
-        });
-      }
-    } else {
-      console.log("Error: Response or response.data is undefined.");
-    }
-  } catch (error) {
-    console.log("no", error);
-    dispatch({
-      type: COMMON_ERROR_SET,
-      payload:
-        error.response && error.response.data
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-  dispatch({
-    type: COMMON_LOADING_SET,
-    payload: false,
-  });
-};
+
 
 export const getPages = () => async (dispatch) => {
   const service = new pageService();
@@ -93,44 +47,7 @@ export const getPages = () => async (dispatch) => {
     payload: false,
   });
 };
-export const deleteById = (id) => async (dispatch) => {
-  const service = new pageService();
-  try {
-    dispatch({
-      type: COMMON_LOADING_SET,
-      payload: true,
-    });
-    const response = await service.deleteById(id);
-    console.log(response);
-    if (response.status === 200) {
-      dispatch({
-        type: PAGE_DELETE,
-        payload: id,
-      });
-      dispatch({
-        type: COMMON_MESSAGE_SET,
-        payload: response.data,
-      });
-    } else {
-      dispatch({
-        type: COMMON_ERROR_SET,
-        payload: response.message,
-      });
-    }
-  } catch (error) {
-    console.log("error:" + error);
-    dispatch({
-      type: COMMON_ERROR_SET,
-      payload: error.response.data
-        ? error.response.data.message
-        : error.message,
-    });
-  }
-  dispatch({
-    type: COMMON_LOADING_SET,
-    payload: false,
-  });
-};
+
 export const getById = (id) => async (dispatch) => {
   const service = new pageService();
   try {

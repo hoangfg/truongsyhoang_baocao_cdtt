@@ -2290,6 +2290,9 @@ input[type="range"]::-webkit-slider-thumb {
   .products.one .thumbnail-show {
     height: 100px;
   }
+  .posts.one .image-show {
+    height: 560px;
+  }
 }
 @media screen and (max-width: 639px) {
   .mini-cart {
@@ -2337,6 +2340,10 @@ input[type="range"]::-webkit-slider-thumb {
   .products.one .row {
     flex: 0 0 50%;
     width: 50%;
+  }
+  .posts.one .row {
+    flex: 0 0 50%;
+    width: 100%;
   }
   .products.one .is_sticky,
   .is_sticky {

@@ -28,7 +28,7 @@ class Footer extends Component {
   };
   render() {
     const { configs, pages, publishers, isLoading, posts } = this.props;
-    console.log("clgs", publishers);
+
     return (
       <footer>
         <FooterNewLater></FooterNewLater>
@@ -36,6 +36,7 @@ class Footer extends Component {
           pages={pages}
           publishers={publishers}
           posts={posts}
+          configs={configs}
         ></FooterWidget>
         <FooterInfo config={configs}></FooterInfo>
       </footer>

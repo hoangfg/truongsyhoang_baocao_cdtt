@@ -125,6 +125,18 @@ public class PostService {
         return found.get();
     }
 
+    public Post findBySlug(String slug) {
+        Optional<Post> found = postReponsitory.findBySlug(slug);
+        if (found.isEmpty()) {
+            throw new AuthorException("Post slug: " + slug + " does not esisted");
+        }
+
+        if (found.get().getStatus() == 1) {
+            throw new AuthorException("Post slug: " + slug + " is not published");
+        }
+        return found.get();
+    }
+
     public void deleteById(Long id) {
         Post existed = findById(id);
         String fileName = existed.getImage();

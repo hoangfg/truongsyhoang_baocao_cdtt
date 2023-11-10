@@ -1,4 +1,5 @@
 import {
+  TOPICS_LOADING_SET,
   TOPICS_SET,
   TOPIC_APPEND,
   TOPIC_DELETE,
@@ -9,6 +10,7 @@ import {
 const initialState = {
   topic: {},
   topics: [],
+  isLoading: false,
 };
 const topicReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -16,6 +18,8 @@ const topicReducer = (state = initialState, { type, payload }) => {
       return { ...state, topic: payload };
     case TOPICS_SET:
       return { ...state, topics: payload };
+    case TOPICS_LOADING_SET:
+      return { ...state, isLoading: payload };
     case TOPIC_APPEND:
       return { ...state, topics: [payload, ...state.topics] };
     case TOPIC_DELETE:

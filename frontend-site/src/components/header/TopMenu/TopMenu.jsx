@@ -19,7 +19,7 @@ function TopMenu(props) {
       menus.parent_id === 0 &&
       menus.position === "mainmenu"
   );
-  console.log("f", filterMenus);
+
   return (
     <div className="header-nav">
       <div className="container">
@@ -37,7 +37,7 @@ function TopMenu(props) {
             <nav className="mobile-hide">
               <ul className="flexitem second-links">
                 <li>
-                  <Link to="/">Home</Link>
+                  <Link to="/">Trang chủ</Link>
                 </li>
                 {filterMenus &&
                   filterMenus

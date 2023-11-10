@@ -11,7 +11,7 @@ class Feature extends Component {
     let filteredGenre = genres.filter(
       (item) => item.status === 0 && item.parentId === 0
     );
-    console.log("sale", filteredBook);
+
     return (
       <div className="features">
         <div className="container">
@@ -86,13 +86,11 @@ class Feature extends Component {
                     <h2>
                       <span className="circle" />
                       <span>
-                        <Link to={`product/genres/${item.slug}`}>
-                          {item.name}
-                        </Link>
+                        <Link to={`/genres/${item.slug}`}>{item.name}</Link>
                       </span>
                     </h2>
                     <div className="second-links">
-                      <Link to={`product/${item.slug}`} className="view-all">
+                      <Link to={`/genres/${item.slug}`} className="view-all">
                         View all
                         <i className="ri-arrow-right-line" />
                       </Link>

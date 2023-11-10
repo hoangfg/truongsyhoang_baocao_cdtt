@@ -7,6 +7,8 @@ import {
   GENRES_LOADING_SET,
   LANGUAGES_LOADING_SET,
   PUBLISHERS_LOADING_SET,
+  POSTS_LOADING_SET,
+  TOPICS_LOADING_SET,
 } from "./actionTypes";
 
 export const setMessage = (message) => (dispatch) => {
@@ -54,6 +56,18 @@ export const setGenresLoading = (loading) => (dispatch) => {
 export const setPublisgersLoading = (loading) => (dispatch) => {
   dispatch({
     type: PUBLISHERS_LOADING_SET,
+    payload: loading,
+  });
+};
+export const setPostsLoading = (loading) => (dispatch) => {
+  dispatch({
+    type: POSTS_LOADING_SET,
+    payload: loading,
+  });
+};
+export const setTopicsLoading = (loading) => (dispatch) => {
+  dispatch({
+    type: TOPICS_LOADING_SET,
     payload: loading,
   });
 };

@@ -59,7 +59,7 @@ export const getTopics = () => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
-      payload: true,
+      payload: { isLoadingTopics: true },
     });
     const response = await service.getTopics();
     console.log("re", response);
@@ -85,7 +85,7 @@ export const getTopics = () => async (dispatch) => {
   }
   dispatch({
     type: COMMON_LOADING_SET,
-    payload: false,
+    payload: { isLoadingTopics: false },
   });
 };
 export const deleteById = (id) => async (dispatch) => {
@@ -123,7 +123,7 @@ export const deleteById = (id) => async (dispatch) => {
   }
   dispatch({
     type: COMMON_LOADING_SET,
-    payload: false,
+    payload: { isLoadingTopics: false },
   });
 };
 export const getById = (id) => async (dispatch) => {

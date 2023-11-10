@@ -21,4 +21,7 @@ public interface BookReponsitory extends JpaRepository<Book, Long> {
     List<Book> findAllBy();
 
     Optional<Book> findBySlug(String slug);
+
+    @Query("SELECT b FROM Book b LEFT JOIN FETCH b.stores s LEFT JOIN FETCH s.sale ORDER BY b.id DESC")
+    Page<Book> findAllWithStoreAndSaleOrderByIdDesc(Pageable pageable);
 }

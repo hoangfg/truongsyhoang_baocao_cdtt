@@ -467,6 +467,7 @@ public class BookService {
         return new ResponseEntity<>(newList, HttpStatus.OK);
     }
 
+
     @Transactional(rollbackFor = Exception.class)
     public void deleteById(Long id) {
         var found = bookReponsitory.findById(id).orElseThrow(() -> new AuthorException("Book not found"));
