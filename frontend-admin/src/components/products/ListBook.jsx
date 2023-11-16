@@ -82,18 +82,31 @@ class ListBook extends Component {
       status: record.status === 0 ? 1 : 0,
     });
   };
-
+  delete = async (record) => {
+    this.props.statusBook(record.id, { status: 2 });
+  };
+  restore = async (record) => {
+    this.props.statusBook(record.id, { status: 1 });
+  };
+  show = (book) => {
+    const { navigate } = this.props.router;
+    navigate("/product/show/" + book.id);
+  };
   render() {
     const { navigate } = this.props.router;
     const { open } = this.state;
-    const { books, isLoading } = this.props;
+    const { books, isLoading, title, type } = this.props;
+    let filteredItems = books.filter((item) => item.status !== 2);
 
+    if (type === "trash") {
+      filteredItems = books.filter((item) => item.status === 2);
+    }
     if (isLoading) {
       return (
         <>
           <ContentHeader
             navigate={navigate}
-            title="Danh sách sản phẩm"
+            title={title}
             className="site-page_header"
           />
           <Skeleton />
@@ -107,7 +120,7 @@ class ListBook extends Component {
             <Col span={12}>
               <ContentHeader
                 navigate={navigate}
-                title="Danh sách sản phẩm"
+                title={title}
                 className="site-page_header"
               />
             </Col>
@@ -120,7 +133,7 @@ class ListBook extends Component {
         </div>
 
         <BookList
-          books={books}
+          books={filteredItems}
           openDeleteConfirmModal={this.openDeleteConfirmModal}
           onEdit={this.edit}
           handleStatusChange={this.handleStatusChange}
@@ -130,6 +143,9 @@ class ListBook extends Component {
           onCancel={() => {
             this.setState({ ...this.state, open: false, page: {} });
           }}
+          type={type}
+          onRestore={this.restore}
+          onDelete={this.delete}
         />
         {this.state.openStoreForm && (
           <StoreForm

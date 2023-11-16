@@ -42,18 +42,18 @@ public class PostService {
             entity.setImage(fileName);
             dto.setImageFile(null);
         }
-        var topic = new Topic();
-        topic.setId(dto.getTopicId());
-
-        entity.setTopic(topic);
-        System.out.println(topic);
+        if (dto.getTopicId() != 0) {
+            var topic = new Topic();
+            topic.setId(dto.getTopicId());
+            entity.setTopic(topic);
+        }
 
         String name = dto.getTitle();
         String slug = generateSlug(name);
         entity.setSlug(slug);
         entity.setCreatedAt(LocalDate.now());
         entity.setCreatedBy(1L);
-        entity.setType("post");
+        entity.setType(dto.getType());
 
         // entity.setUpdatedAt(LocalDate.now());
         // entity.setUpdatedBy(1L);
@@ -86,15 +86,16 @@ public class PostService {
 
             entity.setImage(originalImage);
         }
+        entity.setType(dto.getType());
 
         // Restore original values
         entity.setCreatedAt(originalCreatedAt);
         entity.setCreatedBy(originalCreatedBy);
-        var topic = new Topic();
-        topic.setId(dto.getTopicId());
-
-        entity.setTopic(topic);
-        System.out.println(topic);
+        if (dto.getTopicId() != 0) {
+            var topic = new Topic();
+            topic.setId(dto.getTopicId());
+            entity.setTopic(topic);
+        }
 
         String name = dto.getTitle();
         String slug = generateSlug(name);

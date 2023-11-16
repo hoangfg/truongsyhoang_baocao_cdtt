@@ -13,6 +13,9 @@ import configReducer from "./reducers/configReducer";
 import sliderReducer from "./reducers/sliderReducer";
 import storeReducer from "./reducers/storeReducer";
 import menuReducer from "./reducers/menuReducer";
+import roleReducer from "./reducers/roleReducer";
+import userReducer from './reducers/userReducer';
+import orderReducer from './reducers/orderReducer';
 const rootReducer = combineReducers({
   publisherReducer,
   commonReducer,
@@ -27,5 +30,8 @@ const rootReducer = combineReducers({
   sliderReducer,
   storeReducer,
   menuReducer,
+  roleReducer,
+  userReducer,
+  orderReducer,
 });
 export default rootReducer;

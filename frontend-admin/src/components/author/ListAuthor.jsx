@@ -75,11 +75,26 @@ class ListAuthor extends Component {
       status: record.status === 0 ? 1 : 0,
     });
   };
+  delete = async (record) => {
+    this.props.statusAuthor(record.id, { status: 2 });
+  };
+  restore = async (record) => {
+    this.props.statusAuthor(record.id, { status: 1 });
+  };
+  show = (author) => {
+    const { navigate } = this.props.router;
+    navigate("/authors/show/" + author.id);
+  };
   render() {
     const { navigate } = this.props.router;
     const { open } = this.state;
-    const { authors, isLoading } = this.props;
+    const { authors, isLoading, type, title } = this.props;
+    let filteredAuthors = authors.filter((author) => author.status !== 2);
 
+    // If the type is "trash", filter authors with status === 2
+    if (type === "trash") {
+      filteredAuthors = authors.filter((author) => author.status === 2);
+    }
     if (isLoading) {
       return (
         <>
@@ -117,10 +132,13 @@ class ListAuthor extends Component {
         </div>
 
         <AuthorList
-          dataSource={authors}
+          dataSource={filteredAuthors}
           onDeleteConfirm={this.onDeleteConfirm}
           onEdit={this.onEdit}
           handleStatusChange={this.handleStatusChange}
+          type={type}
+          onRestore={this.restore}
+          onDelete={this.delete}
         />
 
         <AuthorForm
@@ -129,7 +147,6 @@ class ListAuthor extends Component {
           onCreate={this.onCreate}
           onCancel={() => {
             this.setState({ ...this.state, open: false, author: {} });
-            
           }}
         />
       </>

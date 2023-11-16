@@ -1,7 +1,12 @@
 {
   "configurations": [
-    
-
+    {
+      "type": "java",
+      "name": "Example04Application",
+      "request": "launch",
+      "mainClass": "com.truongsyhoang.example04.Example04Application",
+      "projectName": "example04"
+    },
     {
       "type": "java",
       "name": "Spring Boot-BackendApplication<backend>",

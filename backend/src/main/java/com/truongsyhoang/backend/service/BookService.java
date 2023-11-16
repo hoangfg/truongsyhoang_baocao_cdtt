@@ -449,6 +449,7 @@ public class BookService {
             // Lấy thông tin từ BookStore
             if (item.getStores() != null && !item.getStores().isEmpty()) {
                 BookStore store = item.getStores().iterator().next();
+                // dto.setTypeName(store.getTypeName());
                 dto.setEntryPrice(store.getEntryPrice());
                 dto.setQuanlity(store.getQuanlity());
             }
@@ -466,8 +467,6 @@ public class BookService {
         }).collect(Collectors.toList());
         return new ResponseEntity<>(newList, HttpStatus.OK);
     }
-
-
     @Transactional(rollbackFor = Exception.class)
     public void deleteById(Long id) {
         var found = bookReponsitory.findById(id).orElseThrow(() -> new AuthorException("Book not found"));

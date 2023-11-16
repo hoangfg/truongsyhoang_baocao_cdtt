@@ -18,7 +18,7 @@ function PagePostDetail(props) {
     props.getBySlug(slug);
   }, [props.router.params, props.getBySlug]);
 
-  const { post, posts } = props;
+  const { post, posts, type } = props;
 
   return (
     <>
@@ -30,9 +30,11 @@ function PagePostDetail(props) {
                 <li>
                   <Link to="/">Trang chủ</Link>
                 </li>
-                <li>
-                  <Link href="#">{post?.topic?.name}</Link>
-                </li>
+                {type === "post" && (
+                  <li>
+                    <Link href="#">{post?.topic?.name}</Link>
+                  </li>
+                )}
                 <li>{post.title}</li>
               </ul>
             </div>
@@ -79,6 +81,11 @@ function PagePostDetail(props) {
                             >
                               Chi tiết
                             </a> */}
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: post.metadesc,
+                              }}
+                            />
                             <div
                               dangerouslySetInnerHTML={{
                                 __html: post.detail,
@@ -268,13 +275,19 @@ function PagePostDetail(props) {
           </div>
         </div>
       </div>
-      <div className="related-products">
-        <div className="container">
-          <div className="wrapper">
-            <RelatedPost posts={posts} topic={post?.topic?.name} id={post.id} />
+      {type === "post" && (
+        <div className="related-products">
+          <div className="container">
+            <div className="wrapper">
+              <RelatedPost
+                posts={posts}
+                topic={post?.topic?.name}
+                id={post.id}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

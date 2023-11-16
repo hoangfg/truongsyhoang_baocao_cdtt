@@ -53,7 +53,7 @@ public class Post extends AbtractEntity {
     private int status;
 
     @ManyToOne
-    @JoinColumn(name = "topic_id")
+    @JoinColumn(name = "topic_id", nullable = true)
     private Topic topic;
 
     @PreUpdate

@@ -80,6 +80,32 @@ export const CONFIG_DELETE = "CONFIG_DELETE";
 export const CONFIG_UPDATE = "CONFIG_UPDATE";
 export const CONFIGS_STATE_CLEAR = "CONFIGS_STATE_CLEAR";
 
+export const ROLE_SET = "ROLE_SET";
+export const ROLES_SET = "ROLES_SET";
+export const ROLE_APPEND = "ROLE_APPEND";
+export const ROLE_DELETE = "ROLE_DELETE";
+export const ROLE_UPDATE = "ROLE_UPDATE";
+export const ROLES_STATE_CLEAR = "ROLES_STATE_CLEAR";
+
+export const USER_SET = "USER_SET";
+export const USERS_SET = "USERS_SET";
+export const USER_APPEND = "USER_APPEND";
+export const USER_DELETE = "USER_DELETE";
+export const USER_UPDATE = "USER_UPDATE";
+
+export const ORDER_SET = "ORDER_SET";
+export const ORDERS_SET = "ORDERS_SET";
+export const ORDER_APPEND = "ORDER_APPEND";
+export const ORDER_DELETE = "ORDER_DELETE";
+export const ORDER_UPDATE = "ORDER_UPDATE";
+export const ORDERS_STATE_CLEAR = "ORDERS_STATE_CLEAR";
+
+export const ORDERDetail_SET = "ORDERDetail_SET";
+export const ORDERDetailS_SET = "ORDERDetailS_SET";
+export const ORDERDetail_DELETE = "ORDERDetail_DELETE";
+export const ORDERDetail_UPDATE = "ORDERDetail_UPDATE";
+export const ORDERDetailS_STATE_CLEAR = "ORDERDetailS_STATE_CLEAR";
+
 export const COMMON_ERROR_SET = "COMMON_ERROR_SET";
 export const COMMON_MESSAGE_SET = "COMMON_MESSAGE_SET";
 export const COMMON_LOADING_SET = "COMMON_LOADING_SET";

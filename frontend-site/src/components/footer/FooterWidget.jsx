@@ -2,8 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const FooterWidget = ({ pages, publishers, posts, configs }) => {
-  const filterPage = pages.filter((item) => item.status === 0);
-  const filterPost = posts.filter((item) => item.status === 0);
+  const filterPage = posts.filter(
+    (item) => item.status === 0 && item.type === "page"
+  );
+  const filterPost = posts.filter(
+    (item) => item.status === 0 && item.type === "post"
+  );
   const filterConfig = configs.filter((item) => item.status === 0);
   const firstConfig = filterConfig[0];
   return (
@@ -43,7 +47,7 @@ const FooterWidget = ({ pages, publishers, posts, configs }) => {
                   {filterPage &&
                     filterPage.map((item) => (
                       <li key={item.id}>
-                        <Link to={`/post/${item.slug}`}>{item.title}</Link>
+                        <Link to={`/page/${item.slug}`}>{item.title}</Link>
                       </li>
                     ))}
                 </ul>

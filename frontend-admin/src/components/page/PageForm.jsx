@@ -13,7 +13,7 @@ import {
   Image,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import pageService from "../../services/pageService";
+import postService from "../../services/postService";
 import SunEditor from "suneditor-react";
 class PageForm extends Component {
   form = createRef();
@@ -21,7 +21,7 @@ class PageForm extends Component {
     super(props);
 
     this.state = {
-      page: {},
+      post: {},
       previewImage: "",
       previewVisible: false,
     };
@@ -52,11 +52,11 @@ class PageForm extends Component {
 
   render() {
     const { open, onCreate, onCancel } = this.props;
-    const { page } = this.props;
-    const imageURL = pageService.getPhotoUrl(page.image);
+    const { post } = this.props;
+    const imageURL = postService.getPhotoUrl(post.image);
     const initialImage = {
       url: imageURL,
-      uid: page.image,
+      uid: post.image,
     };
 
     return (
@@ -92,7 +92,7 @@ class PageForm extends Component {
           layout="vertical"
           name="form_in_modal"
           initialValues={{ modifier: "public" }}
-          key={"f" + page.id + page.title + page.image}
+          key={"f" + post.id + post.title + post.image}
         >
           <Row style={{ display: "flex", justifyContent: "space-around" }}>
             <Col md={24}>
@@ -100,8 +100,17 @@ class PageForm extends Component {
                 label="ID"
                 name="id"
                 labelCol={{ span: 24 }}
-                initialValue={page.id}
-                hidden={page.id ? false : true}
+                initialValue={post.id}
+                hidden={post.id ? false : true}
+              >
+                <Input readOnly></Input>
+              </Form.Item>
+              <Form.Item
+                label="Type"
+                name="type"
+                labelCol={{ span: 24 }}
+                initialValue="page"
+                hidden
               >
                 <Input readOnly></Input>
               </Form.Item>
@@ -111,15 +120,15 @@ class PageForm extends Component {
                 label="ID"
                 name="id"
                 labelCol={{ span: 24 }}
-                initialValue={page.id}
-                hidden={page.id ? false : true}
+                initialValue={post.id}
+                hidden={post.id ? false : true}
               >
                 <Input readOnly></Input>
               </Form.Item> */}
               <Form.Item
                 label="Tên"
                 name="title"
-                initialValue={page.title}
+                initialValue={post.title}
                 labelCol={{ span: 24 }}
                 // wrapperCol={{ span: 24 }}
                 rules={[
@@ -138,7 +147,7 @@ class PageForm extends Component {
               <Form.Item
                 label="metakey"
                 name="metakey"
-                initialValue={page.metakey}
+                initialValue={post.metakey}
                 labelCol={{ span: 24 }}
                 rules={[
                   {
@@ -163,13 +172,13 @@ class PageForm extends Component {
                       ["fontColor", "hiliteColor", "textStyle", "removeFormat"],
                     ],
                   }}
-                  setContents={page.metakey}
+                  setContents={post.metakey}
                 />
               </Form.Item>
               <Form.Item
                 label="metadesc"
                 name="metadesc"
-                initialValue={page.metadesc}
+                initialValue={post.metadesc}
                 labelCol={{ span: 24 }}
                 rules={[
                   {
@@ -194,13 +203,13 @@ class PageForm extends Component {
                       ["fontColor", "hiliteColor", "textStyle", "removeFormat"],
                     ],
                   }}
-                  setContents={page.metadesc}
+                  setContents={post.metadesc}
                 />
               </Form.Item>
 
               <Divider></Divider>
 
-              {/* {!page.id && (
+              {/* {!post.id && (
                 <Button
                   htmlType="submit"
                   type="primary"
@@ -210,7 +219,7 @@ class PageForm extends Component {
                   Lưu
                 </Button>
               )}
-              {page.id && (
+              {post.id && (
                 <Button
                   htmlType="button"
                   type="primary"
@@ -226,7 +235,7 @@ class PageForm extends Component {
               <Form.Item
                 label="Detail"
                 name="detail"
-                initialValue={page.detail}
+                initialValue={post.detail}
                 labelCol={{ span: 24 }}
                 rules={[
                   {
@@ -256,7 +265,7 @@ class PageForm extends Component {
                     ],
                   }}
                   onChange={this.handleDetailChange}
-                  setContents={page.detail}
+                  setContents={post.detail}
                 />
               </Form.Item>
 
@@ -264,7 +273,7 @@ class PageForm extends Component {
                 label="Trạng thái"
                 name="status"
                 labelCol={{ span: 24 }}
-                initialValue={page.status === 0 ? "0" : "1"}
+                initialValue={post.status === 0 ? "0" : "1"}
               >
                 <Select>
                   <Select.Option value="0">Hoạt động</Select.Option>
@@ -285,7 +294,7 @@ class PageForm extends Component {
                 labelCol={{ span: 24 }}
                 valuePropName="fileList"
                 getValueFromEvent={this.normFile}
-                // initialValue={page.status === "Visible" ? "0" : "1"}
+                // initialValue={post.status === "Visible" ? "0" : "1"}
               >
                 {/* <ImgCrop rotationSlider> */}
                 <Upload

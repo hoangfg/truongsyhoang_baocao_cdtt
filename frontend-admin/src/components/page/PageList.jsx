@@ -5,12 +5,12 @@ import Column from "antd/es/table/Column";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { Image } from "antd/lib";
-import pageService from "../../services/pageService";
+import postService from "../../services/postService";
 export default class PageList extends Component {
   render() {
     const { dataSource, onEdit, onDeleteConfirm, handleStatusChange } =
       this.props;
-    console.log("da",dataSource);
+    console.log("da", dataSource);
     return (
       <Table
         className="content-panel_table"
@@ -37,7 +37,7 @@ export default class PageList extends Component {
             <Space>
               <Image
                 height="50px"
-                src={pageService.getPhotoUrl(record.image)}
+                src={postService.getPhotoUrl(record.image)}
               ></Image>
             </Space>
           )}

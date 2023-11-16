@@ -105,6 +105,15 @@ class PostForm extends Component {
               >
                 <Input readOnly></Input>
               </Form.Item>
+              <Form.Item
+                label="Type"
+                name="type"
+                labelCol={{ span: 24 }}
+                initialValue="post"
+                hidden
+              >
+                <Input readOnly></Input>
+              </Form.Item>
             </Col>
             <Col xs={24} md={11}>
               {/* <Form.Item

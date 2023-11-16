@@ -125,6 +125,13 @@ class ListMenu extends Component {
       status: record.status === 0 ? 1 : 0,
     });
   };
+  delete = async (record) => {
+    this.props.statusMenu(record.id, { status: 2 });
+  };
+  restore = async (record) => {
+    this.props.statusMenu(record.id, { status: 1 });
+  };
+
   onChange = (e, item) => {
     this.setState({
       position: e.target.value,
@@ -133,7 +140,7 @@ class ListMenu extends Component {
   render() {
     const { navigate } = this.props.router;
     const { open } = this.state;
-    const { menus, isLoading } = this.props;
+    const { menus, isLoading, title, type } = this.props;
     const {
       menu,
       publisherList,
@@ -144,13 +151,18 @@ class ListMenu extends Component {
       TopicList,
       selectedItems,
     } = this.state;
+    let filteredItems = menus.filter((item) => item.status !== 2);
+
+    if (type === "trash") {
+      filteredItems = menus.filter((item) => item.status === 2);
+    }
     // console.log("menus", menus);
     if (isLoading) {
       return (
         <>
           <ContentHeader
             navigate={navigate}
-            title="Danh sách nhà xuất bản"
+            title={title}
             className="site-page_header"
           />
           <Skeleton />
@@ -164,7 +176,7 @@ class ListMenu extends Component {
             <Col span={12}>
               <ContentHeader
                 navigate={navigate}
-                title="Danh sách Menu"
+                title={title}
                 className="site-page_header"
               />
             </Col>
@@ -172,7 +184,7 @@ class ListMenu extends Component {
         </div>
 
         <MenuList
-          dataSoure={menus}
+          dataSoure={filteredItems}
           menu={menu}
           publisherList={publisherList}
           authorList={authorList}
@@ -187,6 +199,9 @@ class ListMenu extends Component {
           onEdit={this.onEdit}
           handleStatusChange={this.handleStatusChange}
           onCreate={this.onCreate}
+          type={type}
+          onRestore={this.restore}
+          onDelete={this.delete}
         />
 
         <MenuForm

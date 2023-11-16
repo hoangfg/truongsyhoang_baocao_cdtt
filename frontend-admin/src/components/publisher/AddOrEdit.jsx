@@ -72,7 +72,7 @@ class AddOrEdit extends Component {
         //   }
         // }
       );
-      
+
       console.log("1", filteredPublisherList);
       this.setState({
         ...this.state,
@@ -173,17 +173,10 @@ class AddOrEdit extends Component {
 
   render() {
     const { navigate } = this.props.router;
-    const { isLoading } = this.props;
+    const { isLoading, title } = this.props;
     const { publisherList } = this.state;
-    // console.log(publisherList);
     const { publisher } = this.state;
-    // console.log("2", publisher.parentId.id);
-    let title = "";
-    if (publisher.id) {
-      title = "Sửa thông tin nhà xuất bản";
-    } else {
-      title = "Thêm nhà xuất bản";
-    }
+
     let select = publisher.parentId;
 
     if (select !== null && select !== undefined) {

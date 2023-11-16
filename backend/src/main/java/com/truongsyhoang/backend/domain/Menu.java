@@ -30,7 +30,7 @@ public class Menu extends AbtractEntity {
     private String type;
     @Column(name = "table_id", nullable = true)
     private Long table_id;
-    @Column(name = "status", columnDefinition = "Long default 0")
+    @Column(name = "status", columnDefinition = "bigint default 0")
     private Long status;
 
     @PrePersist

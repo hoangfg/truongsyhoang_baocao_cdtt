@@ -45,6 +45,17 @@ import Home from "../components/home/Home";
 import ListStore from "../components/store/ListStore";
 import MenuList from "../components/menu/MenuList";
 import ListMenu from "../components/menu/ListMenu";
+import ListRole from "../components/role/ListRole";
+import ListUser from "../components/user/ListUser";
+import ShowUser from "../components/user/ShowUser";
+import ShowPublisher from "../components/publisher/ShowPublisher";
+import ShowAuthor from "../components/author/ShowAuthor";
+import ShowGenres from "../components/bookgenres/ShowGenres";
+import ShowBook from "../components/products/ShowBook";
+import ListCustomer from "../components/customer/ListCustomer";
+import ShowCustomer from "../components/customer/ShowCustomer";
+import ListOrder from "../components/order/ListOrder";
+import OrderDetail from "../components/order/OrderDetail";
 // import Home from './../../../../../java-project/frontend-site/src/layouts/Home';
 
 const { Header, Sider, Content } = Layout;
@@ -103,6 +114,12 @@ function DashboardPage() {
                   onClick: () => navigate("/publishers"),
                 },
                 {
+                  key: "23",
+                  icon: <BsListTask />,
+                  label: "Thùng rác",
+                  onClick: () => navigate("/publishers/trash"),
+                },
+                {
                   key: "22",
                   icon: <MdOutlineCreateNewFolder />,
                   label: "Thêm",
@@ -121,6 +138,12 @@ function DashboardPage() {
                   label: "Danh sách",
                   onClick: () => navigate("/authors"),
                 },
+                {
+                  key: "32",
+                  icon: <BsListTask />,
+                  label: "Thùng rác",
+                  onClick: () => navigate("/authors/trash"),
+                },
               ],
             },
             {
@@ -133,6 +156,12 @@ function DashboardPage() {
                   icon: <BsListTask />,
                   label: "Danh sách",
                   onClick: () => navigate("/genres"),
+                },
+                {
+                  key: "42",
+                  icon: <BsListTask />,
+                  label: "Thùng rác",
+                  onClick: () => navigate("/genres/trash"),
                 },
               ],
             },
@@ -171,6 +200,12 @@ function DashboardPage() {
                   icon: <BsListTask />,
                   label: "Danh sách",
                   onClick: () => navigate("/product"),
+                },
+                {
+                  key: "64",
+                  icon: <BsListTask />,
+                  label: "Thùng rác",
+                  onClick: () => navigate("/product/trash"),
                 },
               ],
             },
@@ -255,6 +290,82 @@ function DashboardPage() {
                   label: "Danh sách",
                   onClick: () => navigate("/menu"),
                 },
+                {
+                  key: "10a2",
+                  icon: <BsListTask />,
+                  label: "Thùng rác",
+                  onClick: () => navigate("/menu/trash"),
+                },
+              ],
+            },
+            {
+              key: "11a",
+              icon: <AiOutlineAlipay />,
+              label: "Quản lí tài khoản",
+              children: [
+                {
+                  key: "11a1",
+                  icon: <BsListTask />,
+                  label: "Quyền",
+                  onClick: () => navigate("/roles"),
+                },
+                {
+                  key: "11a2",
+                  icon: <BsListTask />,
+                  label: "Thành viên",
+                  children: [
+                    {
+                      key: "11a2a",
+                      icon: <BsListTask />,
+                      label: "Danh sách",
+                      onClick: () => navigate("/users"),
+                    },
+                    {
+                      key: "11a2b",
+                      icon: <BsListTask />,
+                      label: "Thùng rác",
+                      onClick: () => navigate("/users/trash"),
+                    },
+                  ],
+                },
+                {
+                  key: "12a2",
+                  icon: <BsListTask />,
+                  label: "Khách hàng",
+                  children: [
+                    {
+                      key: "12a2a",
+                      icon: <BsListTask />,
+                      label: "Danh sách",
+                      onClick: () => navigate("/customer"),
+                    },
+                    {
+                      key: "12a2b",
+                      icon: <BsListTask />,
+                      label: "Thùng rác",
+                      onClick: () => navigate("/customer/trash"),
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              key: "12a",
+              icon: <AiOutlineAlipay />,
+              label: "Đơn hàng",
+              children: [
+                {
+                  key: "12a1",
+                  icon: <BsListTask />,
+                  label: "Danh sách",
+                  onClick: () => navigate("/order"),
+                },
+                {
+                  key: "12a2",
+                  icon: <BsListTask />,
+                  label: "Thùng rác",
+                  onClick: () => navigate("/order/trash"),
+                },
               ],
             },
           ]}
@@ -304,16 +415,38 @@ function DashboardPage() {
           <div className="content-panel">
             <Routes>
               <Route path="/" element={<Home />}></Route>
-              <Route path="/publishers" element={<Index />}></Route>
+              <Route
+                path="/publishers"
+                element={<Index title="Tất cả nhà sản xuất" />}
+              ></Route>
+              <Route
+                path="/publishers/trash"
+                element={<Index title="Thùng rác" type="trash" />}
+              ></Route>
               <Route
                 path="/publishers/add"
-                element={<AddOrEdit key="a" />}
+                element={<AddOrEdit title="Thêm" key="a" />}
               ></Route>
               <Route
                 path="/publishers/update/:id"
-                element={<AddOrEdit key="u" />}
+                element={<AddOrEdit title="Sửa" key="u" />}
               ></Route>
-              <Route path="/authors" element={<ListAuthor />}></Route>
+              <Route
+                path="/publishers/show/:id"
+                element={<ShowPublisher title="xem" />}
+              ></Route>
+              <Route
+                path="/authors"
+                element={<ListAuthor title="Tất cả tác giả" />}
+              ></Route>
+              <Route
+                path="/authors/show/:id"
+                element={<ShowAuthor title="Thông tin" />}
+              ></Route>
+              <Route
+                path="/authors/trash"
+                element={<ListAuthor title="Thùng rác" type="trash" />}
+              ></Route>
               {/* <Route
                 path="/author/add"
                 element={<AuthorForm key="a" />}
@@ -322,25 +455,72 @@ function DashboardPage() {
                 path="/author/update/:id"
                 element={<AuthorForm key="u" />}
               ></Route> */}
-              <Route path="/genres" element={<ListGenres />}></Route>
+              <Route
+                path="/genres"
+                element={<ListGenres title="Tất cả thể loại" />}
+              ></Route>
+              <Route path="/genres/show/:id" element={<ShowGenres />}></Route>
+              <Route
+                path="/genres/trash"
+                element={<ListGenres title="Thùng rác" type="trash" />}
+              ></Route>
               <Route path="/language" element={<ListLanguage />}></Route>
               {/* <Route path="/product/upload" element={<UploadImage />}></Route> */}
               <Route
                 path="/product/add"
-                element={<AddOrEditBook key="a" />}
+                element={<AddOrEditBook title="Thêm" key="a" />}
               ></Route>
-              <Route path="/product" element={<ListBook />}></Route>
+              <Route
+                path="/product"
+                element={<ListBook title="Tất cả sản phẩm" />}
+              ></Route>
+              <Route
+                path="/product/trash"
+                element={<ListBook title="Thùng rác" type="trash" />}
+              ></Route>
               <Route
                 path="/product/update/:id"
                 element={<AddOrEditBook key="u" />}
               />
+              <Route path="/product/show/:id" element={<ShowBook key="u" />} />
               <Route path="/topic" element={<ListTopic />}></Route>
               <Route path="/post" element={<ListPost />}></Route>
               <Route path="/page" element={<ListPage />}></Route>
               <Route path="/config" element={<ListConfig />}></Route>
               <Route path="/slider" element={<ListSlider />}></Route>
               <Route path="/store" element={<ListStore />}></Route>
-              <Route path="/menu" element={<ListMenu />}></Route>
+              <Route
+                path="/menu"
+                element={<ListMenu title="Tất cả menu" />}
+              ></Route>
+              <Route
+                path="/menu/trash"
+                element={<ListMenu type="trash" title="thùng rác" />}
+              ></Route>
+              <Route path="/roles" element={<ListRole />}></Route>
+              <Route
+                path="/users"
+                element={<ListUser title="Tất cả thành viên" />}
+              ></Route>
+              <Route
+                path="/users/trash"
+                element={<ListUser title="Thùng rác" type="trash" />}
+              ></Route>
+              <Route path="/users/show/:id" element={<ShowUser />}></Route>
+              <Route
+                path="/customer"
+                element={<ListCustomer title="Tất cả khách hàng" />}
+              ></Route>
+              <Route
+                path="/customer/trash"
+                element={<ListCustomer title="Thùng rác" type="trash" />}
+              ></Route>
+              <Route
+                path="/customer/show/:id"
+                element={<ShowCustomer />}
+              ></Route>
+              <Route path="/order" element={<ListOrder />}></Route>
+              <Route path="/order/edit/:id" element={<OrderDetail />}></Route>
             </Routes>
             <Outlet></Outlet>
           </div>

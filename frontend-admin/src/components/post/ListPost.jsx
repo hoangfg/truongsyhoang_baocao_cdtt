@@ -40,9 +40,9 @@ class ListPost extends Component {
   loadData = async () => {
     try {
       const TopicService = new topicService();
-      console.log("h", TopicService);
+
       const topicListResponse = await TopicService.getTopics();
-      console.log(",", topicListResponse);
+
       this.setState({
         ...this.state,
 
@@ -98,7 +98,9 @@ class ListPost extends Component {
     const { navigate } = this.props.router;
     const { open, topicList } = this.state;
     const { posts, isLoading } = this.props;
-    console.log("topicList", topicList);
+    let filteredItems = posts.filter(
+      (item) => item.status !== 2 && item.type === "post"
+    );
     if (isLoading) {
       return (
         <>
@@ -136,7 +138,7 @@ class ListPost extends Component {
         </div>
 
         <PostList
-          dataSource={posts}
+          dataSource={filteredItems}
           onDeleteConfirm={this.onDeleteConfirm}
           onEdit={this.onEdit}
           handleStatusChange={this.handleStatusChange}

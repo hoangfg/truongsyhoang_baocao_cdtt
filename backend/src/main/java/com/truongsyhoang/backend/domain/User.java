@@ -46,8 +46,8 @@ public class User extends AbtractEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "expires_at", nullable = true)
-    private LocalDate expiresAt;
+    // @Column(name = "expires_at", nullable = true)
+    // private LocalDate expiresAt;
 
     @Column(name = "address", nullable = true)
     private String address;
@@ -62,12 +62,13 @@ public class User extends AbtractEntity {
     private int status;
 
     @ManyToOne
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", nullable = true)
     @JsonIgnoreProperties("users")
     private Role role;
-    @OneToMany(mappedBy = "user")
-    @JsonIgnoreProperties("user")
-    private List<Token> tokens;
+    
+    // @OneToMany(mappedBy = "user")
+    // @JsonIgnoreProperties("user")
+    // private List<Token> tokens;
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties("user")
     private List<Orders> orders;

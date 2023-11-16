@@ -16,7 +16,7 @@ export const insertPost = (post) => async (dispatch) => {
   try {
     const response = await service.create(post);
     console.log("post", post);
-    console.log("repon ", response.data);
+    console.log("repon ", response.status);
     if (response.status === 201) {
       console.log("yes", response);
       dispatch({

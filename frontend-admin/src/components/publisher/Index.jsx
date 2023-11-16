@@ -1,4 +1,4 @@
-import { BiEdit } from "react-icons/bi";
+import { BiEdit, BiShowAlt } from "react-icons/bi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import React, { Component } from "react";
 
@@ -19,6 +19,8 @@ import {
   updatePublisher,
   statusPublisher,
 } from "./../../redux/actions/publisherAction";
+import { MdSettingsBackupRestore } from "react-icons/md";
+import { Link } from "react-router-dom";
 class Index extends Component {
   constructor() {
     super();
@@ -58,7 +60,16 @@ class Index extends Component {
     this.props.statusPublisher(record.id, {
       status: record.status === "Visible" ? "Invisible" : "Visible",
     });
-    
+  };
+  onDelete = async (record) => {
+    this.props.statusPublisher(record.id, {
+      status: "Disabled",
+    });
+  };
+  onRestore = async (record) => {
+    this.props.statusPublisher(record.id, {
+      status: "Invisible",
+    });
   };
   componentDidMount = () => {
     this.props.getPublishers();
@@ -68,13 +79,24 @@ class Index extends Component {
   };
   render() {
     const { navigate } = this.props.router;
-    const { publishers, isLoading } = this.props;
+    const { publishers, isLoading, title, type } = this.props;
+    console.log(publishers);
+    let filteredPublisher = publishers
+      ? publishers.filter((item) => item.status !== "Disabled")
+      : [];
+
+    // If the type is "trash", filter publishers with status === 2
+    if (type === "trash") {
+      filteredPublisher = publishers
+        ? publishers.filter((item) => item.status === "Disabled")
+        : [];
+    }
     if (isLoading) {
       return (
         <>
           <ContentHeader
             navigate={navigate}
-            title="Danh sách nhà xuất bản"
+            title={title}
             className="site-page_header"
           />
           <Skeleton />
@@ -85,12 +107,12 @@ class Index extends Component {
       <>
         <ContentHeader
           navigate={navigate}
-          title="Danh sách nhà xuất bản"
+          title={title}
           className="site-page_header"
         />
         <Table
           className="content-panel_table"
-          dataSource={publishers}
+          dataSource={filteredPublisher}
           size="small"
           rowKey="id"
           pagination={{ pageSize: 8 }}
@@ -108,22 +130,24 @@ class Index extends Component {
             dataIndex="name"
             align="center"
           ></Column>
-          <Column
-            title="Trạng thái"
-            key="status"
-            dataIndex="status"
-            width={150}
-            align="center"
-            render={(text, record) => (
-              <Space size="middle">
-                <Switch
-                  checked={record.status === "Visible"}
-                  onChange={() => this.handleStatusChange(record)}
-                  loading={isLoading}
-                />
-              </Space>
-            )}
-          ></Column>
+          {type !== "trash" && (
+            <Column
+              title="Trạng thái"
+              key="status"
+              dataIndex="status"
+              width={150}
+              align="center"
+              render={(text, record) => (
+                <Space size="middle">
+                  <Switch
+                    checked={record.status === "Visible"}
+                    onChange={() => this.handleStatusChange(record)}
+                    loading={isLoading}
+                  />
+                </Space>
+              )}
+            ></Column>
+          )}
           <Column
             title="Chức năng"
             key="action"
@@ -132,23 +156,36 @@ class Index extends Component {
             align="center"
             render={(_, record) => (
               <Space size="middle">
-                <Button
-                  key={record.key}
-                  type="primary"
-                  style={{ marginRight: "8px" }}
-                  onClick={() => this.edit(record)}
-                >
-                  <BiEdit type="primary" align="center" />
-                </Button>
-                <Button
-                  loading={isLoading}
-                  key={record.key}
-                  type="primary"
-                  danger
-                  onClick={() => this.openDeleteConfirmModal(record)}
-                >
-                  <RiDeleteBin2Line align="center" />
-                </Button>
+                <>
+                  <Link to={`/publishers/show/${record.id}`}>
+                    <Button
+                      key={record.key}
+                      type="link"
+                      style={{ marginRight: "8px" }}
+                      // onClick={() => onShow(record)}
+                    >
+                      {/* <BiEdit type="primary" align="center" /> */}
+                      <BiShowAlt type="success" align="center" />
+                    </Button>
+                  </Link>
+                  <Button
+                    key={record.key}
+                    type="primary"
+                    style={{ marginRight: "8px" }}
+                    onClick={() => this.edit(record)}
+                  >
+                    <BiEdit type="primary" align="center" />
+                  </Button>
+                  <Button
+                    loading={isLoading}
+                    key={record.key}
+                    type="primary"
+                    danger
+                    onClick={() => this.openDeleteConfirmModal(record)}
+                  >
+                    <RiDeleteBin2Line align="center" />
+                  </Button>
+                </>
               </Space>
             )}
           ></Column>

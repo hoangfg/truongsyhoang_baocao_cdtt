@@ -13,6 +13,7 @@ export default class postService {
     formData.append("detail", post.detail);
     formData.append("metakey", post.metakey);
     formData.append("metadesc", post.metadesc);
+    formData.append("type", post.type);
     formData.append("status", post.status);
     console.log("topic", post.topicId);
     if (post.topicId) {
@@ -45,6 +46,7 @@ export default class postService {
     formData.append("metakey", post.metakey);
     formData.append("metadesc", post.metadesc);
     formData.append("status", post.status);
+    formData.append("type", post.type);
     console.log("topic", post.topicId);
     if (post.topicId) {
       formData.append("topicId", post.topicId);

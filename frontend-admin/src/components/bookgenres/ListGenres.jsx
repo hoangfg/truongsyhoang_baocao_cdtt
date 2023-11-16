@@ -49,7 +49,7 @@ class ListGenres extends Component {
   onEdit = (values) => {
     this.setState({ ...this.state, genres: values, open: true });
   };
-  
+
   onDeleteConfirm = (genres) => {
     this.setState({ ...this.state, genres: genres });
     const message = "Bạn có muốn xóa thể loại: " + genres.name + " không?";
@@ -70,16 +70,32 @@ class ListGenres extends Component {
       status: record.status === 0 ? 1 : 0,
     });
   };
+  delete = async (record) => {
+    this.props.statusGenres(record.id, { status: 2 });
+  };
+  restore = async (record) => {
+    this.props.statusGenres(record.id, { status: 1 });
+  };
+  show = (genre) => {
+    const { navigate } = this.props.router;
+    navigate("/genres/show/" + genre.id);
+  };
   render() {
     const { navigate } = this.props.router;
     const { open } = this.state;
-    const { isLoading, genres } = this.props;
+    const { isLoading, genres, title, type } = this.props;
+    let filteredItems = genres.filter((item) => item.status !== 2);
+
+    
+    if (type === "trash") {
+      filteredItems = genres.filter((item) => item.status === 2);
+    }
     if (isLoading) {
       return (
         <>
           <ContentHeader
             navigate={navigate}
-            title="Danh sách thể loại"
+            title={title}
             className="site-page_header"
           />
           <Skeleton />
@@ -93,7 +109,7 @@ class ListGenres extends Component {
             <Col span={12}>
               <ContentHeader
                 navigate={navigate}
-                title="Danh sách thể loại"
+                title={title}
                 className="site-page_header"
               />
             </Col>
@@ -114,6 +130,9 @@ class ListGenres extends Component {
           onDeleteConfirm={this.onDeleteConfirm}
           onEdit={this.onEdit}
           handleStatusChange={this.handleStatusChange}
+          type={type}
+          onRestore={this.restore}
+          onDelete={this.delete}
         />
         <GenresForm
           dataSource={genres}
@@ -122,7 +141,6 @@ class ListGenres extends Component {
           onCreate={this.onCreate}
           onCancel={() => {
             this.setState({ ...this.state, open: false });
-            
           }}
         />
       </>

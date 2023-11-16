@@ -12,6 +12,7 @@ import {
   Select,
   Space,
   Switch,
+  Tooltip,
   message,
 } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
@@ -21,8 +22,11 @@ import bookGenresService from "../../services/bookGenresService";
 import bookLanguageService from "../../services/bookLanguageService";
 import { Table } from "antd";
 import Column from "antd/es/table/Column";
-import { BiEdit } from "react-icons/bi";
+import { BiEdit, BiShowAlt } from "react-icons/bi";
 import { RiDeleteBin2Line } from "react-icons/ri";
+import { MdSettingsBackupRestore } from "react-icons/md";
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -112,6 +116,9 @@ class MenuList extends Component {
       onEdit,
       onDeleteConfirm,
       handleStatusChange,
+      onRestore,
+      type,
+      onDelete,
     } = this.props;
     // console.log("publisherList:", publisherList);
     // console.log("authorList:", authorList);
@@ -454,71 +461,73 @@ class MenuList extends Component {
     ];
 
     return (
-      <>
-        <Row>
+      <Row>
+        {type !== "trash" && (
           <Col span={6}>
             <Collapse defaultActiveKey={["1"]} items={items} />
           </Col>
-          <Col span={17} offset={1}>
-            <Table
-              className="content-panel_table"
-              dataSource={dataSoure}
-              size="small"
-              rowKey="id"
-              pagination={{ pageSize: 11 }}
-              scroll={{ y: 396 }}
-            >
-              <Column
-                title="ID"
-                key="id"
-                dataIndex="id"
-                width={50}
-                align="center"
-                sorter={(a, b) => a.id.localeCompare(b.id)}
-              />
-              <Column
-                title="Tên"
-                key="name"
-                dataIndex="name"
-                align="center"
-                sorter={(a, b) => a.name.localeCompare(b.name)}
-              />
-              <Column
-                title="Link"
-                key="link"
-                dataIndex="link"
-                align="center"
-                sorter={(a, b) => a.link.localeCompare(b.link)}
-              />
+        )}
+        <Col span={17} offset={1}>
+          <Table
+            className="content-panel_table"
+            dataSource={dataSoure}
+            size="small"
+            rowKey="id"
+            pagination={{ pageSize: 11 }}
+            scroll={{ y: 396 }}
+          >
+            <Column
+              title="ID"
+              key="id"
+              dataIndex="id"
+              width={50}
+              align="center"
+              sorter={(a, b) => a.id.localeCompare(b.id)}
+            />
+            <Column
+              title="Tên"
+              key="name"
+              dataIndex="name"
+              align="center"
+              sorter={(a, b) => a.name.localeCompare(b.name)}
+            />
+            <Column
+              title="Link"
+              key="link"
+              dataIndex="link"
+              align="center"
+              sorter={(a, b) => a.link.localeCompare(b.link)}
+            />
 
-              <Column
-                title="Loại"
-                key="type"
-                dataIndex="type"
-                align="center"
-                sorter={(a, b) => a.type.localeCompare(b.type)}
-                filters={[
-                  { text: "Publisher", value: "publisher" },
-                  { text: "Author", value: "author" },
-                  { text: "Genres", value: "genre" },
-                  { text: "Topic", value: "topic" },
-                  { text: "Page", value: "page" },
-                  { text: "Custom", value: "custom" },
-                ]}
-                onFilter={(value, record) => record.type === value}
-              />
-              <Column
-                title="Vị trí"
-                key="position"
-                dataIndex="position"
-                align="center"
-                sorter={(a, b) => a.position.localeCompare(b.position)}
-                filters={[
-                  { text: "Main menu", value: "mainmenu" },
-                  { text: "Footer menu", value: "footermenu" },
-                ]}
-                onFilter={(value, record) => record.position === value}
-              />
+            <Column
+              title="Loại"
+              key="type"
+              dataIndex="type"
+              align="center"
+              sorter={(a, b) => a.type.localeCompare(b.type)}
+              filters={[
+                { text: "Publisher", value: "publisher" },
+                { text: "Author", value: "author" },
+                { text: "Genres", value: "genre" },
+                { text: "Topic", value: "topic" },
+                { text: "Page", value: "page" },
+                { text: "Custom", value: "custom" },
+              ]}
+              onFilter={(value, record) => record.type === value}
+            />
+            <Column
+              title="Vị trí"
+              key="position"
+              dataIndex="position"
+              align="center"
+              sorter={(a, b) => a.position.localeCompare(b.position)}
+              filters={[
+                { text: "Main menu", value: "mainmenu" },
+                { text: "Footer menu", value: "footermenu" },
+              ]}
+              onFilter={(value, record) => record.position === value}
+            />
+            {type !== "trash" && (
               <Column
                 title="Trạng thái"
                 key="status"
@@ -539,37 +548,79 @@ class MenuList extends Component {
                   </Space>
                 )}
               />
-              <Column
-                title="Chức năng"
-                key="action"
-                dataIndex="status"
-                width={150}
-                align="center"
-                render={(_, record) => (
-                  <Space size="middle">
-                    <Button
-                      key={record.key}
-                      type="primary"
-                      style={{ marginRight: "8px" }}
-                      onClick={() => onEdit(record)}
-                    >
-                      <BiEdit type="primary" align="center" />
-                    </Button>
-                    <Button
-                      key={record.key}
-                      type="primary"
-                      danger
-                      onClick={() => onDeleteConfirm(record)}
-                    >
-                      <RiDeleteBin2Line align="center" />
-                    </Button>
-                  </Space>
-                )}
-              />
-            </Table>
-          </Col>
-        </Row>
-      </>
+            )}
+            <Column
+              title="Chức năng"
+              key="action"
+              dataIndex="status"
+              width={150}
+              align="center"
+              render={(_, record) => (
+                <Space>
+                  {type !== "trash" ? (
+                    <>
+                      <Tooltip placement="top" title="Edit">
+                        <Button
+                          key={record.key}
+                          type="link"
+                          style={{ marginRight: "8px" }}
+                          onClick={() => onEdit(record)}
+                        >
+                          <BiEdit
+                            size="middle"
+                            color="blue"
+                            type="primary"
+                            align="center"
+                          />
+                        </Button>
+                      </Tooltip>
+                      <Tooltip placement="top" title="delete">
+                        <Button
+                          // loading={isLoading}
+                          key={record.key}
+                          type="link"
+                          danger
+                          onClick={() => onDelete(record)}
+                        >
+                          <RiDeleteBin2Line
+                            size="middle"
+                            align="center"
+                            color="red"
+                          />
+                        </Button>
+                      </Tooltip>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        key={record.key}
+                        type="primary"
+                        style={{ marginRight: "8px" }}
+                        onClick={() => onRestore(record)}
+                      >
+                        {/* Add an onRestore method for restoring from trash */}
+                        <MdSettingsBackupRestore
+                          type="primary"
+                          align="center"
+                        />
+                      </Button>
+                      <Button
+                        // loading={isLoading}
+                        key={record.key}
+                        type="primary"
+                        danger
+                        onClick={() => onDeleteConfirm(record)}
+                      >
+                        <RiDeleteBin2Line align="center" />
+                      </Button>
+                    </>
+                  )}
+                </Space>
+              )}
+            ></Column>
+          </Table>
+        </Col>
+      </Row>
     );
   }
 }

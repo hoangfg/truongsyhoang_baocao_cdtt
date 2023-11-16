@@ -34,7 +34,8 @@ function App() {
             <Route path="contact" element={<Contact />} />
 
             <Route path="/product/:slug" element={<PageOffer />} />
-            <Route path="post/:slug" element={<PagePostDetail />} />
+            <Route path="post/:slug" element={<PagePostDetail type="post" />} />
+            <Route path="page/:slug" element={<PagePostDetail type="page" />} />
             <Route path="cart" element={<Cart />} />
             <Route path="checkout" element={<CheckOut />} />
             <Route path="signin" element={<SignBox />} />

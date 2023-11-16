@@ -6,16 +6,15 @@ import PageList from "./PageList";
 import { Button, Col, Modal, Row, Skeleton, message } from "antd";
 import PageForm from "./PageForm";
 import {
-  insertPage,
-  getPages,
+  insertPost,
+  getPosts,
   deleteById,
-  updatePage,
-  statusPage,
-} from "../../redux/actions/pageAction";
+  updatePost,
+  statusPost,
+} from "../../redux/actions/postAction";
 import { connect } from "react-redux";
-import pageReducer from "../../redux/reducers/pageReducer";
+import postReducer from "../../redux/reducers/postReducer";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-
 
 class ListPage extends Component {
   constructor(props) {
@@ -23,39 +22,35 @@ class ListPage extends Component {
 
     this.state = {
       open: false,
-      page: {},
-     
+      post: {},
     };
   }
 
   componentDidMount = () => {
-    this.props.getPages();
-
-    
+    this.props.getPosts();
   };
   // componentWillUnmount = () => {
   //   this.props.clearState();
   // };
-  
 
   onCreate = (values) => {
     // console.log(values);
     if (values.id) {
-      this.props.updatePage(values);
+      this.props.updatePost(values);
     } else {
       console.log("val", values);
-      this.props.insertPage(values);
+      this.props.insertPost(values);
     }
-    this.setState({ ...this.state, page: {}, open: false });
+    this.setState({ ...this.state, post: {}, open: false });
   };
   onEdit = (values) => {
-    this.setState({ ...this.state, page: values, open: true });
+    this.setState({ ...this.state, post: values, open: true });
   };
 
-  onDeleteConfirm = (page) => {
-    this.setState({ ...this.state, page: page });
+  onDeleteConfirm = (post) => {
+    this.setState({ ...this.state, post: post });
 
-    const message = "Bạn có muốn xóa trang đơn: " + page.name + " không?";
+    const message = "Bạn có muốn xóa trang đơn: " + post.name + " không?";
     Modal.confirm({
       title: "Xóa bản ghi?",
       icon: <ExclamationCircleOutlined />,
@@ -67,22 +62,24 @@ class ListPage extends Component {
     });
   };
   deletePage = () => {
-    this.props.deleteById(this.state.page.id);
-    this.setState({ ...this.state, page: {} });
+    this.props.deleteById(this.state.post.id);
+    this.setState({ ...this.state, post: {} });
   };
   onCancelModel = () => {
-    this.setState({ ...this.state, page: {} });
+    this.setState({ ...this.state, post: {} });
   };
   handleStatusChange = async (record) => {
-    this.props.statusPage(record.id, {
+    this.props.statusPost(record.id, {
       status: record.status === 0 ? 1 : 0,
     });
   };
   render() {
     const { navigate } = this.props.router;
     const { open, topicList } = this.state;
-    const { pages, isLoading } = this.props;
-    console.log("topicList", topicList);
+    const { posts, isLoading } = this.props;
+    let filteredItems = posts.filter(
+      (item) => item.status !== 2 && item.type === "page"
+    );
     if (isLoading) {
       return (
         <>
@@ -120,7 +117,7 @@ class ListPage extends Component {
         </div>
 
         <PageList
-          dataSource={pages}
+          dataSource={filteredItems}
           onDeleteConfirm={this.onDeleteConfirm}
           onEdit={this.onEdit}
           handleStatusChange={this.handleStatusChange}
@@ -128,11 +125,11 @@ class ListPage extends Component {
 
         <PageForm
           topicList={topicList}
-          page={this.state.page}
+          post={this.state.post}
           open={open}
           onCreate={this.onCreate}
           onCancel={() => {
-            this.setState({ ...this.state, open: false, page: {} });
+            this.setState({ ...this.state, open: false, post: {} });
           }}
         />
       </>
@@ -141,17 +138,17 @@ class ListPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  pages: state.pageReducer.pages,
+  posts: state.postReducer.posts,
   isLoading: state.commonReducer.isLoading,
 });
 // const mapStateToProps = (state) => (console.log(state));
 
 const mapDispatchToProps = {
-  insertPage,
-  getPages,
+  insertPost,
+  getPosts,
   deleteById,
-  updatePage,
-  statusPage,
+  updatePost,
+  statusPost,
 };
 
 export default connect(
