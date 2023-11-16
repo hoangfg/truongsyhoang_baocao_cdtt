@@ -40,7 +40,7 @@ function App() {
             <Route path="checkout" element={<CheckOut />} />
             <Route path="signin" element={<SignBox />} />
             <Route
-              path="genres/:slug"
+              path="genre/:slug"
               element={<PageCategory title="Sản phẩm theo thể loại" type="genres" />}
             />
             <Route

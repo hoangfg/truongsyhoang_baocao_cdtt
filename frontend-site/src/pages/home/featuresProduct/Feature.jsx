@@ -6,12 +6,12 @@ import { render } from "@testing-library/react";
 class Feature extends Component {
   render() {
     const { books, genres } = this.props;
+
     // console.log(books);
     let filteredBook = books.filter((item) => item.status === 0);
-    let filteredGenre = genres.filter(
-      (item) => item.status === 0 && item.parentId === 0
-    );
-
+    let filteredGenre = genres.filter((item) => item.status === 0);
+    console.log(filteredBook);
+    console.log(filteredGenre);
     return (
       <div className="features">
         <div className="container">
@@ -86,11 +86,11 @@ class Feature extends Component {
                     <h2>
                       <span className="circle" />
                       <span>
-                        <Link to={`/genres/${item.slug}`}>{item.name}</Link>
+                        <Link to={`/genre/${item.slug}`}>{item.name}</Link>
                       </span>
                     </h2>
                     <div className="second-links">
-                      <Link to={`/genres/${item.slug}`} className="view-all">
+                      <Link to={`/genre/${item.slug}`} className="view-all">
                         View all
                         <i className="ri-arrow-right-line" />
                       </Link>

@@ -11,10 +11,11 @@ import lombok.Setter;
 @Component
 @ConfigurationProperties(prefix = "file")
 public class FileStorageProperties {
-    private String uploadConfigImageDir;
-    private String uploadAuthorImageDir;
-    private String uploadBookImageDir;
-    private String uploadPostImageDir;
-    private String uploadSliderImageDir;
-    private String uploadUserImageDir;
+    private String uploadConfigImageDir = "/src/main/resources/static/uploads/config";
+    private String uploadAuthorImageDir = "/src/main/resources/static/backend/uploads/author";
+    private String uploadBookImageDir = "/src/main/resources/static/uploads/book";
+    private String uploadPostImageDir = "/src/main/resources/static/uploads/post";
+    private String uploadSliderImageDir = "/src/main/resources/static/uploads/slider";
+    private String uploadUserImageDir = "/src/main/resources/static/uploads/user";
+
 }

@@ -63,7 +63,7 @@ export default class GenresList extends Component {
           align="center"
           render={(_, record) => (
             <Space size="middle">
-              <Link to={`/genres/show/${record.id}`}>
+              <Link to={`/genre/show/${record.id}`}>
                 <Button
                   key={record.key}
                   type="link"
